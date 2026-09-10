@@ -1,0 +1,89 @@
+# Stretched HA lab: topology source of truth.
+# Rendered into CML's native import format by scripts/render_lab.py.
+# Interface names are the ones the CML node definitions present. Link numbers
+# match section 8 of docs/build-package.md.
+lab:
+  title: FW-HA-LAB
+  description: >-
+    Dual-site FTD failover demonstration. Two Active/Standby FTDv pairs split
+    across the East and West sites over a 25 ms conditioned layer 2 interconnect.
+    Source: docs/build-package.md (v2, 2026-09-08).
+
+nodes:
+  ISP-A:      {def: cat8000v, ifaces: 5,  x: -300, y: -150, tags: [internet], config: configs/routers/ISP-A.cfg}
+  ISP-B:      {def: cat8000v, ifaces: 4,  x:  300, y: -150, tags: [internet], config: configs/routers/ISP-B.cfg}
+  CLIENT:     {def: net-tools, ifaces: 1, x: -550, y: -300, tags: [internet], config: [configs/docker/net-tools.config.json, configs/docker/CLIENT.boot.sh]}
+  RTR-1:      {def: cat8000v, ifaces: 3,  x: -450, y:    0, tags: [east],  config: configs/routers/RTR-1.cfg}
+  RTR-2:      {def: cat8000v, ifaces: 3,  x: -150, y:    0, tags: [east],  config: configs/routers/RTR-2.cfg}
+  RTR-3:      {def: cat8000v, ifaces: 3,  x:  150, y:    0, tags: [west],  config: configs/routers/RTR-3.cfg}
+  RTR-4:      {def: cat8000v, ifaces: 3,  x:  450, y:    0, tags: [west],  config: configs/routers/RTR-4.cfg}
+  SW-OUT-EAST: {def: ioll2-xe, ifaces: 8,  x: -300, y:  150, tags: [east],  config: configs/switches/SW-OUT-EAST.cfg}
+  SW-OUT-WEST: {def: ioll2-xe, ifaces: 8,  x:  300, y:  150, tags: [west],  config: configs/switches/SW-OUT-WEST.cfg}
+  FTD-A1:     {def: ftdv,     ifaces: 6,  x: -450, y:  300, tags: [east, pair-a], config: configs/ftd/FTD-A1.day0.json}
+  FTD-B1:     {def: ftdv,     ifaces: 6,  x: -150, y:  300, tags: [east, pair-b], config: configs/ftd/FTD-B1.day0.json}
+  FTD-A2:     {def: ftdv,     ifaces: 6,  x:  150, y:  300, tags: [west, pair-a], config: configs/ftd/FTD-A2.day0.json}
+  FTD-B2:     {def: ftdv,     ifaces: 6,  x:  450, y:  300, tags: [west, pair-b], config: configs/ftd/FTD-B2.day0.json}
+  SW-IN-EAST:  {def: ioll2-xe, ifaces: 12, x: -300, y:  450, tags: [east],  config: configs/switches/SW-IN-EAST.cfg}
+  SW-IN-WEST:  {def: ioll2-xe, ifaces: 12, x:  300, y:  450, tags: [west],  config: configs/switches/SW-IN-WEST.cfg}
+  TREX-A:     {def: trex,     ifaces: 3,  x: -700, y:  300, tags: [traffic],  ram: 4096, cpus: 2, config: configs/trex/TREX-A.node.cfg}
+  TREX-B:     {def: trex,     ifaces: 3,  x:  700, y:  300, tags: [traffic],  ram: 4096, cpus: 2, config: configs/trex/TREX-B.node.cfg}
+  SRV-A:      {def: net-tools, ifaces: 1, x: -450, y:  600, tags: [east],  config: [configs/docker/net-tools.config.json, configs/docker/SRV-A.boot.sh]}
+  SRV-B:      {def: net-tools, ifaces: 1, x:  450, y:  600, tags: [west],  config: [configs/docker/net-tools.config.json, configs/docker/SRV-B.boot.sh]}
+  MGMT-SW:    {def: unmanaged_switch, ifaces: 8, x: 0, y: 750, tags: [management]}
+  EXT-CONN:   {def: external_connector, ifaces: 1, x: 0, y: 900, tags: [management], config_inline: "bridge1"}
+
+# Baseline conditioning for the two inter-site trunks. CML applies "latency"
+# PER DIRECTION and the virtual path adds about 1.5 ms each way: measured on
+# 2026-09-08, latency 25 gave 54 ms RTT, 12 gave 27 ms, 11 gave 25 ms.
+# So 11 is the value that yields the 25 ms design point (build package s.13).
+conditioning_baseline: &wan {latency: 11, jitter: 0, loss: 0.0, bandwidth: 0}
+
+links:
+  # East
+  - {n: 1,  a: ISP-A:GigabitEthernet1,   b: RTR-1:GigabitEthernet1,      note: "eBGP ISP-A, 203.0.113.0/30"}
+  - {n: 2,  a: ISP-B:GigabitEthernet1,   b: RTR-2:GigabitEthernet1,      note: "eBGP ISP-B, 203.0.113.8/30"}
+  - {n: 3,  a: RTR-1:GigabitEthernet3,   b: RTR-2:GigabitEthernet3,      note: "iBGP East, 10.255.1.0/30"}
+  - {n: 4,  a: RTR-1:GigabitEthernet2,   b: SW-OUT-EAST:Ethernet0/0,      note: "802.1Q trunk VLAN 100,200"}
+  - {n: 5,  a: RTR-2:GigabitEthernet2,   b: SW-OUT-EAST:Ethernet0/1,      note: "802.1Q trunk VLAN 100,200"}
+  - {n: 6,  a: FTD-A1:GigabitEthernet0/0, b: SW-OUT-EAST:Ethernet0/2,     note: "VLAN 100 outside-A"}
+  - {n: 7,  a: FTD-B1:GigabitEthernet0/0, b: SW-OUT-EAST:Ethernet0/3,     note: "VLAN 200 outside-B"}
+  - {n: 8,  a: FTD-A1:GigabitEthernet0/1, b: SW-IN-EAST:Ethernet0/0,      note: "VLAN 110 inside-A"}
+  - {n: 9,  a: FTD-B1:GigabitEthernet0/1, b: SW-IN-EAST:Ethernet0/1,      note: "VLAN 210 inside-B"}
+  - {n: 10, a: FTD-A1:GigabitEthernet0/2, b: SW-IN-EAST:Ethernet0/2,      note: "VLAN 900 pair A failover"}
+  - {n: 11, a: FTD-A1:GigabitEthernet0/3, b: SW-IN-EAST:Ethernet0/3,      note: "VLAN 901 pair A state"}
+  - {n: 12, a: FTD-B1:GigabitEthernet0/2, b: SW-IN-EAST:Ethernet1/0,      note: "VLAN 902 pair B failover"}
+  - {n: 13, a: FTD-B1:GigabitEthernet0/3, b: SW-IN-EAST:Ethernet1/1,      note: "VLAN 903 pair B state"}
+  - {n: 14, a: TREX-A:eth2,               b: SW-IN-EAST:Ethernet1/2,      note: "VLAN 110 TRex A server side"}
+  - {n: 15, a: SRV-A:eth0,                b: SW-IN-EAST:Ethernet1/3,      note: "VLAN 110 SRV-A"}
+  # West
+  - {n: 16, a: ISP-A:GigabitEthernet2,   b: RTR-3:GigabitEthernet1,      note: "eBGP ISP-A, 203.0.113.4/30"}
+  - {n: 17, a: ISP-B:GigabitEthernet2,   b: RTR-4:GigabitEthernet1,      note: "eBGP ISP-B, 203.0.113.12/30"}
+  - {n: 18, a: RTR-3:GigabitEthernet3,   b: RTR-4:GigabitEthernet3,      note: "iBGP West, 10.255.2.0/30"}
+  - {n: 19, a: RTR-3:GigabitEthernet2,   b: SW-OUT-WEST:Ethernet0/0,      note: "802.1Q trunk VLAN 100,200"}
+  - {n: 20, a: RTR-4:GigabitEthernet2,   b: SW-OUT-WEST:Ethernet0/1,      note: "802.1Q trunk VLAN 100,200"}
+  - {n: 21, a: FTD-A2:GigabitEthernet0/0, b: SW-OUT-WEST:Ethernet0/2,     note: "VLAN 100 outside-A"}
+  - {n: 22, a: FTD-B2:GigabitEthernet0/0, b: SW-OUT-WEST:Ethernet0/3,     note: "VLAN 200 outside-B"}
+  - {n: 23, a: FTD-A2:GigabitEthernet0/1, b: SW-IN-WEST:Ethernet0/0,      note: "VLAN 110 inside-A"}
+  - {n: 24, a: FTD-B2:GigabitEthernet0/1, b: SW-IN-WEST:Ethernet0/1,      note: "VLAN 210 inside-B"}
+  - {n: 25, a: FTD-A2:GigabitEthernet0/2, b: SW-IN-WEST:Ethernet0/2,      note: "VLAN 900 pair A failover"}
+  - {n: 26, a: FTD-A2:GigabitEthernet0/3, b: SW-IN-WEST:Ethernet0/3,      note: "VLAN 901 pair A state"}
+  - {n: 27, a: FTD-B2:GigabitEthernet0/2, b: SW-IN-WEST:Ethernet1/0,      note: "VLAN 902 pair B failover"}
+  - {n: 28, a: FTD-B2:GigabitEthernet0/3, b: SW-IN-WEST:Ethernet1/1,      note: "VLAN 903 pair B state"}
+  - {n: 29, a: TREX-B:eth2,               b: SW-IN-WEST:Ethernet1/2,      note: "VLAN 210 TRex B server side"}
+  - {n: 30, a: SRV-B:eth0,                b: SW-IN-WEST:Ethernet1/3,      note: "VLAN 210 SRV-B"}
+  # Inter-site, conditioned
+  - {n: 31, a: SW-OUT-EAST:Ethernet1/0,    b: SW-OUT-WEST:Ethernet1/0,     note: "INTER-SITE outside trunk VLAN 100,200", conditioning: *wan}
+  - {n: 32, a: SW-IN-EAST:Ethernet2/0,     b: SW-IN-WEST:Ethernet2/0,      note: "INTER-SITE inside trunk VLAN 110,210,900-903", conditioning: *wan}
+  # Internet side
+  - {n: 33, a: ISP-A:GigabitEthernet3,    b: TREX-A:eth1,                note: "192.0.2.0/29 TRex A client side"}
+  - {n: 34, a: ISP-B:GigabitEthernet3,    b: TREX-B:eth1,                note: "192.0.2.128/29 TRex B client side"}
+  - {n: 35, a: ISP-A:GigabitEthernet4,    b: ISP-B:GigabitEthernet4,     note: "eBGP ISP to ISP, 203.0.113.16/30"}
+  - {n: 36, a: ISP-A:GigabitEthernet5,    b: CLIENT:eth0,                note: "192.0.2.8/29 CLIENT"}
+  # Management
+  - {n: 37, a: FTD-A1:Management0/0,      b: MGMT-SW:port0,              note: "mgmt 198.18.129.41"}
+  - {n: 38, a: FTD-A2:Management0/0,      b: MGMT-SW:port1,              note: "mgmt 198.18.129.42"}
+  - {n: 39, a: FTD-B1:Management0/0,      b: MGMT-SW:port2,              note: "mgmt 198.18.129.43"}
+  - {n: 40, a: FTD-B2:Management0/0,      b: MGMT-SW:port3,              note: "mgmt 198.18.129.44"}
+  - {n: 41, a: TREX-A:eth0,               b: MGMT-SW:port4,              note: "mgmt 198.18.129.45"}
+  - {n: 42, a: TREX-B:eth0,               b: MGMT-SW:port5,              note: "mgmt 198.18.129.46"}
+  - {n: 43, a: EXT-CONN:port,             b: MGMT-SW:port6,              note: "bridge to dCloud 198.18.128.0/18"}

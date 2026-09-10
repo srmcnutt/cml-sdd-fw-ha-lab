@@ -1,0 +1,13 @@
+# credentials and session tokens
+.lab-creds.env
+.cache/
+# Python environments (see README for how to create them)
+.venv/
+.venv-trex/
+__pycache__/
+*.pyc
+# per-instance runtime state written by the scripts
+lab/state/
+lab/topology.exported.yaml
+# OS noise
+.DS_Store

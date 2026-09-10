@@ -1,0 +1,22 @@
+# FMC objects. Applied by scripts/fmc_apply.py objects (idempotent by name).
+zones:
+  - {name: OUTSIDE-A, mode: ROUTED}
+  - {name: INSIDE-A,  mode: ROUTED}
+  - {name: OUTSIDE-B, mode: ROUTED}
+  - {name: INSIDE-B,  mode: ROUTED}
+networks:
+  - {name: NET-INSIDE-A,   value: 10.10.0.0/24,    description: "pair A inside VLAN 110"}
+  - {name: NET-INSIDE-B,   value: 10.20.0.0/24,    description: "pair B inside VLAN 210"}
+  - {name: NET-TREX-SRV-A, value: 10.10.1.0/28,    description: "pair A TRex server range, routed via 10.10.0.129"}
+  - {name: NET-TREX-SRV-B, value: 10.20.1.0/28,    description: "pair B TRex server range, routed via 10.20.0.129"}
+  - {name: NET-PUB-SRV-A,  value: 198.51.100.32/28, description: "pair A static NAT pool for TRex servers"}
+  - {name: NET-PUB-SRV-B,  value: 198.51.100.96/28, description: "pair B static NAT pool for TRex servers"}
+hosts:
+  - {name: HOST-GW-A,         value: 198.51.100.1,   description: "HSRP group 10 VIP, pair A default gateway"}
+  - {name: HOST-GW-B,         value: 198.51.100.65,  description: "HSRP group 20 VIP, pair B default gateway"}
+  - {name: HOST-TREX-A-INSIDE, value: 10.10.0.129,  description: "TREX-A server-side port address"}
+  - {name: HOST-TREX-B-INSIDE, value: 10.20.0.129,  description: "TREX-B server-side port address"}
+  - {name: HOST-SRV-A,        value: 10.10.0.50,    description: "SRV-A inside"}
+  - {name: HOST-PUB-SRV-A,    value: 198.51.100.50,  description: "SRV-A public"}
+  - {name: HOST-SRV-B,        value: 10.20.0.50,    description: "SRV-B inside"}
+  - {name: HOST-PUB-SRV-B,    value: 198.51.100.114, description: "SRV-B public"}

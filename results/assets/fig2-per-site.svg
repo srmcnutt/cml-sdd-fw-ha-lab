@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1360" height="880" viewBox="0 0 1360 880" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+  <!-- Figure 2. Per-site connectivity (East shown; West is the mirror image). -->
+  <defs>
+    <marker id="arr" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L12,6 L0,12 z" fill="#6f6d66"/>
+    </marker>
+    <marker id="arr-o" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L12,6 L0,12 z" fill="#b8741f"/>
+    </marker>
+  </defs>
+  <rect width="1360" height="880" fill="#ffffff"/>
+
+  <!-- ISPs -->
+  <rect x="180" y="55" width="360" height="80" rx="14" fill="#f0efeb" stroke="#b8b5ad" stroke-width="2.5"/>
+  <text x="360" y="105" font-size="28" font-weight="bold" text-anchor="middle" fill="#3d3d3d">ISP A</text>
+  <rect x="820" y="55" width="360" height="80" rx="14" fill="#f0efeb" stroke="#b8b5ad" stroke-width="2.5"/>
+  <text x="1000" y="105" font-size="28" font-weight="bold" text-anchor="middle" fill="#3d3d3d">ISP B</text>
+  <line x1="360" y1="135" x2="360" y2="183" stroke="#6f6d66" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="1000" y1="135" x2="1000" y2="183" stroke="#6f6d66" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- edge routers -->
+  <rect x="180" y="185" width="360" height="95" rx="14" fill="#f0efeb" stroke="#b8b5ad" stroke-width="2.5"/>
+  <text x="360" y="225" font-size="26" font-weight="bold" text-anchor="middle" fill="#3d3d3d">RTR-1</text>
+  <text x="360" y="260" font-size="22" text-anchor="middle" fill="#6f6d66">edge router, eBGP to ISP A</text>
+  <rect x="820" y="185" width="360" height="95" rx="14" fill="#f0efeb" stroke="#b8b5ad" stroke-width="2.5"/>
+  <text x="1000" y="225" font-size="26" font-weight="bold" text-anchor="middle" fill="#3d3d3d">RTR-2</text>
+  <text x="1000" y="260" font-size="22" text-anchor="middle" fill="#6f6d66">edge router, eBGP to ISP B</text>
+  <line x1="540" y1="232" x2="820" y2="232" stroke="#6f6d66" stroke-width="2"/>
+  <text x="680" y="222" font-size="22" text-anchor="middle" fill="#6f6d66">iBGP</text>
+  <line x1="360" y1="280" x2="360" y2="330" stroke="#6f6d66" stroke-width="2"/>
+  <line x1="1000" y1="280" x2="1000" y2="330" stroke="#6f6d66" stroke-width="2"/>
+
+  <!-- outside switch -->
+  <rect x="140" y="330" width="940" height="95" rx="14" fill="#fbf1e3" stroke="#b8741f" stroke-width="2.5" stroke-dasharray="10 7"/>
+  <text x="610" y="368" font-size="26" font-weight="bold" text-anchor="middle" fill="#7a4d10">Outside switch</text>
+  <text x="610" y="403" font-size="22" text-anchor="middle" fill="#9a6a1f">802.1Q trunks, VLANs 100 and 200</text>
+  <line x1="1080" y1="377" x2="1208" y2="377" stroke="#b8741f" stroke-width="2.5" stroke-dasharray="8 6" marker-end="url(#arr-o)"/>
+  <text x="1225" y="384" font-size="20" fill="#9a6a1f">to West</text>
+  <line x1="400" y1="425" x2="400" y2="480" stroke="#6f6d66" stroke-width="2"/>
+  <line x1="960" y1="425" x2="960" y2="480" stroke="#6f6d66" stroke-width="2"/>
+
+  <!-- firewalls -->
+  <rect x="220" y="480" width="360" height="110" rx="14" fill="#e6f4f1" stroke="#0e7c6b" stroke-width="2.5"/>
+  <text x="400" y="522" font-size="28" font-weight="bold" text-anchor="middle" fill="#0e5c50">FTD-A1</text>
+  <text x="400" y="560" font-size="24" text-anchor="middle" fill="#2b7a6e">Pair A, active</text>
+  <rect x="780" y="480" width="360" height="110" rx="14" fill="#f0efeb" stroke="#b8b5ad" stroke-width="2.5"/>
+  <text x="960" y="522" font-size="28" font-weight="bold" text-anchor="middle" fill="#3d3d3d">FTD-B1</text>
+  <text x="960" y="560" font-size="24" text-anchor="middle" fill="#6f6d66">Pair B, standby</text>
+  <line x1="400" y1="590" x2="400" y2="640" stroke="#6f6d66" stroke-width="2"/>
+  <line x1="960" y1="590" x2="960" y2="640" stroke="#6f6d66" stroke-width="2"/>
+
+  <!-- inside switch -->
+  <rect x="140" y="640" width="940" height="95" rx="14" fill="#fbf1e3" stroke="#b8741f" stroke-width="2.5" stroke-dasharray="10 7"/>
+  <text x="610" y="678" font-size="26" font-weight="bold" text-anchor="middle" fill="#7a4d10">Inside switch</text>
+  <text x="610" y="713" font-size="22" text-anchor="middle" fill="#9a6a1f">VLANs 110, 210, 900 to 903 (inside, failover, state)</text>
+  <line x1="1080" y1="687" x2="1208" y2="687" stroke="#b8741f" stroke-width="2.5" stroke-dasharray="8 6" marker-end="url(#arr-o)"/>
+  <text x="1225" y="694" font-size="20" fill="#9a6a1f">to West</text>
+
+  <!-- caption -->
+  <text x="680" y="795" font-size="24" text-anchor="middle" fill="#4a4a4a">Both trunks extend to the mirror site over the inter-site circuit at 25 ms RTT.</text>
+  <text x="680" y="835" font-size="24" text-anchor="middle" fill="#4a4a4a">West is identical, hosting FTD-A2 (standby) and FTD-B2 (active).</text>
+</svg>

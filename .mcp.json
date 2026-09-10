@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "cml-mcp-dcloud": {
+      "command": "/bin/sh",
+      "args": [
+        "-c",
+        "set -a; . ./.lab-creds.env; set +a; CML_URL=\"$CML_HOST\" CML_USERNAME=\"$CML_USER\" CML_PASSWORD=\"$CML_PASS\" CML_VERIFY_SSL=false exec uvx 'cml-mcp[pyats]'"
+      ]
+    }
+  }
+}

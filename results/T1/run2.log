@@ -1,0 +1,28 @@
+23:40:44 == restore baseline
+23:40:44 link 31 conditioning: 200 latency=11 loss=0.0
+23:40:45 link 32 conditioning: 200 latency=11 loss=0.0
+23:40:51 PAIR-A: {'primary': 'Active', 'secondary': 'Standby'}
+23:40:52 PAIR-B: {'primary': 'Active', 'secondary': 'Standby'}
+23:40:52 baseline HA: {'A': {'primary': 'Active', 'secondary': 'Standby'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}
+TREX-A: started http_nat.py cps=30 hold=60s clients 192.0.2.33-192.0.2.62 -> 198.51.100.33-198.51.100.46
+TREX-B: started http_nat.py cps=30 hold=60s clients 192.0.2.161-192.0.2.190 -> 198.51.100.97-198.51.100.110
+23:41:15 traffic started: TRex A+B, iperf3 CLIENT -> 198.51.100.50 (pair A)
+23:41:15 settling 25 s
+23:41:43 pre: {"FTD-A1": {"this": "Primary - Active", "other": "Secondary - Standby Ready"}, "FTD-A2": {"this": "Secondary - Standby Ready", "other": "Primary - Active"}, "traffic": {"trex_A": {"time": "23:41:42", "active_flows": 1141.0, "open_flows": 1141.0, "tx_cps": 30, "rx_pps": 820, "tx_bps": 488825, "rx_bps": 487192, "c_tcps_connects": 1134, "c_tcps_closed": null, "c_tcps_conndrops": null, "c_tcps_rexmttimeo": 1, "c_tcps_timeoutdrop": null, "c_err_no_syn": null, "s_tcps_accepts": 1134, "s_tcps_closed": null, "s_tcps_rexmttimeo": null}, "trex_B": {"time": "23:41:42", "active_flows": 982.0, "open_flows"
+23:41:43 T1: no trigger, observing baseline
+23:41:44 t+   0.0s  FTD-A1: Primary - Active | FTD-A2: Secondary - Standby Ready  flows=1201.0 tx_cps=30 rx_pps=800 conndrops=None rexmt=1  iperf=-28.00  sec  4.05 MBytes  16973 Kbits/sec    0    578 KBytes
+23:41:51 t+   6.7s  FTD-A1: Primary - Active | FTD-A2: Secondary - Standby Ready  flows=1404.0 tx_cps=30 rx_pps=967 conndrops=None rexmt=1  iperf=-34.00  sec  4.78 MBytes  20063 Kbits/sec    0    669 KBytes
+23:41:58 t+  13.3s  FTD-A1: Primary - Active | FTD-A2: Secondary - Standby Ready  flows=1610.0 tx_cps=30 rx_pps=1035 conndrops=None rexmt=3  iperf=-42.00  sec  3.99 MBytes  16716 Kbits/sec    0    593 KBytes
+23:42:05 t+  20.3s  FTD-A1: Primary - Active | FTD-A2: Secondary - Standby Ready  flows=1812.0 tx_cps=30 rx_pps=1148 conndrops=None rexmt=3  iperf=-48.00  sec  3.99 MBytes  16716 Kbits/sec    0    711 KBytes
+23:42:11 t+  27.0s  FTD-A1: Primary - Active | FTD-A2: Secondary - Standby Ready  flows=1869.0 tx_cps=30 rx_pps=1069 conndrops=None rexmt=6  iperf=-56.00  sec  4.60 MBytes  19291 Kbits/sec    0    482 KBytes
+23:42:18 t+  33.9s  FTD-A1: Primary - Active | FTD-A2: Secondary - Standby Ready  flows=1869.0 tx_cps=30 rx_pps=1184 conndrops=None rexmt=6  iperf=-62.00  sec  4.60 MBytes  19289 Kbits/sec   53    274 KBytes
+23:42:25 post: {"FTD-A1": {"this": "Primary - Active", "other": "Secondary - Standby Ready"}, "FTD-A2": {"this": "Secondary - Standby Ready", "other": "Primary - Active"}, "traffic": {"trex_A": {"time": "23:42:25", "active_flows": 1869.0, "open_flows": 2422.0, "tx_cps": 30, "rx_pps": 1016, "tx_bps": 594217, "rx_bps": 593235, "c_tcps_connects": 2417, "c_tcps_closed": 553, "c_tcps_conndrops": null, "c_tcps_rexmttimeo": 7, "c_tcps_timeoutdrop": null, "c_err_no_syn": null, "s_tcps_accepts": 2417, "s_tcps_closed": 555, "s_tcps_rexmttimeo": 4}, "trex_B": {"time": "23:42:25", "active_flows": 1869.0, "open_flows": 2
+23:42:27 iperf3 final: pkill iperf3; sleep 1; grep -cE "sec" /tmp/iperf-A.log; grepp -iE "error|reset|refused|timed out" /tmp/iperf-A.log | tail -3 | [1]+  Exit 1                  nohup stdbuf -oL -eL iperf3 -c 198.51.100.50 -t 3600 -i 2 -f k > /tmp/iperf-A.log 2>&1 | 38 | root@fb10e76a21d3:/#
+23:42:27 == restore baseline
+23:42:28 link 31 conditioning: 200 latency=11 loss=0.0
+23:42:28 link 32 conditioning: 200 latency=11 loss=0.0
+23:42:35 PAIR-A: {'primary': 'Active', 'secondary': 'Standby'}
+23:42:35 PAIR-B: {'primary': 'Active', 'secondary': 'Standby'}
+23:42:36 baseline HA: {'A': {'primary': 'Active', 'secondary': 'Standby'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}
+23:42:36 events: {"conndrops_delta": 0, "rexmt_delta": 6, "active_flows_pre_post": [1141.0, 1869.0]}
+23:42:36 saved results/T1/20260908-234236.json

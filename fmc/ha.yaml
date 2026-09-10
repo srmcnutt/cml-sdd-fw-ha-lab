@@ -1,0 +1,14 @@
+# Failover pairs. Failover and state links are separate physical interfaces.
+pairs:
+  PAIR-A:
+    primary: FTD-A1
+    secondary: FTD-A2
+    failover: {interface: GigabitEthernet0/2, logical: failover-a, active: 192.168.90.1, standby: 192.168.90.2, mask: 255.255.255.252}
+    state:    {interface: GigabitEthernet0/3, logical: state-a,    active: 192.168.91.1, standby: 192.168.91.2, mask: 255.255.255.252}
+    encryption: false
+  PAIR-B:
+    primary: FTD-B2
+    secondary: FTD-B1
+    failover: {interface: GigabitEthernet0/2, logical: failover-b, active: 192.168.92.1, standby: 192.168.92.2, mask: 255.255.255.252}
+    state:    {interface: GigabitEthernet0/3, logical: state-b,    active: 192.168.93.1, standby: 192.168.93.2, mask: 255.255.255.252}
+    encryption: false

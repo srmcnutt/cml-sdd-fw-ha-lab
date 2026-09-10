@@ -1,0 +1,45 @@
+23:48:26 == restore baseline
+23:48:27 link 31 conditioning: 200 latency=11 loss=0.0
+23:48:27 link 32 conditioning: 200 latency=11 loss=0.0
+23:48:35 PAIR-A: {'primary': 'Active', 'secondary': 'Standby'}
+23:48:35 PAIR-B: {'primary': 'Active', 'secondary': 'Standby'}
+23:48:36 baseline HA: {'A': {'primary': 'Active', 'secondary': 'Standby'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}
+TREX-A: started http_nat.py cps=30 hold=90s clients 192.0.2.33-192.0.2.62 -> 198.51.100.33-198.51.100.46
+TREX-B: started http_nat.py cps=30 hold=90s clients 192.0.2.161-192.0.2.190 -> 198.51.100.97-198.51.100.110
+23:48:57 traffic started: TRex A+B, iperf3 CLIENT -> 198.51.100.50 (pair A)
+23:48:57 settling 30 s
+23:49:37 pre: {"FTD-A1": {"this": "Primary - Active", "other": "Secondary - Standby Ready"}, "FTD-A2": {"this": "Secondary - Standby Ready", "other": "Primary - Active"}, "traffic": {"trex_A": {"time": "23:49:28", "active_flows": 1260.0, "open_flows": 1260.0, "tx_cps": 30, "rx_pps": 806, "tx_bps": 489720, "rx_bps": 475695, "c_tcps_connects": 1251, "c_tcps_closed": null, "c_tcps_conndrops": null, "c_tcps_rexmttimeo": 1, "c_tcps_timeoutdrop": null, "c_err_no_syn": null, "s_tcps_accepts": 1251, "s_tcps_closed": null, "s_tcps_rexmttimeo": 3}, "trex_B": {"time": "23:49:28", "active_flows": 1109.0, "open_flows": 
+23:49:42 FMC switch active PAIR-A: 200 accepted
+23:49:43 t+   4.6s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=1633.0 tx_cps=30 rx_pps=1061 conndrops=9 rexmt=6  iperf=-46.00  sec  4.97 MBytes  20837 Kbits/sec    0    545 KBytes
+23:49:43 ** failover state change observed at t+4.6s
+23:49:50 t+  11.3s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=1637.0 tx_cps=30 rx_pps=855 conndrops=107 rexmt=6  iperf=-52.00  sec  3.99 MBytes  16717 Kbits/sec    0    586 KBytes
+23:49:57 t+  17.9s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=1642.0 tx_cps=30 rx_pps=736 conndrops=305 rexmt=6  iperf=-58.00  sec  3.99 MBytes  16717 Kbits/sec    0    362 KBytes
+23:50:04 t+  24.8s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=1644.0 tx_cps=30 rx_pps=695 conndrops=508 rexmt=6  iperf=-66.00  sec  4.78 MBytes  20064 Kbits/sec    0    505 KBytes
+23:50:10 t+  31.5s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=1649.0 tx_cps=30 rx_pps=772 conndrops=703 rexmt=6  iperf=-72.00  sec  4.11 MBytes  17231 Kbits/sec   11    409 KBytes
+23:50:17 t+  38.2s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=1641.0 tx_cps=30 rx_pps=1043 conndrops=803 rexmt=46  iperf=-78.00  sec  4.05 MBytes  16974 Kbits/sec   19    366 KBytes
+23:50:24 t+  44.9s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=1688.0 tx_cps=30 rx_pps=953 conndrops=803 rexmt=49  iperf=-86.00  sec  4.78 MBytes  20061 Kbits/sec   10    211 KBytes
+23:50:33 mid diag captured at t+51.6s
+23:50:35 t+  56.1s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=1717.0 tx_cps=30 rx_pps=867 conndrops=803 rexmt=60  iperf=-96.00  sec  4.78 MBytes  20060 Kbits/sec    0    218 KBytes
+23:50:42 t+  62.9s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=1614.0 tx_cps=30 rx_pps=952 conndrops=803 rexmt=60  iperf=-104.00 sec  3.99 MBytes  16715 Kbits/sec    0    166 KBytes
+23:50:48 t+  69.6s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=1662.0 tx_cps=30 rx_pps=808 conndrops=803 rexmt=61  iperf=-110.00 sec  4.05 MBytes  16973 Kbits/sec    1    127 KBytes
+23:50:55 t+  76.4s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=1710.0 tx_cps=30 rx_pps=764 conndrops=803 rexmt=64  iperf=0-118.00 sec   816 KBytes  3342 Kbits/sec    5   20.0 KBytes
+23:51:03 t+  83.1s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=1731.0 tx_cps=30 rx_pps=929 conndrops=803 rexmt=67  iperf=00-124.00 sec  0.00 Bytes  0.00 Kbits/sec   10   20.0 KBytes
+23:51:09 t+  90.5s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=1810.0 tx_cps=30 rx_pps=710 conndrops=894 rexmt=68  iperf=0-132.00 sec   816 KBytes  3343 Kbits/sec    2   24.0 KBytes
+23:51:16 t+  97.3s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=1773.0 tx_cps=30 rx_pps=648 conndrops=1094 rexmt=68  iperf=00-138.00 sec  0.00 Bytes  0.00 Kbits/sec    3   14.7 KBytes
+23:51:23 t+ 104.0s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=1771.0 tx_cps=30 rx_pps=546 conndrops=1288 rexmt=68  iperf=0-144.00 sec   816 KBytes  3343 Kbits/sec    8   18.7 KBytes
+23:51:29 t+ 110.6s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=1772.0 tx_cps=30 rx_pps=619 conndrops=1481 rexmt=68  iperf=0-152.00 sec   816 KBytes  3343 Kbits/sec    7   13.4 KBytes
+23:51:36 t+ 117.2s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=1757.0 tx_cps=30 rx_pps=620 conndrops=1677 rexmt=68  iperf=0-158.00 sec   816 KBytes  3344 Kbits/sec    2   22.7 KBytes
+23:51:47 post: {"FTD-A1": {"this": "Primary - Standby Ready", "other": "Secondary - Active"}, "FTD-A2": {"this": "Secondary - Active", "other": "Primary - Standby Ready"}, "traffic": {"trex_A": {"time": "23:51:42", "active_flows": 1649.0, "open_flows": 5284.0, "tx_cps": 30, "rx_pps": 649, "tx_bps": 408742, "rx_bps": 333046, "c_tcps_connects": 3229, "c_tcps_closed": 3635, "c_tcps_conndrops": 1877, "c_tcps_rexmttimeo": 68, "c_tcps_timeoutdrop": null, "c_err_no_syn": null, "s_tcps_accepts": 3229, "s_tcps_closed": 1758, "s_tcps_rexmttimeo": 107}, "trex_B": {"time": "23:51:43", "active_flows": 2621.0, "open_flows
+23:51:47 FTD-A1 asp drop deltas: {'TCP RST/SYN in window (tcp-rst-syn-in-win)': 235, 'Interface is down (interface-down)': 70, 'TCP replicated flow pak drop (tcp-fo-drop)': 35}
+23:51:47 FTD-A2 asp drop deltas: {'TCP replicated flow pak drop (tcp-fo-drop)': 8309, 'First TCP packet not SYN (tcp-not-syn)': 3048, 'TCP RST/SYN in window (tcp-rst-syn-in-win)': 1435, 'Interface is down (interface-down)': 9}
+23:51:49 iperf3 final: pkill iperf3; sleep 1; grep -cE "sec" /tmp/iperf-A.log; grepp -iE "error|reset|refused|timed out" /tmp/iperf-A.log | tail -3 | [1]+  Exit 1                  nohup stdbuf -oL -eL iperf3 -c 198.51.100.50 -t 3600 -i 2 -f k > /tmp/iperf-A.log 2>&1 | 88 | root@fb10e76a21d3:/#
+23:51:49 == restore baseline
+23:51:50 link 31 conditioning: 200 latency=11 loss=0.0
+23:51:51 link 32 conditioning: 200 latency=11 loss=0.0
+23:51:57 PAIR-A: {'primary': 'Standby', 'secondary': 'Active'}
+23:51:57 PAIR-A: secondary is active, switching back to the primary
+23:52:02 FMC switch active PAIR-A: 200 accepted
+23:52:02 PAIR-B: {'primary': 'Active', 'secondary': 'Standby'}
+23:52:03 baseline HA: {'A': {'primary': 'Active', 'secondary': 'Standby'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}
+23:52:03 events: {"first_state_change_s": 4.6, "traffic_seen_after_change_s": 4.6, "asp_drop_delta_FTD-A1": {"TCP RST/SYN in window (tcp-rst-syn-in-win)": 235, "Interface is down (interface-down)": 70, "TCP replicated flow pak drop (tcp-fo-drop)": 35}, "asp_drop_delta_FTD-A2": {"TCP replicated flow pak drop (tcp-fo-drop)": 8309, "First TCP packet not SYN (tcp-not-syn)": 3048, "TCP RST/SYN in window (tcp-rst-syn-in-win)": 1435, "Interface is down (interface-down)": 9}, "conndrops_delta": 1877, "rexmt_delta": 67, "active_flows_pre_post": [1260.0, 1649.0]}
+23:52:03 saved results/T2/20260908-235203.json

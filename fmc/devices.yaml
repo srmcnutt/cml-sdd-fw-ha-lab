@@ -1,0 +1,27 @@
+# Device registration and per-pair data-plane config.
+# Interfaces are configured on the PRIMARY of each pair only; HA replication
+# carries them to the secondary. Standby addresses are set on the HA pair.
+registration_key: HaLabRegKey2026
+performance_tier: FTDv20
+license_caps: [ESSENTIALS]
+access_policy: LAB-ACP
+devices:
+  - {name: FTD-A1, mgmt: 198.18.129.41, pair: PAIR-A, role: primary}
+  - {name: FTD-A2, mgmt: 198.18.129.42, pair: PAIR-A, role: secondary}
+  - {name: FTD-B2, mgmt: 198.18.129.44, pair: PAIR-B, role: primary}
+  - {name: FTD-B1, mgmt: 198.18.129.43, pair: PAIR-B, role: secondary}
+pairs:
+  PAIR-A:
+    interfaces:
+      - {name: GigabitEthernet0/0, ifname: outside-a, zone: OUTSIDE-A, address: 198.51.100.10, mask: 26, standby: 198.51.100.11}
+      - {name: GigabitEthernet0/1, ifname: inside-a,  zone: INSIDE-A,  address: 10.10.0.1,    mask: 24, standby: 10.10.0.2}
+    routes:
+      - {interface: outside-a, network: any-ipv4,       gateway: HOST-GW-A,          metric: 1}
+      - {interface: inside-a,  network: NET-TREX-SRV-A, gateway: HOST-TREX-A-INSIDE, metric: 1}
+  PAIR-B:
+    interfaces:
+      - {name: GigabitEthernet0/0, ifname: outside-b, zone: OUTSIDE-B, address: 198.51.100.74, mask: 26, standby: 198.51.100.75}
+      - {name: GigabitEthernet0/1, ifname: inside-b,  zone: INSIDE-B,  address: 10.20.0.1,    mask: 24, standby: 10.20.0.2}
+    routes:
+      - {interface: outside-b, network: any-ipv4,       gateway: HOST-GW-B,          metric: 1}
+      - {interface: inside-b,  network: NET-TREX-SRV-B, gateway: HOST-TREX-B-INSIDE, metric: 1}

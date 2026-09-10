@@ -1,0 +1,9 @@
+# Python 3.10 environment for the vendored TRex 2.87 client (.venv-trex).
+# The vendored scapy 2.4.3 does not import on newer interpreters, so this
+# environment is separate from .venv (requirements.txt). Create it with:
+#   uv venv -p 3.10 .venv-trex && uv pip install -p .venv-trex/bin/python -r requirements-trex.txt
+pyyaml>=6.0
+pyzmq>=25
+simpy>=4.0
+texttable>=1.6
+pexpect>=4.9

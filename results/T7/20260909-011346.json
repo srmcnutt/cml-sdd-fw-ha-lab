@@ -1,0 +1,894 @@
+{
+ "scenario": "T7",
+ "opts": {
+  "pair": "A",
+  "latency": 11,
+  "settle": 25,
+  "hold": 90,
+  "cps": 30,
+  "flow_hold": 70
+ },
+ "started": "2026-09-09 01:10:04",
+ "timeline": [
+  {
+   "t": 4.6,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "01:11:39",
+    "active_flows": 1369.0,
+    "open_flows": 1438.0,
+    "tx_cps": 30,
+    "rx_pps": 796,
+    "tx_bps": 474339,
+    "rx_bps": 472798,
+    "c_tcps_connects": 1433,
+    "c_tcps_closed": 69,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 7,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 1434,
+    "s_tcps_closed": 60,
+    "s_tcps_rexmttimeo": 10
+   },
+   "trex_B": {
+    "time": "01:11:39",
+    "active_flows": 1295.0,
+    "open_flows": 1295.0,
+    "tx_cps": 30,
+    "rx_pps": 677,
+    "tx_bps": 414766,
+    "rx_bps": 414893,
+    "c_tcps_connects": 1295,
+    "c_tcps_closed": null,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": null,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 1295,
+    "s_tcps_closed": null,
+    "s_tcps_rexmttimeo": null
+   },
+   "iperf": "[  5]  34.00-36.00  sec  4.78 MBytes  20062 Kbits/sec   95    386 KBytes"
+  },
+  {
+   "t": 11.5,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "01:11:46",
+    "active_flows": 1484.0,
+    "open_flows": 1646.0,
+    "tx_cps": 30,
+    "rx_pps": 877,
+    "tx_bps": 520794,
+    "rx_bps": 516574,
+    "c_tcps_connects": 1640,
+    "c_tcps_closed": 162,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 7,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 1640,
+    "s_tcps_closed": 162,
+    "s_tcps_rexmttimeo": 14
+   },
+   "trex_B": {
+    "time": "01:11:46",
+    "active_flows": 1500.0,
+    "open_flows": 1500.0,
+    "tx_cps": 30,
+    "rx_pps": 748,
+    "tx_bps": 452262,
+    "rx_bps": 451269,
+    "c_tcps_connects": 1500,
+    "c_tcps_closed": null,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": null,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 1500,
+    "s_tcps_closed": null,
+    "s_tcps_rexmttimeo": null
+   },
+   "iperf": "[  5]  42.00-44.00  sec  3.99 MBytes  16716 Kbits/sec    0    458 KBytes"
+  },
+  {
+   "t": 18.2,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "01:11:52",
+    "active_flows": 1683.0,
+    "open_flows": 1845.0,
+    "tx_cps": 30,
+    "rx_pps": 1050,
+    "tx_bps": 618672,
+    "rx_bps": 600495,
+    "c_tcps_connects": 1832,
+    "c_tcps_closed": 162,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 7,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 1832,
+    "s_tcps_closed": 162,
+    "s_tcps_rexmttimeo": 14
+   },
+   "trex_B": {
+    "time": "01:11:52",
+    "active_flows": 1700.0,
+    "open_flows": 1700.0,
+    "tx_cps": 30,
+    "rx_pps": 850,
+    "tx_bps": 503448,
+    "rx_bps": 503474,
+    "c_tcps_connects": 1699,
+    "c_tcps_closed": null,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": null,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 1700,
+    "s_tcps_closed": null,
+    "s_tcps_rexmttimeo": null
+   },
+   "iperf": "[  5]  48.00-50.00  sec  5.15 MBytes  21605 Kbits/sec    0    859 KBytes"
+  },
+  {
+   "t": 24.9,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "01:11:59",
+    "active_flows": 1882.0,
+    "open_flows": 2044.0,
+    "tx_cps": 30,
+    "rx_pps": 1209,
+    "tx_bps": 698309,
+    "rx_bps": 687034,
+    "c_tcps_connects": 2037,
+    "c_tcps_closed": 162,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 8,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 2038,
+    "s_tcps_closed": 162,
+    "s_tcps_rexmttimeo": 15
+   },
+   "trex_B": {
+    "time": "01:11:59",
+    "active_flows": 1900.0,
+    "open_flows": 1900.0,
+    "tx_cps": 30,
+    "rx_pps": 921,
+    "tx_bps": 540734,
+    "rx_bps": 540450,
+    "c_tcps_connects": 1900,
+    "c_tcps_closed": null,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": null,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 1900,
+    "s_tcps_closed": null,
+    "s_tcps_rexmttimeo": null
+   },
+   "iperf": "[  5]  54.00-56.00  sec  4.41 MBytes  18517 Kbits/sec    0    570 KBytes"
+  },
+  {
+   "t": 31.6,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "01:12:06",
+    "active_flows": 2012.0,
+    "open_flows": 2262.0,
+    "tx_cps": 30,
+    "rx_pps": 1164,
+    "tx_bps": 666642,
+    "rx_bps": 668977,
+    "c_tcps_connects": 2257,
+    "c_tcps_closed": 250,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 8,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 2258,
+    "s_tcps_closed": 263,
+    "s_tcps_rexmttimeo": 15
+   },
+   "trex_B": {
+    "time": "01:12:06",
+    "active_flows": 2116.0,
+    "open_flows": 2116.0,
+    "tx_cps": 30,
+    "rx_pps": 1041,
+    "tx_bps": 601328,
+    "rx_bps": 601934,
+    "c_tcps_connects": 2116,
+    "c_tcps_closed": null,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": null,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 2116,
+    "s_tcps_closed": null,
+    "s_tcps_rexmttimeo": null
+   },
+   "iperf": "[  5]  62.00-64.00  sec  4.41 MBytes  18517 Kbits/sec    0    342 KBytes"
+  },
+  {
+   "t": 38.8,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "01:12:13",
+    "active_flows": 2010.0,
+    "open_flows": 2464.0,
+    "tx_cps": 30,
+    "rx_pps": 1131,
+    "tx_bps": 650998,
+    "rx_bps": 653242,
+    "c_tcps_connects": 2457,
+    "c_tcps_closed": 454,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 8,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 2458,
+    "s_tcps_closed": 464,
+    "s_tcps_rexmttimeo": 16
+   },
+   "trex_B": {
+    "time": "01:12:13",
+    "active_flows": 2168.0,
+    "open_flows": 2320.0,
+    "tx_cps": 30,
+    "rx_pps": 1171,
+    "tx_bps": 672539,
+    "rx_bps": 673407,
+    "c_tcps_connects": 2319,
+    "c_tcps_closed": 152,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": null,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 2320,
+    "s_tcps_closed": 163,
+    "s_tcps_rexmttimeo": null
+   },
+   "iperf": "[  5]  68.00-70.00  sec  4.48 MBytes  18776 Kbits/sec    9    357 KBytes"
+  },
+  {
+   "t": 50.4,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "01:12:24",
+    "active_flows": 2012.0,
+    "open_flows": 2811.0,
+    "tx_cps": 30,
+    "rx_pps": 1126,
+    "tx_bps": 653987,
+    "rx_bps": 649730,
+    "c_tcps_connects": 2805,
+    "c_tcps_closed": 799,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 9,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 2806,
+    "s_tcps_closed": 796,
+    "s_tcps_rexmttimeo": 18
+   },
+   "trex_B": {
+    "time": "01:12:25",
+    "active_flows": 2168.0,
+    "open_flows": 2666.0,
+    "tx_cps": 30,
+    "rx_pps": 1228,
+    "tx_bps": 702229,
+    "rx_bps": 702403,
+    "c_tcps_connects": 2666,
+    "c_tcps_closed": 498,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": null,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 2666,
+    "s_tcps_closed": 510,
+    "s_tcps_rexmttimeo": null
+   },
+   "iperf": "[  5]  80.00-82.00  sec  4.41 MBytes  18516 Kbits/sec    0    422 KBytes"
+  },
+  {
+   "t": 57.1,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "01:12:31",
+    "active_flows": 2014.0,
+    "open_flows": 3013.0,
+    "tx_cps": 30,
+    "rx_pps": 1271,
+    "tx_bps": 733766,
+    "rx_bps": 724258,
+    "c_tcps_connects": 3006,
+    "c_tcps_closed": 999,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 10,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 3007,
+    "s_tcps_closed": 996,
+    "s_tcps_rexmttimeo": 19
+   },
+   "trex_B": {
+    "time": "01:12:31",
+    "active_flows": 2168.0,
+    "open_flows": 2867.0,
+    "tx_cps": 30,
+    "rx_pps": 1253,
+    "tx_bps": 716004,
+    "rx_bps": 716346,
+    "c_tcps_connects": 2867,
+    "c_tcps_closed": 699,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": null,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 2867,
+    "s_tcps_closed": 709,
+    "s_tcps_rexmttimeo": null
+   },
+   "iperf": "[  5]  88.00-90.00  sec  3.44 MBytes  14435 Kbits/sec    4    351 KBytes"
+  },
+  {
+   "t": 63.8,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "01:12:38",
+    "active_flows": 2032.0,
+    "open_flows": 3212.0,
+    "tx_cps": 30,
+    "rx_pps": 1220,
+    "tx_bps": 700060,
+    "rx_bps": 697303,
+    "c_tcps_connects": 3206,
+    "c_tcps_closed": 1180,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 10,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 3207,
+    "s_tcps_closed": 1192,
+    "s_tcps_rexmttimeo": 19
+   },
+   "trex_B": {
+    "time": "01:12:38",
+    "active_flows": 2169.0,
+    "open_flows": 3066.0,
+    "tx_cps": 30,
+    "rx_pps": 1264,
+    "tx_bps": 720970,
+    "rx_bps": 720650,
+    "c_tcps_connects": 3066,
+    "c_tcps_closed": 897,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": null,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 3066,
+    "s_tcps_closed": 908,
+    "s_tcps_rexmttimeo": null
+   },
+   "iperf": "[  5]  94.00-96.00  sec  4.41 MBytes  18518 Kbits/sec    0    421 KBytes"
+  },
+  {
+   "t": 70.4,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "01:12:44",
+    "active_flows": 2054.0,
+    "open_flows": 3411.0,
+    "tx_cps": 30,
+    "rx_pps": 1121,
+    "tx_bps": 649005,
+    "rx_bps": 643625,
+    "c_tcps_connects": 3405,
+    "c_tcps_closed": 1357,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 10,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 3406,
+    "s_tcps_closed": 1357,
+    "s_tcps_rexmttimeo": 19
+   },
+   "trex_B": {
+    "time": "01:12:45",
+    "active_flows": 2168.0,
+    "open_flows": 3266.0,
+    "tx_cps": 30,
+    "rx_pps": 1269,
+    "tx_bps": 724237,
+    "rx_bps": 724196,
+    "c_tcps_connects": 3268,
+    "c_tcps_closed": 1101,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": null,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 3268,
+    "s_tcps_closed": 1112,
+    "s_tcps_rexmttimeo": null
+   },
+   "iperf": "[  5] 100.00-102.00 sec  4.48 MBytes  18775 Kbits/sec   13    402 KBytes"
+  },
+  {
+   "t": 77.1,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "01:12:51",
+    "active_flows": 2177.0,
+    "open_flows": 3613.0,
+    "tx_cps": 30,
+    "rx_pps": 1210,
+    "tx_bps": 702765,
+    "rx_bps": 692541,
+    "c_tcps_connects": 3607,
+    "c_tcps_closed": 1436,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 10,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 3608,
+    "s_tcps_closed": 1434,
+    "s_tcps_rexmttimeo": 19
+   },
+   "trex_B": {
+    "time": "01:12:51",
+    "active_flows": 2167.0,
+    "open_flows": 3467.0,
+    "tx_cps": 30,
+    "rx_pps": 1236,
+    "tx_bps": 706858,
+    "rx_bps": 706433,
+    "c_tcps_connects": 3467,
+    "c_tcps_closed": 1300,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": null,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 3467,
+    "s_tcps_closed": 1311,
+    "s_tcps_rexmttimeo": null
+   },
+   "iperf": "[  5] 108.00-110.00 sec  4.41 MBytes  18518 Kbits/sec    0    428 KBytes"
+  },
+  {
+   "t": 83.8,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "01:12:58",
+    "active_flows": 2188.0,
+    "open_flows": 3812.0,
+    "tx_cps": 30,
+    "rx_pps": 1223,
+    "tx_bps": 693646,
+    "rx_bps": 699960,
+    "c_tcps_connects": 3806,
+    "c_tcps_closed": 1624,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 10,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 3806,
+    "s_tcps_closed": 1631,
+    "s_tcps_rexmttimeo": 19
+   },
+   "trex_B": {
+    "time": "01:12:58",
+    "active_flows": 2168.0,
+    "open_flows": 3667.0,
+    "tx_cps": 30,
+    "rx_pps": 1257,
+    "tx_bps": 719095,
+    "rx_bps": 717498,
+    "c_tcps_connects": 3667,
+    "c_tcps_closed": 1499,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": null,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 3667,
+    "s_tcps_closed": 1510,
+    "s_tcps_rexmttimeo": null
+   },
+   "iperf": "[  5] 114.00-116.00 sec  4.41 MBytes  18519 Kbits/sec    0    490 KBytes"
+  }
+ ],
+ "events": {
+  "first_state_change_s": 4.6,
+  "traffic_seen_after_change_s": 4.6,
+  "asp_drop_delta_FTD-A1": {
+   "Interface is down (interface-down)": 68
+  },
+  "asp_drop_delta_FTD-A2": {
+   "First TCP packet not SYN (tcp-not-syn)": 320,
+   "Interface is down (interface-down)": 9
+  },
+  "conndrops_delta": 0,
+  "rexmt_delta": 7,
+  "active_flows_pre_post": [
+   1106.0,
+   2199.0
+  ],
+  "iperf": {
+   "intervals": 67,
+   "zero_intervals": 1,
+   "resets": 0,
+   "survived": true
+  }
+ },
+ "pre": {
+  "FTD-A1": {
+   "this": "Primary - Active",
+   "other": "Secondary - Standby Ready"
+  },
+  "FTD-A2": {
+   "this": "Secondary - Standby Ready",
+   "other": "Primary - Active"
+  },
+  "traffic": {
+   "trex_A": {
+    "time": "01:11:28",
+    "active_flows": 1106.0,
+    "open_flows": 1106.0,
+    "tx_cps": 30,
+    "rx_pps": 717,
+    "tx_bps": 445194,
+    "rx_bps": 432424,
+    "c_tcps_connects": 1098,
+    "c_tcps_closed": null,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 4,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 1098,
+    "s_tcps_closed": null,
+    "s_tcps_rexmttimeo": 4
+   },
+   "trex_B": {
+    "time": "01:11:28",
+    "active_flows": 961.0,
+    "open_flows": 961.0,
+    "tx_cps": 30,
+    "rx_pps": 526,
+    "tx_bps": 337337,
+    "rx_bps": 337867,
+    "c_tcps_connects": 961,
+    "c_tcps_closed": null,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": null,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 961,
+    "s_tcps_closed": null,
+    "s_tcps_rexmttimeo": null
+   },
+   "iperf": "[  5]  24.00-26.00  sec  4.41 MBytes  18517 Kbits/sec    0    596 KBytes"
+  },
+  "fmc": {
+   "primary": "Active",
+   "secondary": "Standby"
+  },
+  "diag": {
+   "FTD-A1": {
+    "asp_drop": [],
+    "stateful": [
+     "Stateful Failover Logical Update Statistics",
+     "General\t\t81720      0          65331      0",
+     "sys cmd  \t221        0          220        0",
+     "up time  \t0          0          0          0",
+     "RPC services  \t0          0          0          0",
+     "TCP conn \t81431      0          65094      0",
+     "UDP conn \t0          0          0          0",
+     "ARP tbl  \t65         0          16         0",
+     "Xlate_Timeout  \t0          0          0          0",
+     "Logical Update Queue Information",
+     "Cur \tMax \tTotal",
+     "Recv Q: \t0 \t13 \t67180",
+     "Xmit Q: \t0 \t1 \t82433"
+    ],
+    "conn_count": "1198 in use, 3977 most used"
+   },
+   "FTD-A2": {
+    "asp_drop": [],
+    "stateful": [
+     "Stateful Failover Logical Update Statistics",
+     "General\t\t139648     0          160554     0",
+     "sys cmd  \t853        0          848        0",
+     "up time  \t0          0          0          0",
+     "RPC services  \t0          0          0          0",
+     "TCP conn \t138753     0          159564     0",
+     "UDP conn \t0          0          0          0",
+     "ARP tbl  \t40         0          132        0",
+     "Xlate_Timeout  \t0          0          0          0",
+     "Logical Update Queue Information",
+     "Cur \tMax \tTotal",
+     "Recv Q: \t0 \t17 \t169433",
+     "Xmit Q: \t0 \t12 \t140608"
+    ],
+    "conn_count": "1110 in use, 5676 most used"
+   }
+  }
+ },
+ "t0": "01:11:33",
+ "mid": {
+  "t": 45.6,
+  "diag": {
+   "FTD-A1": {
+    "asp_drop": [
+     "Interface is down (interface-down)                                          68"
+    ],
+    "stateful": [
+     "Stateful Failover Logical Update Statistics",
+     "General\t\t82444      0          73311      0",
+     "sys cmd  \t227        0          226        0",
+     "up time  \t0          0          0          0",
+     "RPC services  \t0          0          0          0",
+     "TCP conn \t82148      0          73067      0",
+     "UDP conn \t0          0          0          0",
+     "ARP tbl  \t66         0          17         0",
+     "Xlate_Timeout  \t0          0          0          0",
+     "Logical Update Queue Information",
+     "Cur \tMax \tTotal",
+     "Recv Q: \t0 \t13 \t75236",
+     "Xmit Q: \t0 \t1 \t83164"
+    ],
+    "conn_count": "1860 in use, 3977 most used"
+   },
+   "FTD-A2": {
+    "asp_drop": [
+     "First TCP packet not SYN (tcp-not-syn)                                     320",
+     "Interface is down (interface-down)                                           9"
+    ],
+    "stateful": [
+     "Stateful Failover Logical Update Statistics",
+     "General\t\t148127     0          160997     0",
+     "sys cmd  \t860        0          855        0",
+     "up time  \t0          0          0          0",
+     "RPC services  \t0          0          0          0",
+     "TCP conn \t147224     0          159999     0",
+     "UDP conn \t0          0          0          0",
+     "ARP tbl  \t41         0          133        0",
+     "Xlate_Timeout  \t0          0          0          0",
+     "Logical Update Queue Information",
+     "Cur \tMax \tTotal",
+     "Recv Q: \t0 \t17 \t169933",
+     "Xmit Q: \t0 \t12 \t149112"
+    ],
+    "conn_count": "2018 in use, 5676 most used"
+   }
+  }
+ },
+ "post": {
+  "FTD-A1": {
+   "this": "Primary - Standby Ready",
+   "other": "Secondary - Active"
+  },
+  "FTD-A2": {
+   "this": "Secondary - Active",
+   "other": "Primary - Standby Ready"
+  },
+  "traffic": {
+   "trex_A": {
+    "time": "01:13:04",
+    "active_flows": 2199.0,
+    "open_flows": 4012.0,
+    "tx_cps": 30,
+    "rx_pps": 1019,
+    "tx_bps": 589069,
+    "rx_bps": 599054,
+    "c_tcps_connects": 4008,
+    "c_tcps_closed": 1813,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 11,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 4009,
+    "s_tcps_closed": 1815,
+    "s_tcps_rexmttimeo": 22
+   },
+   "trex_B": {
+    "time": "01:13:05",
+    "active_flows": 2169.0,
+    "open_flows": 3866.0,
+    "tx_cps": 30,
+    "rx_pps": 1252,
+    "tx_bps": 716255,
+    "rx_bps": 716103,
+    "c_tcps_connects": 3866,
+    "c_tcps_closed": 1697,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": null,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 3866,
+    "s_tcps_closed": 1709,
+    "s_tcps_rexmttimeo": null
+   },
+   "iperf": "[  5] 120.00-122.00 sec  4.54 MBytes  19034 Kbits/sec    3    275 KBytes"
+  },
+  "fmc": {
+   "primary": "Standby",
+   "secondary": "Active"
+  },
+  "diag": {
+   "FTD-A1": {
+    "asp_drop": [
+     "Interface is down (interface-down)                                          68"
+    ],
+    "stateful": [
+     "Stateful Failover Logical Update Statistics",
+     "General\t\t82451      0          82433      0",
+     "sys cmd  \t234        0          233        0",
+     "up time  \t0          0          0          0",
+     "RPC services  \t0          0          0          0",
+     "TCP conn \t82148      0          82181      0",
+     "UDP conn \t0          0          0          0",
+     "ARP tbl  \t66         0          18         0",
+     "Xlate_Timeout  \t0          0          0          0",
+     "Logical Update Queue Information",
+     "Cur \tMax \tTotal",
+     "Recv Q: \t0 \t13 \t84430",
+     "Xmit Q: \t0 \t1 \t83171"
+    ],
+    "conn_count": "2041 in use, 3977 most used"
+   },
+   "FTD-A2": {
+    "asp_drop": [
+     "First TCP packet not SYN (tcp-not-syn)                                     320",
+     "Interface is down (interface-down)                                           9"
+    ],
+    "stateful": [
+     "Stateful Failover Logical Update Statistics",
+     "General\t\t157239     0          161003     0",
+     "sys cmd  \t866        0          861        0",
+     "up time  \t0          0          0          0",
+     "RPC services  \t0          0          0          0",
+     "TCP conn \t156329     0          159999     0",
+     "UDP conn \t0          0          0          0",
+     "ARP tbl  \t42         0          133        0",
+     "Xlate_Timeout  \t0          0          0          0",
+     "Logical Update Queue Information",
+     "Cur \tMax \tTotal",
+     "Recv Q: \t0 \t17 \t169985",
+     "Xmit Q: \t0 \t12 \t158250"
+    ],
+    "conn_count": "2195 in use, 5676 most used"
+   }
+  }
+ },
+ "log": [
+  "01:10:04 == restore baseline",
+  "01:10:05 link 31 conditioning: 200 latency=11 loss=0.0",
+  "01:10:05 link 32 conditioning: 200 latency=11 loss=0.0",
+  "01:10:13 baseline HA: {'A': {'primary': 'Active', 'secondary': 'Standby'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "01:10:13 link 31 conditioning: 200 latency=11 loss=0.0",
+  "01:10:13 link 32 conditioning: 200 latency=11 loss=0.0",
+  "01:10:22 FTD-A1: cleared connections and drop counters; now 12 in use, 3977 most used",
+  "01:10:28 FTD-A2: cleared connections and drop counters; now 12 in use, 5676 most used",
+  "01:10:34 FTD-B2: cleared connections and drop counters; now 8 in use, 5727 most used",
+  "01:10:40 FTD-B1: cleared connections and drop counters; now 8 in use, 3553 most used",
+  "01:11:01 traffic started: TRex A+B, iperf3 CLIENT -> 198.51.100.50 (pair A)",
+  "01:11:01 settling 25 s",
+  "01:11:33 pre: {\"FTD-A1\": {\"this\": \"Primary - Active\", \"other\": \"Secondary - Standby Ready\"}, \"FTD-A2\": {\"this\": \"Secondary - Standby Ready\", \"other\": \"Primary - Active\"}, \"traffic\": {\"trex_A\": {\"time\": \"01:11:28\", \"active_flows\": 1106.0, \"open_flows\": 1106.0, \"tx_cps\": 30, \"rx_pps\": 717, \"tx_bps\": 445194, \"rx_bps\": 432424, \"c_tcps_connects\": 1098, \"c_tcps_closed\": null, \"c_tcps_conndrops\": null, \"c_tcps_rexmttimeo\": 4, \"c_tcps_timeoutdrop\": null, \"c_err_no_syn\": null, \"s_tcps_accepts\": 1098, \"s_tcps_closed\": null, \"s_tcps_rexmttimeo\": 4}, \"trex_B\": {\"time\": \"01:11:28\", \"active_flows\": 961.0, \"open_flows\": 9",
+  "01:11:37 FMC switch active PAIR-A: 200 accepted",
+  "01:11:39 t+   4.6s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=1369.0 tx_cps=30 rx_pps=796 conndrops=None rexmt=7  iperf=-36.00  sec  4.78 MBytes  20062 Kbits/sec   95    386 KBytes",
+  "01:11:39 ** failover state change observed at t+4.6s",
+  "01:11:46 t+  11.5s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=1484.0 tx_cps=30 rx_pps=877 conndrops=None rexmt=7  iperf=-44.00  sec  3.99 MBytes  16716 Kbits/sec    0    458 KBytes",
+  "01:11:53 t+  18.2s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=1683.0 tx_cps=30 rx_pps=1050 conndrops=None rexmt=7  iperf=-50.00  sec  5.15 MBytes  21605 Kbits/sec    0    859 KBytes",
+  "01:11:59 t+  24.9s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=1882.0 tx_cps=30 rx_pps=1209 conndrops=None rexmt=8  iperf=-56.00  sec  4.41 MBytes  18517 Kbits/sec    0    570 KBytes",
+  "01:12:06 t+  31.6s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=2012.0 tx_cps=30 rx_pps=1164 conndrops=None rexmt=8  iperf=-64.00  sec  4.41 MBytes  18517 Kbits/sec    0    342 KBytes",
+  "01:12:13 t+  38.8s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=2010.0 tx_cps=30 rx_pps=1131 conndrops=None rexmt=8  iperf=-70.00  sec  4.48 MBytes  18776 Kbits/sec    9    357 KBytes",
+  "01:12:23 mid diag captured at t+45.6s",
+  "01:12:25 t+  50.4s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=2012.0 tx_cps=30 rx_pps=1126 conndrops=None rexmt=9  iperf=-82.00  sec  4.41 MBytes  18516 Kbits/sec    0    422 KBytes",
+  "01:12:31 t+  57.1s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=2014.0 tx_cps=30 rx_pps=1271 conndrops=None rexmt=10  iperf=-90.00  sec  3.44 MBytes  14435 Kbits/sec    4    351 KBytes",
+  "01:12:38 t+  63.8s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=2032.0 tx_cps=30 rx_pps=1220 conndrops=None rexmt=10  iperf=-96.00  sec  4.41 MBytes  18518 Kbits/sec    0    421 KBytes",
+  "01:12:45 t+  70.4s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=2054.0 tx_cps=30 rx_pps=1121 conndrops=None rexmt=10  iperf=-102.00 sec  4.48 MBytes  18775 Kbits/sec   13    402 KBytes",
+  "01:12:51 t+  77.1s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=2177.0 tx_cps=30 rx_pps=1210 conndrops=None rexmt=10  iperf=-110.00 sec  4.41 MBytes  18518 Kbits/sec    0    428 KBytes",
+  "01:12:58 t+  83.8s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=2188.0 tx_cps=30 rx_pps=1223 conndrops=None rexmt=10  iperf=-116.00 sec  4.41 MBytes  18519 Kbits/sec    0    490 KBytes",
+  "01:13:09 post: {\"FTD-A1\": {\"this\": \"Primary - Standby Ready\", \"other\": \"Secondary - Active\"}, \"FTD-A2\": {\"this\": \"Secondary - Active\", \"other\": \"Primary - Standby Ready\"}, \"traffic\": {\"trex_A\": {\"time\": \"01:13:04\", \"active_flows\": 2199.0, \"open_flows\": 4012.0, \"tx_cps\": 30, \"rx_pps\": 1019, \"tx_bps\": 589069, \"rx_bps\": 599054, \"c_tcps_connects\": 4008, \"c_tcps_closed\": 1813, \"c_tcps_conndrops\": null, \"c_tcps_rexmttimeo\": 11, \"c_tcps_timeoutdrop\": null, \"c_err_no_syn\": null, \"s_tcps_accepts\": 4009, \"s_tcps_closed\": 1815, \"s_tcps_rexmttimeo\": 22}, \"trex_B\": {\"time\": \"01:13:05\", \"active_flows\": 2169.0, \"open_flows",
+  "01:13:09 FTD-A1 asp drop deltas: {'Interface is down (interface-down)': 68}",
+  "01:13:09 FTD-A2 asp drop deltas: {'First TCP packet not SYN (tcp-not-syn)': 320, 'Interface is down (interface-down)': 9}",
+  "01:13:11 iperf3: {\"intervals\": 67, \"zero_intervals\": 1, \"resets\": 0, \"survived\": true}",
+  "01:13:13 == restore baseline",
+  "01:13:13 link 31 conditioning: 200 latency=11 loss=0.0",
+  "01:13:14 link 32 conditioning: 200 latency=11 loss=0.0",
+  "01:13:21 PAIR-A: {'primary': 'Standby', 'secondary': 'Active'}, re-issuing switch to primary",
+  "01:13:26 FMC switch active PAIR-A: 200 accepted",
+  "01:13:26 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "01:13:46 baseline HA: {'A': {'primary': 'Active', 'secondary': 'Standby'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}"
+ ]
+}

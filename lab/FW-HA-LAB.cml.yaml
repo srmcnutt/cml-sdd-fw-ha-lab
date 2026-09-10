@@ -1,0 +1,1253 @@
+# RENDERED FILE. Source: lab/topology.yaml + configs/. Regenerate with scripts/render_lab.py
+lab:
+  title: FW-HA-LAB
+  description: 'Dual-site FTD failover demonstration. Two Active/Standby FTDv pairs split across the East and West sites over a 25 ms conditioned layer 2 interconnect. Source: docs/build-package.md (v2, 2026-09-08).'
+  notes: ''
+  version: 0.3.0
+annotations: []
+smart_annotations: []
+nodes:
+- id: n0
+  label: ISP-A
+  node_definition: cat8000v
+  x: -300
+  y: -150
+  configuration:
+  - name: iosxe_config.txt
+    content: "platform console serial\n!\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\nno service config\nno aaa new-model\nno ip domain lookup\nip domain name internet.lab\n!\nusername admin privilege 15 secret HaLab2026\n!\nline con 0\n exec-timeout 0 0\n privilege level 15\n logging synchronous\nline vty 0 4\n exec-timeout 0 0\n login local\n transport input ssh\n!\nhostname ISP-A\n!\ninterface Loopback0\n description router-id\n ip address 203.0.113.101 255.255.255.255\n!\ninterface GigabitEthernet1\n description eBGP to RTR-1 East (203.0.113.2)\n ip address 203.0.113.1 255.255.255.252\n bfd interval 300 min_rx 300 multiplier 3\n no shutdown\n!\ninterface GigabitEthernet2\n description eBGP to RTR-3 West (203.0.113.6)\n ip address 203.0.113.5 255.255.255.252\n bfd interval 300 min_rx 300 multiplier 3\n no shutdown\n!\ninterface GigabitEthernet3\n description TREX-A eth1 client side (192.0.2.2)\n ip address 192.0.2.1 255.255.255.248\n no shutdown\n!\n\
+      interface GigabitEthernet4\n description eBGP to ISP-B (203.0.113.18), stands in for the rest of the internet\n ip address 203.0.113.17 255.255.255.252\n bfd interval 300 min_rx 300 multiplier 3\n no shutdown\n!\ninterface GigabitEthernet5\n description CLIENT eth0 (192.0.2.10)\n ip address 192.0.2.9 255.255.255.248\n no shutdown\n!\n! TRex A client pool is routed to the TRex port address; TRex answers ARP only for that address\nip route 192.0.2.32 255.255.255.224 192.0.2.2\n! aggregate for the ISP-A client space, advertised to everyone\nip route 192.0.2.0 255.255.255.128 Null0\n!\nrouter bgp 64497\n bgp router-id 203.0.113.101\n timers bgp 3 9\n bgp log-neighbor-changes\n no bgp default ipv4-unicast\n neighbor 203.0.113.2 remote-as 64496\n neighbor 203.0.113.2 fall-over bfd\n neighbor 203.0.113.2 description RTR-1 East\n neighbor 203.0.113.6 remote-as 64496\n neighbor 203.0.113.6 fall-over bfd\n neighbor 203.0.113.6 description RTR-3 West\n neighbor 203.0.113.18 remote-as 64498\n\
+      \ neighbor 203.0.113.18 fall-over bfd\n neighbor 203.0.113.18 description ISP-B\n !\n address-family ipv4\n  network 192.0.2.0 mask 255.255.255.128\n  neighbor 203.0.113.2 activate\n  neighbor 203.0.113.2 route-map RM-CUST-OUT out\n  neighbor 203.0.113.6 activate\n  neighbor 203.0.113.6 route-map RM-CUST-OUT out\n  neighbor 203.0.113.18 activate\n exit-address-family\n!\nip prefix-list PFX-INTERNET seq 5 permit 192.0.2.0/24 le 25\nroute-map RM-CUST-OUT permit 10\n match ip address prefix-list PFX-INTERNET\nroute-map RM-CUST-OUT deny 20\n!\nend\n"
+  tags:
+  - internet
+  parameters: {}
+  ram: null
+  cpus: null
+  cpu_limit: null
+  boot_disk_size: null
+  data_volume: null
+  image_definition: null
+  hide_links: false
+  interfaces:
+  - id: i0
+    label: GigabitEthernet1
+    slot: 0
+    type: physical
+  - id: i1
+    label: GigabitEthernet2
+    slot: 1
+    type: physical
+  - id: i2
+    label: GigabitEthernet3
+    slot: 2
+    type: physical
+  - id: i3
+    label: GigabitEthernet4
+    slot: 3
+    type: physical
+  - id: i4
+    label: GigabitEthernet5
+    slot: 4
+    type: physical
+- id: n1
+  label: ISP-B
+  node_definition: cat8000v
+  x: 300
+  y: -150
+  configuration:
+  - name: iosxe_config.txt
+    content: "platform console serial\n!\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\nno service config\nno aaa new-model\nno ip domain lookup\nip domain name internet.lab\n!\nusername admin privilege 15 secret HaLab2026\n!\nline con 0\n exec-timeout 0 0\n privilege level 15\n logging synchronous\nline vty 0 4\n exec-timeout 0 0\n login local\n transport input ssh\n!\nhostname ISP-B\n!\ninterface Loopback0\n description router-id\n ip address 203.0.113.102 255.255.255.255\n!\ninterface GigabitEthernet1\n description eBGP to RTR-2 East (203.0.113.10)\n ip address 203.0.113.9 255.255.255.252\n bfd interval 300 min_rx 300 multiplier 3\n no shutdown\n!\ninterface GigabitEthernet2\n description eBGP to RTR-4 West (203.0.113.14)\n ip address 203.0.113.13 255.255.255.252\n bfd interval 300 min_rx 300 multiplier 3\n no shutdown\n!\ninterface GigabitEthernet3\n description TREX-B eth1 client side (192.0.2.130)\n ip address 192.0.2.129 255.255.255.248\n no shutdown\n\
+      !\ninterface GigabitEthernet4\n description eBGP to ISP-A (203.0.113.17)\n ip address 203.0.113.18 255.255.255.252\n bfd interval 300 min_rx 300 multiplier 3\n no shutdown\n!\nip route 192.0.2.160 255.255.255.224 192.0.2.130\nip route 192.0.2.128 255.255.255.128 Null0\n!\nrouter bgp 64498\n bgp router-id 203.0.113.102\n timers bgp 3 9\n bgp log-neighbor-changes\n no bgp default ipv4-unicast\n neighbor 203.0.113.10 remote-as 64496\n neighbor 203.0.113.10 fall-over bfd\n neighbor 203.0.113.10 description RTR-2 East\n neighbor 203.0.113.14 remote-as 64496\n neighbor 203.0.113.14 fall-over bfd\n neighbor 203.0.113.14 description RTR-4 West\n neighbor 203.0.113.17 remote-as 64497\n neighbor 203.0.113.17 fall-over bfd\n neighbor 203.0.113.17 description ISP-A\n !\n address-family ipv4\n  network 192.0.2.128 mask 255.255.255.128\n  neighbor 203.0.113.10 activate\n  neighbor 203.0.113.10 route-map RM-CUST-OUT out\n  neighbor 203.0.113.14 activate\n  neighbor 203.0.113.14 route-map RM-CUST-OUT\
+      \ out\n  neighbor 203.0.113.17 activate\n exit-address-family\n!\nip prefix-list PFX-INTERNET seq 5 permit 192.0.2.0/24 le 25\nroute-map RM-CUST-OUT permit 10\n match ip address prefix-list PFX-INTERNET\nroute-map RM-CUST-OUT deny 20\n!\nend\n"
+  tags:
+  - internet
+  parameters: {}
+  ram: null
+  cpus: null
+  cpu_limit: null
+  boot_disk_size: null
+  data_volume: null
+  image_definition: null
+  hide_links: false
+  interfaces:
+  - id: i0
+    label: GigabitEthernet1
+    slot: 0
+    type: physical
+  - id: i1
+    label: GigabitEthernet2
+    slot: 1
+    type: physical
+  - id: i2
+    label: GigabitEthernet3
+    slot: 2
+    type: physical
+  - id: i3
+    label: GigabitEthernet4
+    slot: 3
+    type: physical
+- id: n2
+  label: CLIENT
+  node_definition: net-tools
+  x: -550
+  y: -300
+  configuration:
+  - name: config.json
+    content: "{\n  \"docker\": {\n    \"image\": \"net-tools:1.0.0\",\n    \"mounts\": [\n      \"type=bind,source=cfg/boot.sh,target=/boot.sh\"\n    ]\n  },\n  \"caps\": [\n    \"CAP_CHOWN\",\n    \"CAP_DAC_OVERRIDE\",\n    \"CAP_FOWNER\",\n    \"CAP_FSETID\",\n    \"CAP_KILL\",\n    \"CAP_MKNOD\",\n    \"CAP_NET_BIND_SERVICE\",\n    \"CAP_NET_RAW\",\n    \"CAP_SETFCAP\",\n    \"CAP_SETGID\",\n    \"CAP_SETPCAP\",\n    \"CAP_SETUID\",\n    \"CAP_SYS_CHROOT\",\n    \"NET_ADMIN\",\n    \"SYS_ADMIN\"\n  ],\n  \"day0cmd\": [ \"/bin/bash\", \"/boot.sh\" ],\n  \"busybox\": true\n}\n"
+  - name: boot.sh
+    content: '# CLIENT: internet-side test host on ISP-A
+
+      ip address add dev eth0 192.0.2.10/29
+
+      ip link set dev eth0 up
+
+      ip route add default via 192.0.2.9
+
+
+      # keep the next line to indicate that the machine is ready
+
+      echo "READY" >/dev/console
+
+      cat /etc/motd
+
+      exit 0
+
+      '
+  tags:
+  - internet
+  parameters: {}
+  ram: null
+  cpus: null
+  cpu_limit: null
+  boot_disk_size: null
+  data_volume: null
+  image_definition: null
+  hide_links: false
+  interfaces:
+  - id: i0
+    label: eth0
+    slot: 0
+    type: physical
+- id: n3
+  label: RTR-1
+  node_definition: cat8000v
+  x: -450
+  y: 0
+  configuration:
+  - name: iosxe_config.txt
+    content: "platform console serial\n!\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\nno service config\nno aaa new-model\nno ip domain lookup\nip domain name enterprise.lab\n!\nusername admin privilege 15 secret HaLab2026\n!\nline con 0\n exec-timeout 0 0\n privilege level 15\n logging synchronous\nline vty 0 4\n exec-timeout 0 0\n login local\n transport input ssh\n!\nhostname RTR-1\n!\ninterface Loopback0\n description router-id\n ip address 10.255.0.1 255.255.255.255\n!\ninterface GigabitEthernet1\n description eBGP to ISP-A (203.0.113.1)\n ip address 203.0.113.2 255.255.255.252\n bfd interval 300 min_rx 300 multiplier 3\n no shutdown\n!\ninterface GigabitEthernet2\n description 802.1Q trunk to SW-OUT-EAST Ethernet0/0\n no ip address\n no shutdown\n!\ninterface GigabitEthernet2.100\n description OUTSIDE-A VLAN 100, pair A gateway, HSRP group 10\n encapsulation dot1Q 100\n ip address 198.51.100.2 255.255.255.192\n standby version 2\n standby 10 ip 198.51.100.1\n\
+      \ standby 10 priority 120\n standby 10 preempt\n!\ninterface GigabitEthernet2.200\n description OUTSIDE-B VLAN 200, pair B gateway, HSRP group 20\n encapsulation dot1Q 200\n ip address 198.51.100.66 255.255.255.192\n standby version 2\n standby 20 ip 198.51.100.65\n standby 20 priority 90\n standby 20 preempt\n!\ninterface GigabitEthernet3\n description iBGP link to RTR-2\n ip address 10.255.1.1 255.255.255.252\n no shutdown\n!\nrouter bgp 64496\n bgp router-id 10.255.0.1\n timers bgp 3 9\n bgp log-neighbor-changes\n no bgp default ipv4-unicast\n neighbor 203.0.113.1 remote-as 64497\n neighbor 203.0.113.1 fall-over bfd\n neighbor 203.0.113.1 description ISP-A\n neighbor 10.255.1.2 remote-as 64496\n neighbor 10.255.1.2 description RTR-2 iBGP\n !\n address-family ipv4\n  network 198.51.100.0 mask 255.255.255.192\n  network 198.51.100.64 mask 255.255.255.192\n  neighbor 203.0.113.1 activate\n  neighbor 203.0.113.1 route-map RM-ISP-IN in\n  neighbor 203.0.113.1 route-map RM-ISP-OUT out\n\
+      \  neighbor 10.255.1.2 activate\n  neighbor 10.255.1.2 next-hop-self\n exit-address-family\n!\nip prefix-list PFX-A seq 5 permit 198.51.100.0/26\nip prefix-list PFX-B seq 5 permit 198.51.100.64/26\nip prefix-list PFX-INTERNET seq 5 permit 192.0.2.0/24 le 25\n!\n! PFX-B is the prefix homed at the OTHER site: prepend so the ISP prefers that site\nroute-map RM-ISP-OUT permit 10\n match ip address prefix-list PFX-B\n set as-path prepend 64496 64496 64496\nroute-map RM-ISP-OUT permit 20\n match ip address prefix-list PFX-A PFX-B\nroute-map RM-ISP-OUT deny 30\n!\nroute-map RM-ISP-IN permit 10\n match ip address prefix-list PFX-INTERNET\nroute-map RM-ISP-IN deny 20\n!\nend\n"
+  tags:
+  - east
+  parameters: {}
+  ram: null
+  cpus: null
+  cpu_limit: null
+  boot_disk_size: null
+  data_volume: null
+  image_definition: null
+  hide_links: false
+  interfaces:
+  - id: i0
+    label: GigabitEthernet1
+    slot: 0
+    type: physical
+  - id: i1
+    label: GigabitEthernet2
+    slot: 1
+    type: physical
+  - id: i2
+    label: GigabitEthernet3
+    slot: 2
+    type: physical
+- id: n4
+  label: RTR-2
+  node_definition: cat8000v
+  x: -150
+  y: 0
+  configuration:
+  - name: iosxe_config.txt
+    content: "platform console serial\n!\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\nno service config\nno aaa new-model\nno ip domain lookup\nip domain name enterprise.lab\n!\nusername admin privilege 15 secret HaLab2026\n!\nline con 0\n exec-timeout 0 0\n privilege level 15\n logging synchronous\nline vty 0 4\n exec-timeout 0 0\n login local\n transport input ssh\n!\nhostname RTR-2\n!\ninterface Loopback0\n description router-id\n ip address 10.255.0.2 255.255.255.255\n!\ninterface GigabitEthernet1\n description eBGP to ISP-B (203.0.113.9)\n ip address 203.0.113.10 255.255.255.252\n bfd interval 300 min_rx 300 multiplier 3\n no shutdown\n!\ninterface GigabitEthernet2\n description 802.1Q trunk to SW-OUT-EAST Ethernet0/1\n no ip address\n no shutdown\n!\ninterface GigabitEthernet2.100\n description OUTSIDE-A VLAN 100, pair A gateway, HSRP group 10\n encapsulation dot1Q 100\n ip address 198.51.100.3 255.255.255.192\n standby version 2\n standby 10 ip 198.51.100.1\n\
+      \ standby 10 priority 110\n standby 10 preempt\n!\ninterface GigabitEthernet2.200\n description OUTSIDE-B VLAN 200, pair B gateway, HSRP group 20\n encapsulation dot1Q 200\n ip address 198.51.100.67 255.255.255.192\n standby version 2\n standby 20 ip 198.51.100.65\n standby 20 priority 100\n standby 20 preempt\n!\ninterface GigabitEthernet3\n description iBGP link to RTR-1\n ip address 10.255.1.2 255.255.255.252\n no shutdown\n!\nrouter bgp 64496\n bgp router-id 10.255.0.2\n timers bgp 3 9\n bgp log-neighbor-changes\n no bgp default ipv4-unicast\n neighbor 203.0.113.9 remote-as 64498\n neighbor 203.0.113.9 fall-over bfd\n neighbor 203.0.113.9 description ISP-B\n neighbor 10.255.1.1 remote-as 64496\n neighbor 10.255.1.1 description RTR-1 iBGP\n !\n address-family ipv4\n  network 198.51.100.0 mask 255.255.255.192\n  network 198.51.100.64 mask 255.255.255.192\n  neighbor 203.0.113.9 activate\n  neighbor 203.0.113.9 route-map RM-ISP-IN in\n  neighbor 203.0.113.9 route-map RM-ISP-OUT out\n\
+      \  neighbor 10.255.1.1 activate\n  neighbor 10.255.1.1 next-hop-self\n exit-address-family\n!\nip prefix-list PFX-A seq 5 permit 198.51.100.0/26\nip prefix-list PFX-B seq 5 permit 198.51.100.64/26\nip prefix-list PFX-INTERNET seq 5 permit 192.0.2.0/24 le 25\n!\n! PFX-B is the prefix homed at the OTHER site: prepend so the ISP prefers that site\nroute-map RM-ISP-OUT permit 10\n match ip address prefix-list PFX-B\n set as-path prepend 64496 64496 64496\nroute-map RM-ISP-OUT permit 20\n match ip address prefix-list PFX-A PFX-B\nroute-map RM-ISP-OUT deny 30\n!\nroute-map RM-ISP-IN permit 10\n match ip address prefix-list PFX-INTERNET\nroute-map RM-ISP-IN deny 20\n!\nend\n"
+  tags:
+  - east
+  parameters: {}
+  ram: null
+  cpus: null
+  cpu_limit: null
+  boot_disk_size: null
+  data_volume: null
+  image_definition: null
+  hide_links: false
+  interfaces:
+  - id: i0
+    label: GigabitEthernet1
+    slot: 0
+    type: physical
+  - id: i1
+    label: GigabitEthernet2
+    slot: 1
+    type: physical
+  - id: i2
+    label: GigabitEthernet3
+    slot: 2
+    type: physical
+- id: n5
+  label: RTR-3
+  node_definition: cat8000v
+  x: 150
+  y: 0
+  configuration:
+  - name: iosxe_config.txt
+    content: "platform console serial\n!\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\nno service config\nno aaa new-model\nno ip domain lookup\nip domain name enterprise.lab\n!\nusername admin privilege 15 secret HaLab2026\n!\nline con 0\n exec-timeout 0 0\n privilege level 15\n logging synchronous\nline vty 0 4\n exec-timeout 0 0\n login local\n transport input ssh\n!\nhostname RTR-3\n!\ninterface Loopback0\n description router-id\n ip address 10.255.0.3 255.255.255.255\n!\ninterface GigabitEthernet1\n description eBGP to ISP-A (203.0.113.5)\n ip address 203.0.113.6 255.255.255.252\n bfd interval 300 min_rx 300 multiplier 3\n no shutdown\n!\ninterface GigabitEthernet2\n description 802.1Q trunk to SW-OUT-WEST Ethernet0/0\n no ip address\n no shutdown\n!\ninterface GigabitEthernet2.100\n description OUTSIDE-A VLAN 100, pair A gateway, HSRP group 10\n encapsulation dot1Q 100\n ip address 198.51.100.4 255.255.255.192\n standby version 2\n standby 10 ip 198.51.100.1\n\
+      \ standby 10 priority 100\n standby 10 preempt\n!\ninterface GigabitEthernet2.200\n description OUTSIDE-B VLAN 200, pair B gateway, HSRP group 20\n encapsulation dot1Q 200\n ip address 198.51.100.68 255.255.255.192\n standby version 2\n standby 20 ip 198.51.100.65\n standby 20 priority 110\n standby 20 preempt\n!\ninterface GigabitEthernet3\n description iBGP link to RTR-4\n ip address 10.255.2.1 255.255.255.252\n no shutdown\n!\nrouter bgp 64496\n bgp router-id 10.255.0.3\n timers bgp 3 9\n bgp log-neighbor-changes\n no bgp default ipv4-unicast\n neighbor 203.0.113.5 remote-as 64497\n neighbor 203.0.113.5 fall-over bfd\n neighbor 203.0.113.5 description ISP-A\n neighbor 10.255.2.2 remote-as 64496\n neighbor 10.255.2.2 description RTR-4 iBGP\n !\n address-family ipv4\n  network 198.51.100.0 mask 255.255.255.192\n  network 198.51.100.64 mask 255.255.255.192\n  neighbor 203.0.113.5 activate\n  neighbor 203.0.113.5 route-map RM-ISP-IN in\n  neighbor 203.0.113.5 route-map RM-ISP-OUT out\n\
+      \  neighbor 10.255.2.2 activate\n  neighbor 10.255.2.2 next-hop-self\n exit-address-family\n!\nip prefix-list PFX-A seq 5 permit 198.51.100.0/26\nip prefix-list PFX-B seq 5 permit 198.51.100.64/26\nip prefix-list PFX-INTERNET seq 5 permit 192.0.2.0/24 le 25\n!\n! PFX-A is the prefix homed at the OTHER site: prepend so the ISP prefers that site\nroute-map RM-ISP-OUT permit 10\n match ip address prefix-list PFX-A\n set as-path prepend 64496 64496 64496\nroute-map RM-ISP-OUT permit 20\n match ip address prefix-list PFX-A PFX-B\nroute-map RM-ISP-OUT deny 30\n!\nroute-map RM-ISP-IN permit 10\n match ip address prefix-list PFX-INTERNET\nroute-map RM-ISP-IN deny 20\n!\nend\n"
+  tags:
+  - west
+  parameters: {}
+  ram: null
+  cpus: null
+  cpu_limit: null
+  boot_disk_size: null
+  data_volume: null
+  image_definition: null
+  hide_links: false
+  interfaces:
+  - id: i0
+    label: GigabitEthernet1
+    slot: 0
+    type: physical
+  - id: i1
+    label: GigabitEthernet2
+    slot: 1
+    type: physical
+  - id: i2
+    label: GigabitEthernet3
+    slot: 2
+    type: physical
+- id: n6
+  label: RTR-4
+  node_definition: cat8000v
+  x: 450
+  y: 0
+  configuration:
+  - name: iosxe_config.txt
+    content: "platform console serial\n!\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\nno service config\nno aaa new-model\nno ip domain lookup\nip domain name enterprise.lab\n!\nusername admin privilege 15 secret HaLab2026\n!\nline con 0\n exec-timeout 0 0\n privilege level 15\n logging synchronous\nline vty 0 4\n exec-timeout 0 0\n login local\n transport input ssh\n!\nhostname RTR-4\n!\ninterface Loopback0\n description router-id\n ip address 10.255.0.4 255.255.255.255\n!\ninterface GigabitEthernet1\n description eBGP to ISP-B (203.0.113.13)\n ip address 203.0.113.14 255.255.255.252\n bfd interval 300 min_rx 300 multiplier 3\n no shutdown\n!\ninterface GigabitEthernet2\n description 802.1Q trunk to SW-OUT-WEST Ethernet0/1\n no ip address\n no shutdown\n!\ninterface GigabitEthernet2.100\n description OUTSIDE-A VLAN 100, pair A gateway, HSRP group 10\n encapsulation dot1Q 100\n ip address 198.51.100.5 255.255.255.192\n standby version 2\n standby 10 ip 198.51.100.1\n\
+      \ standby 10 priority 90\n standby 10 preempt\n!\ninterface GigabitEthernet2.200\n description OUTSIDE-B VLAN 200, pair B gateway, HSRP group 20\n encapsulation dot1Q 200\n ip address 198.51.100.69 255.255.255.192\n standby version 2\n standby 20 ip 198.51.100.65\n standby 20 priority 120\n standby 20 preempt\n!\ninterface GigabitEthernet3\n description iBGP link to RTR-3\n ip address 10.255.2.2 255.255.255.252\n no shutdown\n!\nrouter bgp 64496\n bgp router-id 10.255.0.4\n timers bgp 3 9\n bgp log-neighbor-changes\n no bgp default ipv4-unicast\n neighbor 203.0.113.13 remote-as 64498\n neighbor 203.0.113.13 fall-over bfd\n neighbor 203.0.113.13 description ISP-B\n neighbor 10.255.2.1 remote-as 64496\n neighbor 10.255.2.1 description RTR-3 iBGP\n !\n address-family ipv4\n  network 198.51.100.0 mask 255.255.255.192\n  network 198.51.100.64 mask 255.255.255.192\n  neighbor 203.0.113.13 activate\n  neighbor 203.0.113.13 route-map RM-ISP-IN in\n  neighbor 203.0.113.13 route-map RM-ISP-OUT\
+      \ out\n  neighbor 10.255.2.1 activate\n  neighbor 10.255.2.1 next-hop-self\n exit-address-family\n!\nip prefix-list PFX-A seq 5 permit 198.51.100.0/26\nip prefix-list PFX-B seq 5 permit 198.51.100.64/26\nip prefix-list PFX-INTERNET seq 5 permit 192.0.2.0/24 le 25\n!\n! PFX-A is the prefix homed at the OTHER site: prepend so the ISP prefers that site\nroute-map RM-ISP-OUT permit 10\n match ip address prefix-list PFX-A\n set as-path prepend 64496 64496 64496\nroute-map RM-ISP-OUT permit 20\n match ip address prefix-list PFX-A PFX-B\nroute-map RM-ISP-OUT deny 30\n!\nroute-map RM-ISP-IN permit 10\n match ip address prefix-list PFX-INTERNET\nroute-map RM-ISP-IN deny 20\n!\nend\n"
+  tags:
+  - west
+  parameters: {}
+  ram: null
+  cpus: null
+  cpu_limit: null
+  boot_disk_size: null
+  data_volume: null
+  image_definition: null
+  hide_links: false
+  interfaces:
+  - id: i0
+    label: GigabitEthernet1
+    slot: 0
+    type: physical
+  - id: i1
+    label: GigabitEthernet2
+    slot: 1
+    type: physical
+  - id: i2
+    label: GigabitEthernet3
+    slot: 2
+    type: physical
+- id: n7
+  label: SW-OUT-EAST
+  node_definition: ioll2-xe
+  x: -300
+  y: 150
+  configuration:
+  - name: ios_config.txt
+    content: "hostname SW-OUT-EAST\n!\nno service config\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\nno ip domain lookup\n!\nspanning-tree mode rapid-pvst\n!\nline con 0\n exec-timeout 0 0\n privilege level 15\n logging synchronous\n!\nvlan 100\n name OUTSIDE-A\nvlan 200\n name OUTSIDE-B\n!\ninterface Ethernet0/0\n description RTR-1 Gi2, 802.1Q trunk\n switchport trunk encapsulation dot1q\n switchport trunk allowed vlan 100,200\n switchport mode trunk\n no shutdown\n!\ninterface Ethernet0/1\n description RTR-2 Gi2, 802.1Q trunk\n switchport trunk encapsulation dot1q\n switchport trunk allowed vlan 100,200\n switchport mode trunk\n no shutdown\n!\ninterface Ethernet0/2\n description FTD-A1 Gi0/0 outside-A\n switchport mode access\n switchport access vlan 100\n spanning-tree portfast\n no shutdown\n!\ninterface Ethernet0/3\n description FTD-B1 Gi0/0 outside-B\n switchport mode access\n switchport access vlan 200\n spanning-tree portfast\n no shutdown\n!\n\
+      interface Ethernet1/0\n description INTER-SITE trunk to SW-OUT-WEST Ethernet1/0 (conditioned, 25 ms RTT)\n switchport trunk encapsulation dot1q\n switchport trunk allowed vlan 100,200\n switchport mode trunk\n no shutdown\n!\ninterface range Ethernet1/1 - 3\n description unused\n shutdown\n!\nend\n"
+  tags:
+  - east
+  parameters: {}
+  ram: null
+  cpus: null
+  cpu_limit: null
+  boot_disk_size: null
+  data_volume: null
+  image_definition: null
+  hide_links: false
+  interfaces:
+  - id: i0
+    label: Ethernet0/0
+    slot: 0
+    type: physical
+  - id: i1
+    label: Ethernet0/1
+    slot: 1
+    type: physical
+  - id: i2
+    label: Ethernet0/2
+    slot: 2
+    type: physical
+  - id: i3
+    label: Ethernet0/3
+    slot: 3
+    type: physical
+  - id: i4
+    label: Ethernet1/0
+    slot: 4
+    type: physical
+  - id: i5
+    label: Ethernet1/1
+    slot: 5
+    type: physical
+  - id: i6
+    label: Ethernet1/2
+    slot: 6
+    type: physical
+  - id: i7
+    label: Ethernet1/3
+    slot: 7
+    type: physical
+- id: n8
+  label: SW-OUT-WEST
+  node_definition: ioll2-xe
+  x: 300
+  y: 150
+  configuration:
+  - name: ios_config.txt
+    content: "hostname SW-OUT-WEST\n!\nno service config\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\nno ip domain lookup\n!\nspanning-tree mode rapid-pvst\n!\nline con 0\n exec-timeout 0 0\n privilege level 15\n logging synchronous\n!\nvlan 100\n name OUTSIDE-A\nvlan 200\n name OUTSIDE-B\n!\ninterface Ethernet0/0\n description RTR-3 Gi2, 802.1Q trunk\n switchport trunk encapsulation dot1q\n switchport trunk allowed vlan 100,200\n switchport mode trunk\n no shutdown\n!\ninterface Ethernet0/1\n description RTR-4 Gi2, 802.1Q trunk\n switchport trunk encapsulation dot1q\n switchport trunk allowed vlan 100,200\n switchport mode trunk\n no shutdown\n!\ninterface Ethernet0/2\n description FTD-A2 Gi0/0 outside-A\n switchport mode access\n switchport access vlan 100\n spanning-tree portfast\n no shutdown\n!\ninterface Ethernet0/3\n description FTD-B2 Gi0/0 outside-B\n switchport mode access\n switchport access vlan 200\n spanning-tree portfast\n no shutdown\n!\n\
+      interface Ethernet1/0\n description INTER-SITE trunk to SW-OUT-EAST Ethernet1/0 (conditioned, 25 ms RTT)\n switchport trunk encapsulation dot1q\n switchport trunk allowed vlan 100,200\n switchport mode trunk\n no shutdown\n!\ninterface range Ethernet1/1 - 3\n description unused\n shutdown\n!\nend\n"
+  tags:
+  - west
+  parameters: {}
+  ram: null
+  cpus: null
+  cpu_limit: null
+  boot_disk_size: null
+  data_volume: null
+  image_definition: null
+  hide_links: false
+  interfaces:
+  - id: i0
+    label: Ethernet0/0
+    slot: 0
+    type: physical
+  - id: i1
+    label: Ethernet0/1
+    slot: 1
+    type: physical
+  - id: i2
+    label: Ethernet0/2
+    slot: 2
+    type: physical
+  - id: i3
+    label: Ethernet0/3
+    slot: 3
+    type: physical
+  - id: i4
+    label: Ethernet1/0
+    slot: 4
+    type: physical
+  - id: i5
+    label: Ethernet1/1
+    slot: 5
+    type: physical
+  - id: i6
+    label: Ethernet1/2
+    slot: 6
+    type: physical
+  - id: i7
+    label: Ethernet1/3
+    slot: 7
+    type: physical
+- id: n9
+  label: FTD-A1
+  node_definition: ftdv
+  x: -450
+  y: 300
+  configuration:
+  - name: day0-config
+    content: "{\n    \"EULA\": \"accept\",\n    \"Hostname\": \"FTD-A1\",\n    \"AdminPassword\": \"HaLab-2026!\",\n    \"FirewallMode\": \"routed\",\n    \"DNS1\": \"\",\n    \"DNS2\": \"\",\n    \"DNS3\": \"\",\n    \"IPv4Mode\": \"manual\",\n    \"IPv4Addr\": \"198.18.129.41\",\n    \"IPv4Mask\": \"255.255.192.0\",\n    \"IPv4Gw\": \"198.18.128.1\",\n    \"IPv6Mode\": \"disabled\",\n    \"IPv6Addr\": \"\",\n    \"IPv6Mask\": \"\",\n    \"IPv6Gw\": \"\",\n    \"FmcIp\": \"198.18.129.31\",\n    \"FmcRegKey\": \"HaLabRegKey2026\",\n    \"FmcNatId\": \"\",\n    \"ManageLocally\": \"No\"\n}\n"
+  tags:
+  - east
+  - pair-a
+  parameters: {}
+  ram: null
+  cpus: null
+  cpu_limit: null
+  boot_disk_size: null
+  data_volume: null
+  image_definition: null
+  hide_links: false
+  interfaces:
+  - id: i0
+    label: Management0/0
+    slot: 0
+    type: physical
+  - id: i1
+    label: donotuse1
+    slot: 1
+    type: physical
+  - id: i2
+    label: GigabitEthernet0/0
+    slot: 2
+    type: physical
+  - id: i3
+    label: GigabitEthernet0/1
+    slot: 3
+    type: physical
+  - id: i4
+    label: GigabitEthernet0/2
+    slot: 4
+    type: physical
+  - id: i5
+    label: GigabitEthernet0/3
+    slot: 5
+    type: physical
+- id: n10
+  label: FTD-B1
+  node_definition: ftdv
+  x: -150
+  y: 300
+  configuration:
+  - name: day0-config
+    content: "{\n    \"EULA\": \"accept\",\n    \"Hostname\": \"FTD-B1\",\n    \"AdminPassword\": \"HaLab-2026!\",\n    \"FirewallMode\": \"routed\",\n    \"DNS1\": \"\",\n    \"DNS2\": \"\",\n    \"DNS3\": \"\",\n    \"IPv4Mode\": \"manual\",\n    \"IPv4Addr\": \"198.18.129.43\",\n    \"IPv4Mask\": \"255.255.192.0\",\n    \"IPv4Gw\": \"198.18.128.1\",\n    \"IPv6Mode\": \"disabled\",\n    \"IPv6Addr\": \"\",\n    \"IPv6Mask\": \"\",\n    \"IPv6Gw\": \"\",\n    \"FmcIp\": \"198.18.129.31\",\n    \"FmcRegKey\": \"HaLabRegKey2026\",\n    \"FmcNatId\": \"\",\n    \"ManageLocally\": \"No\"\n}\n"
+  tags:
+  - east
+  - pair-b
+  parameters: {}
+  ram: null
+  cpus: null
+  cpu_limit: null
+  boot_disk_size: null
+  data_volume: null
+  image_definition: null
+  hide_links: false
+  interfaces:
+  - id: i0
+    label: Management0/0
+    slot: 0
+    type: physical
+  - id: i1
+    label: donotuse1
+    slot: 1
+    type: physical
+  - id: i2
+    label: GigabitEthernet0/0
+    slot: 2
+    type: physical
+  - id: i3
+    label: GigabitEthernet0/1
+    slot: 3
+    type: physical
+  - id: i4
+    label: GigabitEthernet0/2
+    slot: 4
+    type: physical
+  - id: i5
+    label: GigabitEthernet0/3
+    slot: 5
+    type: physical
+- id: n11
+  label: FTD-A2
+  node_definition: ftdv
+  x: 150
+  y: 300
+  configuration:
+  - name: day0-config
+    content: "{\n    \"EULA\": \"accept\",\n    \"Hostname\": \"FTD-A2\",\n    \"AdminPassword\": \"HaLab-2026!\",\n    \"FirewallMode\": \"routed\",\n    \"DNS1\": \"\",\n    \"DNS2\": \"\",\n    \"DNS3\": \"\",\n    \"IPv4Mode\": \"manual\",\n    \"IPv4Addr\": \"198.18.129.42\",\n    \"IPv4Mask\": \"255.255.192.0\",\n    \"IPv4Gw\": \"198.18.128.1\",\n    \"IPv6Mode\": \"disabled\",\n    \"IPv6Addr\": \"\",\n    \"IPv6Mask\": \"\",\n    \"IPv6Gw\": \"\",\n    \"FmcIp\": \"198.18.129.31\",\n    \"FmcRegKey\": \"HaLabRegKey2026\",\n    \"FmcNatId\": \"\",\n    \"ManageLocally\": \"No\"\n}\n"
+  tags:
+  - west
+  - pair-a
+  parameters: {}
+  ram: null
+  cpus: null
+  cpu_limit: null
+  boot_disk_size: null
+  data_volume: null
+  image_definition: null
+  hide_links: false
+  interfaces:
+  - id: i0
+    label: Management0/0
+    slot: 0
+    type: physical
+  - id: i1
+    label: donotuse1
+    slot: 1
+    type: physical
+  - id: i2
+    label: GigabitEthernet0/0
+    slot: 2
+    type: physical
+  - id: i3
+    label: GigabitEthernet0/1
+    slot: 3
+    type: physical
+  - id: i4
+    label: GigabitEthernet0/2
+    slot: 4
+    type: physical
+  - id: i5
+    label: GigabitEthernet0/3
+    slot: 5
+    type: physical
+- id: n12
+  label: FTD-B2
+  node_definition: ftdv
+  x: 450
+  y: 300
+  configuration:
+  - name: day0-config
+    content: "{\n    \"EULA\": \"accept\",\n    \"Hostname\": \"FTD-B2\",\n    \"AdminPassword\": \"HaLab-2026!\",\n    \"FirewallMode\": \"routed\",\n    \"DNS1\": \"\",\n    \"DNS2\": \"\",\n    \"DNS3\": \"\",\n    \"IPv4Mode\": \"manual\",\n    \"IPv4Addr\": \"198.18.129.44\",\n    \"IPv4Mask\": \"255.255.192.0\",\n    \"IPv4Gw\": \"198.18.128.1\",\n    \"IPv6Mode\": \"disabled\",\n    \"IPv6Addr\": \"\",\n    \"IPv6Mask\": \"\",\n    \"IPv6Gw\": \"\",\n    \"FmcIp\": \"198.18.129.31\",\n    \"FmcRegKey\": \"HaLabRegKey2026\",\n    \"FmcNatId\": \"\",\n    \"ManageLocally\": \"No\"\n}\n"
+  tags:
+  - west
+  - pair-b
+  parameters: {}
+  ram: null
+  cpus: null
+  cpu_limit: null
+  boot_disk_size: null
+  data_volume: null
+  image_definition: null
+  hide_links: false
+  interfaces:
+  - id: i0
+    label: Management0/0
+    slot: 0
+    type: physical
+  - id: i1
+    label: donotuse1
+    slot: 1
+    type: physical
+  - id: i2
+    label: GigabitEthernet0/0
+    slot: 2
+    type: physical
+  - id: i3
+    label: GigabitEthernet0/1
+    slot: 3
+    type: physical
+  - id: i4
+    label: GigabitEthernet0/2
+    slot: 4
+    type: physical
+  - id: i5
+    label: GigabitEthernet0/3
+    slot: 5
+    type: physical
+- id: n13
+  label: SW-IN-EAST
+  node_definition: ioll2-xe
+  x: -300
+  y: 450
+  configuration:
+  - name: ios_config.txt
+    content: "hostname SW-IN-EAST\n!\nno service config\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\nno ip domain lookup\n!\nspanning-tree mode rapid-pvst\n!\nline con 0\n exec-timeout 0 0\n privilege level 15\n logging synchronous\n!\nvlan 110\n name INSIDE-A\nvlan 210\n name INSIDE-B\nvlan 900\n name FO-A\nvlan 901\n name STATE-A\nvlan 902\n name FO-B\nvlan 903\n name STATE-B\n!\ninterface Ethernet0/0\n description FTD-A1 Gi0/1 inside-A\n switchport mode access\n switchport access vlan 110\n spanning-tree portfast\n no shutdown\n!\ninterface Ethernet0/1\n description FTD-B1 Gi0/1 inside-B\n switchport mode access\n switchport access vlan 210\n spanning-tree portfast\n no shutdown\n!\ninterface Ethernet0/2\n description FTD-A1 Gi0/2 pair A failover\n switchport mode access\n switchport access vlan 900\n spanning-tree portfast\n no shutdown\n!\ninterface Ethernet0/3\n description FTD-A1 Gi0/3 pair A state\n switchport mode access\n switchport access vlan\
+      \ 901\n spanning-tree portfast\n no shutdown\n!\ninterface Ethernet1/0\n description FTD-B1 Gi0/2 pair B failover\n switchport mode access\n switchport access vlan 902\n spanning-tree portfast\n no shutdown\n!\ninterface Ethernet1/1\n description FTD-B1 Gi0/3 pair B state\n switchport mode access\n switchport access vlan 903\n spanning-tree portfast\n no shutdown\n!\ninterface Ethernet1/2\n description TREX-A eth2 TRex server side\n switchport mode access\n switchport access vlan 110\n spanning-tree portfast\n no shutdown\n!\ninterface Ethernet1/3\n description SRV-A eth0\n switchport mode access\n switchport access vlan 110\n spanning-tree portfast\n no shutdown\n!\ninterface Ethernet2/0\n description INTER-SITE trunk to SW-IN-WEST Ethernet2/0 (conditioned, 25 ms RTT)\n switchport trunk encapsulation dot1q\n switchport trunk allowed vlan 110,210,900-903\n switchport mode trunk\n no shutdown\n!\ninterface range Ethernet2/1 - 3\n description unused\n shutdown\n!\nend\n"
+  tags:
+  - east
+  parameters: {}
+  ram: null
+  cpus: null
+  cpu_limit: null
+  boot_disk_size: null
+  data_volume: null
+  image_definition: null
+  hide_links: false
+  interfaces:
+  - id: i0
+    label: Ethernet0/0
+    slot: 0
+    type: physical
+  - id: i1
+    label: Ethernet0/1
+    slot: 1
+    type: physical
+  - id: i2
+    label: Ethernet0/2
+    slot: 2
+    type: physical
+  - id: i3
+    label: Ethernet0/3
+    slot: 3
+    type: physical
+  - id: i4
+    label: Ethernet1/0
+    slot: 4
+    type: physical
+  - id: i5
+    label: Ethernet1/1
+    slot: 5
+    type: physical
+  - id: i6
+    label: Ethernet1/2
+    slot: 6
+    type: physical
+  - id: i7
+    label: Ethernet1/3
+    slot: 7
+    type: physical
+  - id: i8
+    label: Ethernet2/0
+    slot: 8
+    type: physical
+  - id: i9
+    label: Ethernet2/1
+    slot: 9
+    type: physical
+  - id: i10
+    label: Ethernet2/2
+    slot: 10
+    type: physical
+  - id: i11
+    label: Ethernet2/3
+    slot: 11
+    type: physical
+- id: n14
+  label: SW-IN-WEST
+  node_definition: ioll2-xe
+  x: 300
+  y: 450
+  configuration:
+  - name: ios_config.txt
+    content: "hostname SW-IN-WEST\n!\nno service config\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\nno ip domain lookup\n!\nspanning-tree mode rapid-pvst\n!\nline con 0\n exec-timeout 0 0\n privilege level 15\n logging synchronous\n!\nvlan 110\n name INSIDE-A\nvlan 210\n name INSIDE-B\nvlan 900\n name FO-A\nvlan 901\n name STATE-A\nvlan 902\n name FO-B\nvlan 903\n name STATE-B\n!\ninterface Ethernet0/0\n description FTD-A2 Gi0/1 inside-A\n switchport mode access\n switchport access vlan 110\n spanning-tree portfast\n no shutdown\n!\ninterface Ethernet0/1\n description FTD-B2 Gi0/1 inside-B\n switchport mode access\n switchport access vlan 210\n spanning-tree portfast\n no shutdown\n!\ninterface Ethernet0/2\n description FTD-A2 Gi0/2 pair A failover\n switchport mode access\n switchport access vlan 900\n spanning-tree portfast\n no shutdown\n!\ninterface Ethernet0/3\n description FTD-A2 Gi0/3 pair A state\n switchport mode access\n switchport access vlan\
+      \ 901\n spanning-tree portfast\n no shutdown\n!\ninterface Ethernet1/0\n description FTD-B2 Gi0/2 pair B failover\n switchport mode access\n switchport access vlan 902\n spanning-tree portfast\n no shutdown\n!\ninterface Ethernet1/1\n description FTD-B2 Gi0/3 pair B state\n switchport mode access\n switchport access vlan 903\n spanning-tree portfast\n no shutdown\n!\ninterface Ethernet1/2\n description TREX-B eth2 TRex server side\n switchport mode access\n switchport access vlan 210\n spanning-tree portfast\n no shutdown\n!\ninterface Ethernet1/3\n description SRV-B eth0\n switchport mode access\n switchport access vlan 210\n spanning-tree portfast\n no shutdown\n!\ninterface Ethernet2/0\n description INTER-SITE trunk to SW-IN-EAST Ethernet2/0 (conditioned, 25 ms RTT)\n switchport trunk encapsulation dot1q\n switchport trunk allowed vlan 110,210,900-903\n switchport mode trunk\n no shutdown\n!\ninterface range Ethernet2/1 - 3\n description unused\n shutdown\n!\nend\n"
+  tags:
+  - west
+  parameters: {}
+  ram: null
+  cpus: null
+  cpu_limit: null
+  boot_disk_size: null
+  data_volume: null
+  image_definition: null
+  hide_links: false
+  interfaces:
+  - id: i0
+    label: Ethernet0/0
+    slot: 0
+    type: physical
+  - id: i1
+    label: Ethernet0/1
+    slot: 1
+    type: physical
+  - id: i2
+    label: Ethernet0/2
+    slot: 2
+    type: physical
+  - id: i3
+    label: Ethernet0/3
+    slot: 3
+    type: physical
+  - id: i4
+    label: Ethernet1/0
+    slot: 4
+    type: physical
+  - id: i5
+    label: Ethernet1/1
+    slot: 5
+    type: physical
+  - id: i6
+    label: Ethernet1/2
+    slot: 6
+    type: physical
+  - id: i7
+    label: Ethernet1/3
+    slot: 7
+    type: physical
+  - id: i8
+    label: Ethernet2/0
+    slot: 8
+    type: physical
+  - id: i9
+    label: Ethernet2/1
+    slot: 9
+    type: physical
+  - id: i10
+    label: Ethernet2/2
+    slot: 10
+    type: physical
+  - id: i11
+    label: Ethernet2/3
+    slot: 11
+    type: physical
+- id: n15
+  label: TREX-A
+  node_definition: trex
+  x: -700
+  y: 300
+  configuration:
+  - name: node.cfg
+    content: "# this is a shell script which will be sourced at boot (as root, by virl2-01-day0config.start,\n# before virl2-02-trex.start generates /etc/trex_cfg.yaml and launches TRex stateless in tmux)\nhostname TREX-A\n# configurable user account\nUSERNAME=cisco\nPASSWORD=cisco\n# --- Lab additions ---\n# management address on eth0 (dCloud network, same segment as the FMC)\nip link set dev eth0 up\nip address add 198.18.129.45/18 dev eth0\nip route add default via 198.18.128.1\n# The CML TRex image lacks astf_schema.json; without it TRex exits as soon as a\n# stateful client connects (\"Could not create ASTF validator\"). Restore it from\n# the TRex 2.87 sources (vendor/trex-core/scripts/astf_schema.json).\ncat > /trex/astf_schema.json <<'EOSCHEMA'\n{\n    \"title\": \"astf_profile\",\n    \"description\": \"TRex ASTF profile \",\n    \"type\": \"object\",\n    \"properties\": {\n        \"buf_list\" : {\n           \"$ref\": \"#/definitions/buf_list_t\"\n        },\n\n        \"ip_gen_dist_list\"\
+      : {\n           \"$ref\": \"#/definitions/ip_gen_dist_list_t\" \n        },\n \n        \"templates\" : {\n            \"$ref\": \"#/definitions/template_array_t\"\n        },\n        \n        \"program_list\" : {\n            \"$ref\": \"#/definitions/program_array_t\"\n        },\n        \n        \"c_glob_info\" : {\n            \"$ref\": \"#/definitions/glob_info_t\"\n        },\n        \n        \"s_glob_info\" : {\n            \"$ref\": \"#/definitions/glob_info_t\"\n        },\n        \"tg_names\": {\n            \"$ref\": \"#/definitions/tg_names_t\"\n        }\n    },\n    \n    \"required\": [\"buf_list\"],\n    \n    \"definitions\": {\n\n             \"buf_list_t\" : {\n                  \"type\": \"array\",\n                  \"items\": {\n                       \"type\": [ \"string\", \"object\" ]\n                   }\n              },\n\n              \"ip_gen_dist_list_t\" : {\n                  \"type\": \"array\",\n                  \"items\": {\n          \
+      \             \"type\": \"object\",\n                       \"properties\": {\n                            \"ip_start\": {\n                              \"type\" : \"string\"\n                            },\n\n                            \"dir\": { \n                               \"type\" : \"string\",\n                               \"enum\" : [\"c\",\"s\"]\n                            },\n\n                            \"distribution\": {\n                              \"type\" : \"string\",\n                              \"enum\" : [\"seq\",\"rand\",\"normal\"]\n                            },\n\n                            \"ip_end\":  {\n                              \"type\" : \"string\"\n                            },\n\n                            \"ip_offset\" : {\n                             \"type\" : \"string\"\n                            }\n                       },\n                       \"required\": [\"ip_start\",\"dir\",\"distribution\",\"ip_end\",\"ip_offset\"\
+      ]\n                   }\n             },\n             \n             \"server_template_t\" : {\n                 \"type\": \"object\",\n                 \"properties\": {\n                        \"program_index\": {\n                             \"type\" : \"integer\",\n                             \"minimum\" : 0\n                         },\n                         \"assoc\" : {\n                             \"type\" : \"array\",\n                              \"items\": {\n                                   \"type\": \"object\",\n                                   \"properties\": {\n                                        \"port\": {\n                                            \"type\" : \"integer\",\n                                            \"minimum\" : 0\n                                          }\n                                   }, // for now\n                                   \"required\": [\"port\"]\n                              }\n                         }\n\
+      \                 },\n                 \"required\": [\"program_index\",\"assoc\"]\n             },\n\n             \"client_template_t\" : {\n                 \"type\": \"object\",\n                 \"properties\": {\n                        \"program_index\": {\n                             \"type\" : \"integer\",\n                             \"minimum\" : 0\n                         },\n                        \"port\": {\n                             \"type\" : \"integer\",\n                             \"minimum\": 0\n                         },\n\n                        \"glob_info\" : {\n                          \"$ref\": \"#/definitions/glob_info_t\"      \n                        },\n                        \n                        \"cps\": {\n                             \"type\" : \"number\",\n                             \"minimum\" : 0.5\n                         },\n                        \"limit\": {\n                             \"type\" : \"integer\",\n      \
+      \                       \"minimum\": 0\n                         },\n                        \"cluster\": {\n                             \"type\" : \"object\"\n                         },\n\n                         \"ip_gen\" : {\n                             \"type\" : \"object\",\n                             \"properties\": { \n\n                               \"dist_server\" : {\n                                   \"type\" : \"object\",\n                                   \"properties\": {\n                                        \"index\": {\n                                           \"type\" : \"integer\",\n                                           \"minimum\": 0\n                                        }\n                                    },\n                                    \"required\": [\"index\"]\n                               },\n\n                               \"dist_client\" : {\n                                   \"type\" : \"object\",\n                  \
+      \                 \"properties\": {\n                                        \"index\": {\n                                           \"type\" : \"integer\",\n                                           \"minimum\": 0\n                                        }\n                                    },\n                                    \"required\": [\"index\"]\n                               }\n                            }\n                         }\n                 },\n                 \"required\": [\"program_index\",\"ip_gen\",\"cps\",\"port\"]\n             },\n             \n             /* one template type */   \n             \"template_t\" : {\n                \"type\": \"object\",\n                \"properties\": {\n                  \"server_template\" : {\n                    \"$ref\": \"#/definitions/server_template_t\" \n                  },\n\n                 \"client_template\" : {\n                    \"$ref\": \"#/definitions/client_template_t\" \n            \
+      \      },\n                  \"tg_id\": {\n                      \"type\" : \"integer\"\n                  }\n                },\n               \"required\": [\"server_template\",\"client_template\"]\n            },\n            \n           /* array of templates  */   \n           \"template_array_t\" : {\n                  \"type\": \"array\",\n                  \"items\": {\n                       \"$ref\": \"#/definitions/template_t\"     \n                   },\n                   \"minItems\": 1\n           },\n\n           \"tg_names_t\" : {\n               \"type\": \"array\",\n               \"items\": {\n                    \"type\": \"string\"\n                }\n           },\n\n\n          /* programs commands */\n          /*****************************/   \n\n          \n          \"program_command_tx_t\" : {\n               \"type\": \"object\",\n                \"properties\": {\n                      \"name\": {\n                          \"type\" : \"string\",\n\
+      \                          \"enum\": [\"tx\"]\n                      },\n\n                      \"buf_index\" : {\n                          \"type\" : \"integer\"\n                      }   \n                },\n                \"required\": [\"name\",\"buf_index\"]\n           },\n                \n          \"program_command_rx_t\" : {\n               \"type\": \"object\",\n                \"properties\": {\n                      \"name\": {\n                          \"type\" : \"string\",\n                          \"enum\" : [\"rx\"]\n                      },\n\n                      \"min_bytes\" : {\n                          \"type\" : \"integer\",\n                          \"minimum\": 0\n                      },\n\n                      \"clear\" : {\n                          \"type\" : \"boolean\"\n                      }   \n                         \n                },\n                \"required\": [\"name\",\"min_bytes\"]\n           },\n\n          \"program_command_keepalive_t\"\
+      \ : {\n               \"type\": \"object\",\n                \"properties\": {\n                      \"name\": {\n                          \"type\" : \"string\",\n                          \"enum\" : [\"keepalive\"]\n                      },\n\n                      \"msec\" : {\n                          \"type\" : \"integer\",\n                          \"minimum\": 0\n                      }   \n                },\n                \"required\": [\"name\",\"msec\"]\n           },\n\n\n          \"program_command_rx_msg_t\" : {\n               \"type\": \"object\",\n                \"properties\": {\n                      \"name\": {\n                          \"type\" : \"string\",\n                          \"enum\" : [\"rx_msg\"]\n                      },\n\n                      \"min_pkts\" : {\n                          \"type\" : \"integer\",\n                          \"minimum\": 1\n                      },\n\n                      \"clear\" : {\n                      \
+      \    \"type\" : \"boolean\"\n                      }   \n                },\n                \"required\": [\"name\",\"min_pkts\"]\n           },\n           \n          \"program_command_tx_msg_t\" : {\n               \"type\": \"object\",\n                \"properties\": {\n                      \"name\": {\n                          \"type\" : \"string\",\n                          \"enum\" : [\"tx_msg\"]\n                      },\n\n                      \"buf_index\" : {\n                          \"type\" : \"integer\"\n                      }   \n                },\n                \"required\": [\"name\",\"buf_index\"]\n           },\n\n           \n          \"program_command_gen_t\" : {\n               \"type\": \"object\",\n                \"properties\": {\n                      \"name\": {\n                          \"type\" : \"string\",\n                          \"enum\" : [\"close_msg\",\"connect\",\"reset\",\"nc\"]\n                      }\n                },\n  \
+      \              \"required\": [\"name\"]\n           },\n\n          \"program_command_delay_t\" : {\n               \"type\": \"object\",\n                \"properties\": {\n                      \"name\": {\n                          \"type\" : \"string\",\n                          \"enum\" : [\"delay\"]\n                      },\n\n                     \"usec\" : {\n                          \"type\" : \"integer\",\n                          \"minimum\": 1\n                      }\n                },\n                \"required\": [\"name\",\"usec\"]\n           },\n\n          \"program_command_delay_rnd_t\" : {\n               \"type\": \"object\",\n                \"properties\": {\n                      \"name\": {\n                          \"type\" : \"string\",\n                          \"enum\" : [\"delay_rnd\"]\n                      },\n\n                     \"min_usec\" : {\n                          \"type\" : \"integer\",\n                          \"minimum\": 0\n\
+      \                      },\n\n                     \"max_usec\" : {\n                          \"type\" : \"integer\",\n                          \"minimum\": 1\n                      }\n                },\n                \"required\": [\"name\",\"min_usec\",\"max_usec\"]\n           },\n\n          \"program_command_set_val_t\" : {\n               \"type\": \"object\",\n                \"properties\": {\n                      \"name\": {\n                          \"type\" : \"string\",\n                          \"enum\" : [\"set_var\"]\n                      },\n\n                     \"id\" : {\n                          \"type\" : \"integer\"\n                      },\n\n                     \"val\" : {\n                          \"type\" : \"integer\",\n                          \"minimum\": 0\n                      }\n                },\n                \"required\": [\"name\",\"id\",\"val\"]\n           },\n\n          \"program_command_set_tick_var_t\" : {\n            \"\
+      type\": \"object\",\n             \"properties\": {\n                   \"name\": {\n                       \"type\" : \"string\",\n                       \"enum\" : [\"set_tick_var\"]\n                   },\n\n                  \"id\" : {\n                       \"type\" : \"integer\"\n                   }\n             },\n             \"required\": [\"name\", \"id\"]\n            },\n\n          \"program_command_jmpnz_t\" : {\n               \"type\": \"object\",\n                \"properties\": {\n                      \"name\": {\n                          \"type\" : \"string\",\n                          \"enum\" : [\"jmp_nz\"]\n                      },\n\n                     \"id\" : {\n                          \"type\" : \"integer\"\n                      },\n\n                     \"offset\" : {\n                          \"type\" : \"integer\"\n                      }\n                },\n                \"required\": [\"name\",\"id\",\"offset\"]\n           },\n\n   \
+      \        \"program_command_jmpdp_t\" : {\n            \"type\": \"object\",\n             \"properties\": {\n                   \"name\": {\n                       \"type\" : \"string\",\n                       \"enum\" : [\"jmp_dp\"]\n                   },\n\n                  \"id\" : {\n                       \"type\" : \"integer\"\n                   },\n\n                  \"offset\" : {\n                       \"type\" : \"integer\"\n                   },\n\n                   \"duration\" : {\n                    \"type\" : \"number\",\n                    \"minimum\": 0.0\n                   }\n             },\n             \"required\": [\"name\", \"id\", \"offset\", \"duration\"]\n        },\n\n           \"program_command_tx_mode_t\" : {\n               \"type\": \"object\",\n                \"properties\": {\n                      \"name\": {\n                          \"type\" : \"string\",\n                          \"enum\" : [\"tx_mode\"]\n                      },\n\
+      \n                     \"flags\" : {\n                          \"type\" : \"integer\",\n                          \"minimum\": 0\n                      }\n                },\n                \"required\": [\"name\",\"flags\"]\n           },\n\n             \n         /*****************************/   \n         /* one programs  */\n\n         \"program_t\" : {\n              \"type\": \"object\",\n              \n              \"properties\": {\n                      \"commands\": {\n                            \"type\": \"array\",\n                            \"items\": {\n                                  \"anyOf\": [\n                                    {\"$ref\": \"#/definitions/program_command_tx_t\"},\n                                    {\"$ref\": \"#/definitions/program_command_rx_t\"},\n                                    {\"$ref\": \"#/definitions/program_command_keepalive_t\"},\n                                    {\"$ref\": \"#/definitions/program_command_rx_msg_t\"},\n\
+      \                                    {\"$ref\": \"#/definitions/program_command_tx_msg_t\"},\n                                    {\"$ref\": \"#/definitions/program_command_gen_t\"},\n                                    {\"$ref\": \"#/definitions/program_command_delay_t\"},\n                                    {\"$ref\": \"#/definitions/program_command_delay_rnd_t\"},\n                                    {\"$ref\": \"#/definitions/program_command_set_val_t\"},\n                                    {\"$ref\": \"#/definitions/program_command_set_tick_var_t\"},\n                                    {\"$ref\": \"#/definitions/program_command_jmpnz_t\"},\n                                    {\"$ref\": \"#/definitions/program_command_jmpdp_t\"},\n                                    {\"$ref\": \"#/definitions/program_command_tx_mode_t\"}\n                                    \n                                    ]\n                                },\n                             \"minItems\"\
+      : 1\n                      }\n                },\n\n              \"required\": [\"commands\"]    \n         },\n         \n         \"program_array_t\" : {\n                  \"type\": \"array\",\n                  \"items\": {\n                       \"$ref\": \"#/definitions/program_t\"     \n                   },\n                   \"minItems\": 1\n         },\n         \n        \"glob_info_t\": {\n               \"type\": \"object\",\n                \"properties\": {\n\n                    \"scheduler\" : {\n                        \"type\": \"object\",\n                         \"properties\": {\n                            \"rampup_sec\" : {\n                                \"type\": \"integer\"\n                            },\n\n                            \"accurate\" : {\n                                \"type\": \"integer\"\n                            }\n                         }   \n                    },    \n                \n                    \"ipv6\" : {\n  \
+      \                      \"type\": \"object\",\n                         \"properties\": {\n                            \"src_msb\" : {\n                                \"type\": \"array\",\n                                \"items\": {\n                                     \"type\": \"integer\"\n                                },\n                                \"minItems\": 16,\n                                \"maxItems\": 16\n                            },\n\n                            \"dst_msb\" : {\n                                \"type\": \"array\",\n                                \"items\": {\n                                     \"type\": \"integer\"\n                                },\n                                \"minItems\": 16,\n                                \"maxItems\": 16\n                            },\n                            \n                            \"enable\" : {\n                                \"type\": \"integer\"\n                          \
+      \  }\n                         }   \n                    },    \n                \n                    \"tcp\" : {\n                        \"type\": \"object\",\n                        \"properties\": {\n                           \"initwnd\" : {\n                               \"type\": \"integer\"\n                           },\n                           \"mss\" : {\n                               \"type\": \"integer\"\n                           },\n                           \n                           \"rxbufsize\" : {\n                               \"type\": \"integer\"\n                           },\n                           \"txbufsize\" : {\n                               \"type\": \"integer\"\n                           },\n                           \"no_delay\" : {\n                               \"type\": \"integer\",\n                               \"enum\" : [0,1,2,3]\n                               \n                           },\n                           \"\
+      no_delay_counter\" : {\n                                \"type\": \"integer\"\n                           },\n\n                           \"rexmtthresh\" : {\n                               \"type\": \"integer\"\n                           },\n                           \"do_rfc1323\" : {\n                               \"type\": \"integer\"\n                           },\n                           \n                           \"keepinit\" : {\n                               \"type\": \"integer\"\n                           },\n                           \"keepidle\" : {\n                               \"type\": \"integer\"\n                           },\n                           \"keepintvl\" : {\n                               \"type\": \"integer\"\n                           },\n                           \"blackhole\" : {\n                               \"type\": \"integer\"\n                           },\n                           \"delay_ack_msec\" : {\n                \
+      \               \"type\": \"integer\"\n                           },\n                           \"delay_ack_msec\" : {\n                               \"type\": \"integer\"\n                           }\n                        }\n                    },\n                    \n                    \"ip\" : {\n                        \"type\": \"object\",\n                        \"properties\": {\n                           \"tos\" : {\n                               \"type\": \"integer\"\n                           },\n                           \"ttl\" : {\n                               \"type\": \"integer\"\n                           },\n                           \"dont_use_inbound_mac\" : {\n                                \"type\": \"integer\"\n                           }\n                        }\n                    }\n\n                }\n          }\n\n    }\n}\nEOSCHEMA\n# Switch TRex to advanced stateful (ASTF) mode with L3 port gateways.\n# The stock launcher runs after\
+      \ this file and rewrites trex_cfg.yaml, so the\n# change is made by a detached job that waits for the launcher's tmux session,\n# appends the port gateways, stops the stateless TRex, clears its DPDK runtime\n# state (a stale /var/run/dpdk makes the next start fail at EAL init), and\n# respawns the TREX window with --astf. The job lives in a file so that its own\n# command line never matches the TRex process name it kills.\ncat > /tmp/astf-switch.sh <<'EOS'\n#!/bin/sh\nuntil tmux has-session -t trex 2>/dev/null; do sleep 2; done\nsleep 8\ncat >> /etc/trex_cfg.yaml <<'EOC'\n  port_info:\n    - ip: 192.0.2.2\n      default_gw: 192.0.2.1\n    - ip: 10.10.0.129\n      default_gw: 10.10.0.1\nEOC\npkill -f _t-rex-64-o; sleep 3\npgrep -f _t-rex-64-o >/dev/null && { pkill -9 -f _t-rex-64-o; sleep 2; }\nrm -rf /var/run/dpdk\ntmux respawn-window -k -t trex:TREX -c /trex \"LD_LIBRARY_PATH=/usr/glibc-compat/lib:/lib:/usr/lib ./_t-rex-64-o -i --astf --software --sleeps\"\necho \"astf respawn done\
+      \ $(date)\"\nEOS\nchmod +x /tmp/astf-switch.sh\nsetsid sh /tmp/astf-switch.sh >/tmp/astf-switch.log 2>&1 </dev/null &\n"
+  tags:
+  - traffic
+  parameters: {}
+  ram: 4096
+  cpus: 2
+  cpu_limit: null
+  boot_disk_size: null
+  data_volume: null
+  image_definition: null
+  hide_links: false
+  interfaces:
+  - id: i0
+    label: eth0
+    slot: 0
+    type: physical
+  - id: i1
+    label: eth1
+    slot: 1
+    type: physical
+  - id: i2
+    label: eth2
+    slot: 2
+    type: physical
+- id: n16
+  label: TREX-B
+  node_definition: trex
+  x: 700
+  y: 300
+  configuration:
+  - name: node.cfg
+    content: "# this is a shell script which will be sourced at boot (as root, by virl2-01-day0config.start,\n# before virl2-02-trex.start generates /etc/trex_cfg.yaml and launches TRex stateless in tmux)\nhostname TREX-B\n# configurable user account\nUSERNAME=cisco\nPASSWORD=cisco\n# --- Lab additions ---\n# management address on eth0 (dCloud network, same segment as the FMC)\nip link set dev eth0 up\nip address add 198.18.129.46/18 dev eth0\nip route add default via 198.18.128.1\n# The CML TRex image lacks astf_schema.json; without it TRex exits as soon as a\n# stateful client connects (\"Could not create ASTF validator\"). Restore it from\n# the TRex 2.87 sources (vendor/trex-core/scripts/astf_schema.json).\ncat > /trex/astf_schema.json <<'EOSCHEMA'\n{\n    \"title\": \"astf_profile\",\n    \"description\": \"TRex ASTF profile \",\n    \"type\": \"object\",\n    \"properties\": {\n        \"buf_list\" : {\n           \"$ref\": \"#/definitions/buf_list_t\"\n        },\n\n        \"ip_gen_dist_list\"\
+      : {\n           \"$ref\": \"#/definitions/ip_gen_dist_list_t\" \n        },\n \n        \"templates\" : {\n            \"$ref\": \"#/definitions/template_array_t\"\n        },\n        \n        \"program_list\" : {\n            \"$ref\": \"#/definitions/program_array_t\"\n        },\n        \n        \"c_glob_info\" : {\n            \"$ref\": \"#/definitions/glob_info_t\"\n        },\n        \n        \"s_glob_info\" : {\n            \"$ref\": \"#/definitions/glob_info_t\"\n        },\n        \"tg_names\": {\n            \"$ref\": \"#/definitions/tg_names_t\"\n        }\n    },\n    \n    \"required\": [\"buf_list\"],\n    \n    \"definitions\": {\n\n             \"buf_list_t\" : {\n                  \"type\": \"array\",\n                  \"items\": {\n                       \"type\": [ \"string\", \"object\" ]\n                   }\n              },\n\n              \"ip_gen_dist_list_t\" : {\n                  \"type\": \"array\",\n                  \"items\": {\n          \
+      \             \"type\": \"object\",\n                       \"properties\": {\n                            \"ip_start\": {\n                              \"type\" : \"string\"\n                            },\n\n                            \"dir\": { \n                               \"type\" : \"string\",\n                               \"enum\" : [\"c\",\"s\"]\n                            },\n\n                            \"distribution\": {\n                              \"type\" : \"string\",\n                              \"enum\" : [\"seq\",\"rand\",\"normal\"]\n                            },\n\n                            \"ip_end\":  {\n                              \"type\" : \"string\"\n                            },\n\n                            \"ip_offset\" : {\n                             \"type\" : \"string\"\n                            }\n                       },\n                       \"required\": [\"ip_start\",\"dir\",\"distribution\",\"ip_end\",\"ip_offset\"\
+      ]\n                   }\n             },\n             \n             \"server_template_t\" : {\n                 \"type\": \"object\",\n                 \"properties\": {\n                        \"program_index\": {\n                             \"type\" : \"integer\",\n                             \"minimum\" : 0\n                         },\n                         \"assoc\" : {\n                             \"type\" : \"array\",\n                              \"items\": {\n                                   \"type\": \"object\",\n                                   \"properties\": {\n                                        \"port\": {\n                                            \"type\" : \"integer\",\n                                            \"minimum\" : 0\n                                          }\n                                   }, // for now\n                                   \"required\": [\"port\"]\n                              }\n                         }\n\
+      \                 },\n                 \"required\": [\"program_index\",\"assoc\"]\n             },\n\n             \"client_template_t\" : {\n                 \"type\": \"object\",\n                 \"properties\": {\n                        \"program_index\": {\n                             \"type\" : \"integer\",\n                             \"minimum\" : 0\n                         },\n                        \"port\": {\n                             \"type\" : \"integer\",\n                             \"minimum\": 0\n                         },\n\n                        \"glob_info\" : {\n                          \"$ref\": \"#/definitions/glob_info_t\"      \n                        },\n                        \n                        \"cps\": {\n                             \"type\" : \"number\",\n                             \"minimum\" : 0.5\n                         },\n                        \"limit\": {\n                             \"type\" : \"integer\",\n      \
+      \                       \"minimum\": 0\n                         },\n                        \"cluster\": {\n                             \"type\" : \"object\"\n                         },\n\n                         \"ip_gen\" : {\n                             \"type\" : \"object\",\n                             \"properties\": { \n\n                               \"dist_server\" : {\n                                   \"type\" : \"object\",\n                                   \"properties\": {\n                                        \"index\": {\n                                           \"type\" : \"integer\",\n                                           \"minimum\": 0\n                                        }\n                                    },\n                                    \"required\": [\"index\"]\n                               },\n\n                               \"dist_client\" : {\n                                   \"type\" : \"object\",\n                  \
+      \                 \"properties\": {\n                                        \"index\": {\n                                           \"type\" : \"integer\",\n                                           \"minimum\": 0\n                                        }\n                                    },\n                                    \"required\": [\"index\"]\n                               }\n                            }\n                         }\n                 },\n                 \"required\": [\"program_index\",\"ip_gen\",\"cps\",\"port\"]\n             },\n             \n             /* one template type */   \n             \"template_t\" : {\n                \"type\": \"object\",\n                \"properties\": {\n                  \"server_template\" : {\n                    \"$ref\": \"#/definitions/server_template_t\" \n                  },\n\n                 \"client_template\" : {\n                    \"$ref\": \"#/definitions/client_template_t\" \n            \
+      \      },\n                  \"tg_id\": {\n                      \"type\" : \"integer\"\n                  }\n                },\n               \"required\": [\"server_template\",\"client_template\"]\n            },\n            \n           /* array of templates  */   \n           \"template_array_t\" : {\n                  \"type\": \"array\",\n                  \"items\": {\n                       \"$ref\": \"#/definitions/template_t\"     \n                   },\n                   \"minItems\": 1\n           },\n\n           \"tg_names_t\" : {\n               \"type\": \"array\",\n               \"items\": {\n                    \"type\": \"string\"\n                }\n           },\n\n\n          /* programs commands */\n          /*****************************/   \n\n          \n          \"program_command_tx_t\" : {\n               \"type\": \"object\",\n                \"properties\": {\n                      \"name\": {\n                          \"type\" : \"string\",\n\
+      \                          \"enum\": [\"tx\"]\n                      },\n\n                      \"buf_index\" : {\n                          \"type\" : \"integer\"\n                      }   \n                },\n                \"required\": [\"name\",\"buf_index\"]\n           },\n                \n          \"program_command_rx_t\" : {\n               \"type\": \"object\",\n                \"properties\": {\n                      \"name\": {\n                          \"type\" : \"string\",\n                          \"enum\" : [\"rx\"]\n                      },\n\n                      \"min_bytes\" : {\n                          \"type\" : \"integer\",\n                          \"minimum\": 0\n                      },\n\n                      \"clear\" : {\n                          \"type\" : \"boolean\"\n                      }   \n                         \n                },\n                \"required\": [\"name\",\"min_bytes\"]\n           },\n\n          \"program_command_keepalive_t\"\
+      \ : {\n               \"type\": \"object\",\n                \"properties\": {\n                      \"name\": {\n                          \"type\" : \"string\",\n                          \"enum\" : [\"keepalive\"]\n                      },\n\n                      \"msec\" : {\n                          \"type\" : \"integer\",\n                          \"minimum\": 0\n                      }   \n                },\n                \"required\": [\"name\",\"msec\"]\n           },\n\n\n          \"program_command_rx_msg_t\" : {\n               \"type\": \"object\",\n                \"properties\": {\n                      \"name\": {\n                          \"type\" : \"string\",\n                          \"enum\" : [\"rx_msg\"]\n                      },\n\n                      \"min_pkts\" : {\n                          \"type\" : \"integer\",\n                          \"minimum\": 1\n                      },\n\n                      \"clear\" : {\n                      \
+      \    \"type\" : \"boolean\"\n                      }   \n                },\n                \"required\": [\"name\",\"min_pkts\"]\n           },\n           \n          \"program_command_tx_msg_t\" : {\n               \"type\": \"object\",\n                \"properties\": {\n                      \"name\": {\n                          \"type\" : \"string\",\n                          \"enum\" : [\"tx_msg\"]\n                      },\n\n                      \"buf_index\" : {\n                          \"type\" : \"integer\"\n                      }   \n                },\n                \"required\": [\"name\",\"buf_index\"]\n           },\n\n           \n          \"program_command_gen_t\" : {\n               \"type\": \"object\",\n                \"properties\": {\n                      \"name\": {\n                          \"type\" : \"string\",\n                          \"enum\" : [\"close_msg\",\"connect\",\"reset\",\"nc\"]\n                      }\n                },\n  \
+      \              \"required\": [\"name\"]\n           },\n\n          \"program_command_delay_t\" : {\n               \"type\": \"object\",\n                \"properties\": {\n                      \"name\": {\n                          \"type\" : \"string\",\n                          \"enum\" : [\"delay\"]\n                      },\n\n                     \"usec\" : {\n                          \"type\" : \"integer\",\n                          \"minimum\": 1\n                      }\n                },\n                \"required\": [\"name\",\"usec\"]\n           },\n\n          \"program_command_delay_rnd_t\" : {\n               \"type\": \"object\",\n                \"properties\": {\n                      \"name\": {\n                          \"type\" : \"string\",\n                          \"enum\" : [\"delay_rnd\"]\n                      },\n\n                     \"min_usec\" : {\n                          \"type\" : \"integer\",\n                          \"minimum\": 0\n\
+      \                      },\n\n                     \"max_usec\" : {\n                          \"type\" : \"integer\",\n                          \"minimum\": 1\n                      }\n                },\n                \"required\": [\"name\",\"min_usec\",\"max_usec\"]\n           },\n\n          \"program_command_set_val_t\" : {\n               \"type\": \"object\",\n                \"properties\": {\n                      \"name\": {\n                          \"type\" : \"string\",\n                          \"enum\" : [\"set_var\"]\n                      },\n\n                     \"id\" : {\n                          \"type\" : \"integer\"\n                      },\n\n                     \"val\" : {\n                          \"type\" : \"integer\",\n                          \"minimum\": 0\n                      }\n                },\n                \"required\": [\"name\",\"id\",\"val\"]\n           },\n\n          \"program_command_set_tick_var_t\" : {\n            \"\
+      type\": \"object\",\n             \"properties\": {\n                   \"name\": {\n                       \"type\" : \"string\",\n                       \"enum\" : [\"set_tick_var\"]\n                   },\n\n                  \"id\" : {\n                       \"type\" : \"integer\"\n                   }\n             },\n             \"required\": [\"name\", \"id\"]\n            },\n\n          \"program_command_jmpnz_t\" : {\n               \"type\": \"object\",\n                \"properties\": {\n                      \"name\": {\n                          \"type\" : \"string\",\n                          \"enum\" : [\"jmp_nz\"]\n                      },\n\n                     \"id\" : {\n                          \"type\" : \"integer\"\n                      },\n\n                     \"offset\" : {\n                          \"type\" : \"integer\"\n                      }\n                },\n                \"required\": [\"name\",\"id\",\"offset\"]\n           },\n\n   \
+      \        \"program_command_jmpdp_t\" : {\n            \"type\": \"object\",\n             \"properties\": {\n                   \"name\": {\n                       \"type\" : \"string\",\n                       \"enum\" : [\"jmp_dp\"]\n                   },\n\n                  \"id\" : {\n                       \"type\" : \"integer\"\n                   },\n\n                  \"offset\" : {\n                       \"type\" : \"integer\"\n                   },\n\n                   \"duration\" : {\n                    \"type\" : \"number\",\n                    \"minimum\": 0.0\n                   }\n             },\n             \"required\": [\"name\", \"id\", \"offset\", \"duration\"]\n        },\n\n           \"program_command_tx_mode_t\" : {\n               \"type\": \"object\",\n                \"properties\": {\n                      \"name\": {\n                          \"type\" : \"string\",\n                          \"enum\" : [\"tx_mode\"]\n                      },\n\
+      \n                     \"flags\" : {\n                          \"type\" : \"integer\",\n                          \"minimum\": 0\n                      }\n                },\n                \"required\": [\"name\",\"flags\"]\n           },\n\n             \n         /*****************************/   \n         /* one programs  */\n\n         \"program_t\" : {\n              \"type\": \"object\",\n              \n              \"properties\": {\n                      \"commands\": {\n                            \"type\": \"array\",\n                            \"items\": {\n                                  \"anyOf\": [\n                                    {\"$ref\": \"#/definitions/program_command_tx_t\"},\n                                    {\"$ref\": \"#/definitions/program_command_rx_t\"},\n                                    {\"$ref\": \"#/definitions/program_command_keepalive_t\"},\n                                    {\"$ref\": \"#/definitions/program_command_rx_msg_t\"},\n\
+      \                                    {\"$ref\": \"#/definitions/program_command_tx_msg_t\"},\n                                    {\"$ref\": \"#/definitions/program_command_gen_t\"},\n                                    {\"$ref\": \"#/definitions/program_command_delay_t\"},\n                                    {\"$ref\": \"#/definitions/program_command_delay_rnd_t\"},\n                                    {\"$ref\": \"#/definitions/program_command_set_val_t\"},\n                                    {\"$ref\": \"#/definitions/program_command_set_tick_var_t\"},\n                                    {\"$ref\": \"#/definitions/program_command_jmpnz_t\"},\n                                    {\"$ref\": \"#/definitions/program_command_jmpdp_t\"},\n                                    {\"$ref\": \"#/definitions/program_command_tx_mode_t\"}\n                                    \n                                    ]\n                                },\n                             \"minItems\"\
+      : 1\n                      }\n                },\n\n              \"required\": [\"commands\"]    \n         },\n         \n         \"program_array_t\" : {\n                  \"type\": \"array\",\n                  \"items\": {\n                       \"$ref\": \"#/definitions/program_t\"     \n                   },\n                   \"minItems\": 1\n         },\n         \n        \"glob_info_t\": {\n               \"type\": \"object\",\n                \"properties\": {\n\n                    \"scheduler\" : {\n                        \"type\": \"object\",\n                         \"properties\": {\n                            \"rampup_sec\" : {\n                                \"type\": \"integer\"\n                            },\n\n                            \"accurate\" : {\n                                \"type\": \"integer\"\n                            }\n                         }   \n                    },    \n                \n                    \"ipv6\" : {\n  \
+      \                      \"type\": \"object\",\n                         \"properties\": {\n                            \"src_msb\" : {\n                                \"type\": \"array\",\n                                \"items\": {\n                                     \"type\": \"integer\"\n                                },\n                                \"minItems\": 16,\n                                \"maxItems\": 16\n                            },\n\n                            \"dst_msb\" : {\n                                \"type\": \"array\",\n                                \"items\": {\n                                     \"type\": \"integer\"\n                                },\n                                \"minItems\": 16,\n                                \"maxItems\": 16\n                            },\n                            \n                            \"enable\" : {\n                                \"type\": \"integer\"\n                          \
+      \  }\n                         }   \n                    },    \n                \n                    \"tcp\" : {\n                        \"type\": \"object\",\n                        \"properties\": {\n                           \"initwnd\" : {\n                               \"type\": \"integer\"\n                           },\n                           \"mss\" : {\n                               \"type\": \"integer\"\n                           },\n                           \n                           \"rxbufsize\" : {\n                               \"type\": \"integer\"\n                           },\n                           \"txbufsize\" : {\n                               \"type\": \"integer\"\n                           },\n                           \"no_delay\" : {\n                               \"type\": \"integer\",\n                               \"enum\" : [0,1,2,3]\n                               \n                           },\n                           \"\
+      no_delay_counter\" : {\n                                \"type\": \"integer\"\n                           },\n\n                           \"rexmtthresh\" : {\n                               \"type\": \"integer\"\n                           },\n                           \"do_rfc1323\" : {\n                               \"type\": \"integer\"\n                           },\n                           \n                           \"keepinit\" : {\n                               \"type\": \"integer\"\n                           },\n                           \"keepidle\" : {\n                               \"type\": \"integer\"\n                           },\n                           \"keepintvl\" : {\n                               \"type\": \"integer\"\n                           },\n                           \"blackhole\" : {\n                               \"type\": \"integer\"\n                           },\n                           \"delay_ack_msec\" : {\n                \
+      \               \"type\": \"integer\"\n                           },\n                           \"delay_ack_msec\" : {\n                               \"type\": \"integer\"\n                           }\n                        }\n                    },\n                    \n                    \"ip\" : {\n                        \"type\": \"object\",\n                        \"properties\": {\n                           \"tos\" : {\n                               \"type\": \"integer\"\n                           },\n                           \"ttl\" : {\n                               \"type\": \"integer\"\n                           },\n                           \"dont_use_inbound_mac\" : {\n                                \"type\": \"integer\"\n                           }\n                        }\n                    }\n\n                }\n          }\n\n    }\n}\nEOSCHEMA\n# Switch TRex to advanced stateful (ASTF) mode with L3 port gateways.\n# The stock launcher runs after\
+      \ this file and rewrites trex_cfg.yaml, so the\n# change is made by a detached job that waits for the launcher's tmux session,\n# appends the port gateways, stops the stateless TRex, clears its DPDK runtime\n# state (a stale /var/run/dpdk makes the next start fail at EAL init), and\n# respawns the TREX window with --astf. The job lives in a file so that its own\n# command line never matches the TRex process name it kills.\ncat > /tmp/astf-switch.sh <<'EOS'\n#!/bin/sh\nuntil tmux has-session -t trex 2>/dev/null; do sleep 2; done\nsleep 8\ncat >> /etc/trex_cfg.yaml <<'EOC'\n  port_info:\n    - ip: 192.0.2.130\n      default_gw: 192.0.2.129\n    - ip: 10.20.0.129\n      default_gw: 10.20.0.1\nEOC\npkill -f _t-rex-64-o; sleep 3\npgrep -f _t-rex-64-o >/dev/null && { pkill -9 -f _t-rex-64-o; sleep 2; }\nrm -rf /var/run/dpdk\ntmux respawn-window -k -t trex:TREX -c /trex \"LD_LIBRARY_PATH=/usr/glibc-compat/lib:/lib:/usr/lib ./_t-rex-64-o -i --astf --software --sleeps\"\necho \"astf respawn\
+      \ done $(date)\"\nEOS\nchmod +x /tmp/astf-switch.sh\nsetsid sh /tmp/astf-switch.sh >/tmp/astf-switch.log 2>&1 </dev/null &\n"
+  tags:
+  - traffic
+  parameters: {}
+  ram: 4096
+  cpus: 2
+  cpu_limit: null
+  boot_disk_size: null
+  data_volume: null
+  image_definition: null
+  hide_links: false
+  interfaces:
+  - id: i0
+    label: eth0
+    slot: 0
+    type: physical
+  - id: i1
+    label: eth1
+    slot: 1
+    type: physical
+  - id: i2
+    label: eth2
+    slot: 2
+    type: physical
+- id: n17
+  label: SRV-A
+  node_definition: net-tools
+  x: -450
+  y: 600
+  configuration:
+  - name: config.json
+    content: "{\n  \"docker\": {\n    \"image\": \"net-tools:1.0.0\",\n    \"mounts\": [\n      \"type=bind,source=cfg/boot.sh,target=/boot.sh\"\n    ]\n  },\n  \"caps\": [\n    \"CAP_CHOWN\",\n    \"CAP_DAC_OVERRIDE\",\n    \"CAP_FOWNER\",\n    \"CAP_FSETID\",\n    \"CAP_KILL\",\n    \"CAP_MKNOD\",\n    \"CAP_NET_BIND_SERVICE\",\n    \"CAP_NET_RAW\",\n    \"CAP_SETFCAP\",\n    \"CAP_SETGID\",\n    \"CAP_SETPCAP\",\n    \"CAP_SETUID\",\n    \"CAP_SYS_CHROOT\",\n    \"NET_ADMIN\",\n    \"SYS_ADMIN\"\n  ],\n  \"day0cmd\": [ \"/bin/bash\", \"/boot.sh\" ],\n  \"busybox\": true\n}\n"
+  - name: boot.sh
+    content: '# SRV-A: inside test host behind pair A, public 198.51.100.50
+
+      ip address add dev eth0 10.10.0.50/24
+
+      ip link set dev eth0 up
+
+      ip route add default via 10.10.0.1
+
+      command -v iperf3 >/dev/null 2>&1 && iperf3 -s -D
+
+      # keep the next line to indicate that the machine is ready
+
+      echo "READY" >/dev/console
+
+      cat /etc/motd
+
+      exit 0
+
+      '
+  tags:
+  - east
+  parameters: {}
+  ram: null
+  cpus: null
+  cpu_limit: null
+  boot_disk_size: null
+  data_volume: null
+  image_definition: null
+  hide_links: false
+  interfaces:
+  - id: i0
+    label: eth0
+    slot: 0
+    type: physical
+- id: n18
+  label: SRV-B
+  node_definition: net-tools
+  x: 450
+  y: 600
+  configuration:
+  - name: config.json
+    content: "{\n  \"docker\": {\n    \"image\": \"net-tools:1.0.0\",\n    \"mounts\": [\n      \"type=bind,source=cfg/boot.sh,target=/boot.sh\"\n    ]\n  },\n  \"caps\": [\n    \"CAP_CHOWN\",\n    \"CAP_DAC_OVERRIDE\",\n    \"CAP_FOWNER\",\n    \"CAP_FSETID\",\n    \"CAP_KILL\",\n    \"CAP_MKNOD\",\n    \"CAP_NET_BIND_SERVICE\",\n    \"CAP_NET_RAW\",\n    \"CAP_SETFCAP\",\n    \"CAP_SETGID\",\n    \"CAP_SETPCAP\",\n    \"CAP_SETUID\",\n    \"CAP_SYS_CHROOT\",\n    \"NET_ADMIN\",\n    \"SYS_ADMIN\"\n  ],\n  \"day0cmd\": [ \"/bin/bash\", \"/boot.sh\" ],\n  \"busybox\": true\n}\n"
+  - name: boot.sh
+    content: '# SRV-B: inside test host behind pair B, public 198.51.100.114
+
+      ip address add dev eth0 10.20.0.50/24
+
+      ip link set dev eth0 up
+
+      ip route add default via 10.20.0.1
+
+      command -v iperf3 >/dev/null 2>&1 && iperf3 -s -D
+
+      # keep the next line to indicate that the machine is ready
+
+      echo "READY" >/dev/console
+
+      cat /etc/motd
+
+      exit 0
+
+      '
+  tags:
+  - west
+  parameters: {}
+  ram: null
+  cpus: null
+  cpu_limit: null
+  boot_disk_size: null
+  data_volume: null
+  image_definition: null
+  hide_links: false
+  interfaces:
+  - id: i0
+    label: eth0
+    slot: 0
+    type: physical
+- id: n19
+  label: MGMT-SW
+  node_definition: unmanaged_switch
+  x: 0
+  y: 750
+  configuration: []
+  tags:
+  - management
+  parameters: {}
+  ram: null
+  cpus: null
+  cpu_limit: null
+  boot_disk_size: null
+  data_volume: null
+  image_definition: null
+  hide_links: false
+  interfaces:
+  - id: i0
+    label: port0
+    slot: 0
+    type: physical
+  - id: i1
+    label: port1
+    slot: 1
+    type: physical
+  - id: i2
+    label: port2
+    slot: 2
+    type: physical
+  - id: i3
+    label: port3
+    slot: 3
+    type: physical
+  - id: i4
+    label: port4
+    slot: 4
+    type: physical
+  - id: i5
+    label: port5
+    slot: 5
+    type: physical
+  - id: i6
+    label: port6
+    slot: 6
+    type: physical
+  - id: i7
+    label: port7
+    slot: 7
+    type: physical
+- id: n20
+  label: EXT-CONN
+  node_definition: external_connector
+  x: 0
+  y: 900
+  configuration:
+  - name: default
+    content: bridge1
+  tags:
+  - management
+  parameters: {}
+  ram: null
+  cpus: null
+  cpu_limit: null
+  boot_disk_size: null
+  data_volume: null
+  image_definition: null
+  hide_links: false
+  interfaces:
+  - id: i0
+    label: port
+    slot: 0
+    type: physical
+links:
+- id: l0
+  n1: n0
+  n2: n3
+  i1: i0
+  i2: i0
+  conditioning: {}
+  label: 01 ISP-A-GigabitEthernet1<->RTR-1-GigabitEthernet1
+- id: l1
+  n1: n1
+  n2: n4
+  i1: i0
+  i2: i0
+  conditioning: {}
+  label: 02 ISP-B-GigabitEthernet1<->RTR-2-GigabitEthernet1
+- id: l2
+  n1: n3
+  n2: n4
+  i1: i2
+  i2: i2
+  conditioning: {}
+  label: 03 RTR-1-GigabitEthernet3<->RTR-2-GigabitEthernet3
+- id: l3
+  n1: n3
+  n2: n7
+  i1: i1
+  i2: i0
+  conditioning: {}
+  label: 04 RTR-1-GigabitEthernet2<->SW-OUT-EAST-Ethernet0/0
+- id: l4
+  n1: n4
+  n2: n7
+  i1: i1
+  i2: i1
+  conditioning: {}
+  label: 05 RTR-2-GigabitEthernet2<->SW-OUT-EAST-Ethernet0/1
+- id: l5
+  n1: n9
+  n2: n7
+  i1: i2
+  i2: i2
+  conditioning: {}
+  label: 06 FTD-A1-GigabitEthernet0/0<->SW-OUT-EAST-Ethernet0/2
+- id: l6
+  n1: n10
+  n2: n7
+  i1: i2
+  i2: i3
+  conditioning: {}
+  label: 07 FTD-B1-GigabitEthernet0/0<->SW-OUT-EAST-Ethernet0/3
+- id: l7
+  n1: n9
+  n2: n13
+  i1: i3
+  i2: i0
+  conditioning: {}
+  label: 08 FTD-A1-GigabitEthernet0/1<->SW-IN-EAST-Ethernet0/0
+- id: l8
+  n1: n10
+  n2: n13
+  i1: i3
+  i2: i1
+  conditioning: {}
+  label: 09 FTD-B1-GigabitEthernet0/1<->SW-IN-EAST-Ethernet0/1
+- id: l9
+  n1: n9
+  n2: n13
+  i1: i4
+  i2: i2
+  conditioning: {}
+  label: 10 FTD-A1-GigabitEthernet0/2<->SW-IN-EAST-Ethernet0/2
+- id: l10
+  n1: n9
+  n2: n13
+  i1: i5
+  i2: i3
+  conditioning: {}
+  label: 11 FTD-A1-GigabitEthernet0/3<->SW-IN-EAST-Ethernet0/3
+- id: l11
+  n1: n10
+  n2: n13
+  i1: i4
+  i2: i4
+  conditioning: {}
+  label: 12 FTD-B1-GigabitEthernet0/2<->SW-IN-EAST-Ethernet1/0
+- id: l12
+  n1: n10
+  n2: n13
+  i1: i5
+  i2: i5
+  conditioning: {}
+  label: 13 FTD-B1-GigabitEthernet0/3<->SW-IN-EAST-Ethernet1/1
+- id: l13
+  n1: n15
+  n2: n13
+  i1: i2
+  i2: i6
+  conditioning: {}
+  label: 14 TREX-A-eth2<->SW-IN-EAST-Ethernet1/2
+- id: l14
+  n1: n17
+  n2: n13
+  i1: i0
+  i2: i7
+  conditioning: {}
+  label: 15 SRV-A-eth0<->SW-IN-EAST-Ethernet1/3
+- id: l15
+  n1: n0
+  n2: n5
+  i1: i1
+  i2: i0
+  conditioning: {}
+  label: 16 ISP-A-GigabitEthernet2<->RTR-3-GigabitEthernet1
+- id: l16
+  n1: n1
+  n2: n6
+  i1: i1
+  i2: i0
+  conditioning: {}
+  label: 17 ISP-B-GigabitEthernet2<->RTR-4-GigabitEthernet1
+- id: l17
+  n1: n5
+  n2: n6
+  i1: i2
+  i2: i2
+  conditioning: {}
+  label: 18 RTR-3-GigabitEthernet3<->RTR-4-GigabitEthernet3
+- id: l18
+  n1: n5
+  n2: n8
+  i1: i1
+  i2: i0
+  conditioning: {}
+  label: 19 RTR-3-GigabitEthernet2<->SW-OUT-WEST-Ethernet0/0
+- id: l19
+  n1: n6
+  n2: n8
+  i1: i1
+  i2: i1
+  conditioning: {}
+  label: 20 RTR-4-GigabitEthernet2<->SW-OUT-WEST-Ethernet0/1
+- id: l20
+  n1: n11
+  n2: n8
+  i1: i2
+  i2: i2
+  conditioning: {}
+  label: 21 FTD-A2-GigabitEthernet0/0<->SW-OUT-WEST-Ethernet0/2
+- id: l21
+  n1: n12
+  n2: n8
+  i1: i2
+  i2: i3
+  conditioning: {}
+  label: 22 FTD-B2-GigabitEthernet0/0<->SW-OUT-WEST-Ethernet0/3
+- id: l22
+  n1: n11
+  n2: n14
+  i1: i3
+  i2: i0
+  conditioning: {}
+  label: 23 FTD-A2-GigabitEthernet0/1<->SW-IN-WEST-Ethernet0/0
+- id: l23
+  n1: n12
+  n2: n14
+  i1: i3
+  i2: i1
+  conditioning: {}
+  label: 24 FTD-B2-GigabitEthernet0/1<->SW-IN-WEST-Ethernet0/1
+- id: l24
+  n1: n11
+  n2: n14
+  i1: i4
+  i2: i2
+  conditioning: {}
+  label: 25 FTD-A2-GigabitEthernet0/2<->SW-IN-WEST-Ethernet0/2
+- id: l25
+  n1: n11
+  n2: n14
+  i1: i5
+  i2: i3
+  conditioning: {}
+  label: 26 FTD-A2-GigabitEthernet0/3<->SW-IN-WEST-Ethernet0/3
+- id: l26
+  n1: n12
+  n2: n14
+  i1: i4
+  i2: i4
+  conditioning: {}
+  label: 27 FTD-B2-GigabitEthernet0/2<->SW-IN-WEST-Ethernet1/0
+- id: l27
+  n1: n12
+  n2: n14
+  i1: i5
+  i2: i5
+  conditioning: {}
+  label: 28 FTD-B2-GigabitEthernet0/3<->SW-IN-WEST-Ethernet1/1
+- id: l28
+  n1: n16
+  n2: n14
+  i1: i2
+  i2: i6
+  conditioning: {}
+  label: 29 TREX-B-eth2<->SW-IN-WEST-Ethernet1/2
+- id: l29
+  n1: n18
+  n2: n14
+  i1: i0
+  i2: i7
+  conditioning: {}
+  label: 30 SRV-B-eth0<->SW-IN-WEST-Ethernet1/3
+- id: l30
+  n1: n7
+  n2: n8
+  i1: i4
+  i2: i4
+  conditioning:
+    latency: 11
+    jitter: 0
+    loss: 0.0
+    bandwidth: 0
+  label: 31 SW-OUT-EAST-Ethernet1/0<->SW-OUT-WEST-Ethernet1/0
+- id: l31
+  n1: n13
+  n2: n14
+  i1: i8
+  i2: i8
+  conditioning:
+    latency: 11
+    jitter: 0
+    loss: 0.0
+    bandwidth: 0
+  label: 32 SW-IN-EAST-Ethernet2/0<->SW-IN-WEST-Ethernet2/0
+- id: l32
+  n1: n0
+  n2: n15
+  i1: i2
+  i2: i1
+  conditioning: {}
+  label: 33 ISP-A-GigabitEthernet3<->TREX-A-eth1
+- id: l33
+  n1: n1
+  n2: n16
+  i1: i2
+  i2: i1
+  conditioning: {}
+  label: 34 ISP-B-GigabitEthernet3<->TREX-B-eth1
+- id: l34
+  n1: n0
+  n2: n1
+  i1: i3
+  i2: i3
+  conditioning: {}
+  label: 35 ISP-A-GigabitEthernet4<->ISP-B-GigabitEthernet4
+- id: l35
+  n1: n0
+  n2: n2
+  i1: i4
+  i2: i0
+  conditioning: {}
+  label: 36 ISP-A-GigabitEthernet5<->CLIENT-eth0
+- id: l36
+  n1: n9
+  n2: n19
+  i1: i0
+  i2: i0
+  conditioning: {}
+  label: 37 FTD-A1-Management0/0<->MGMT-SW-port0
+- id: l37
+  n1: n11
+  n2: n19
+  i1: i0
+  i2: i1
+  conditioning: {}
+  label: 38 FTD-A2-Management0/0<->MGMT-SW-port1
+- id: l38
+  n1: n10
+  n2: n19
+  i1: i0
+  i2: i2
+  conditioning: {}
+  label: 39 FTD-B1-Management0/0<->MGMT-SW-port2
+- id: l39
+  n1: n12
+  n2: n19
+  i1: i0
+  i2: i3
+  conditioning: {}
+  label: 40 FTD-B2-Management0/0<->MGMT-SW-port3
+- id: l40
+  n1: n15
+  n2: n19
+  i1: i0
+  i2: i4
+  conditioning: {}
+  label: 41 TREX-A-eth0<->MGMT-SW-port4
+- id: l41
+  n1: n16
+  n2: n19
+  i1: i0
+  i2: i5
+  conditioning: {}
+  label: 42 TREX-B-eth0<->MGMT-SW-port5
+- id: l42
+  n1: n20
+  n2: n19
+  i1: i0
+  i2: i6
+  conditioning: {}
+  label: 43 EXT-CONN-port<->MGMT-SW-port6

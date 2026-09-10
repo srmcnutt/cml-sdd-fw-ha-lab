@@ -1,0 +1,17 @@
+# One NAT policy per pair. Static rules first (manual, before auto), then
+# interface PAT (manual, after auto). Proxy ARP stays enabled on statics.
+policies:
+  NAT-PAIR-A:
+    target: PAIR-A
+    before_auto:
+      - {name: static-trex-servers, type: STATIC, src_zone: INSIDE-A, dst_zone: OUTSIDE-A, original: NET-TREX-SRV-A, translated: NET-PUB-SRV-A}
+      - {name: static-srv-a,        type: STATIC, src_zone: INSIDE-A, dst_zone: OUTSIDE-A, original: HOST-SRV-A,     translated: HOST-PUB-SRV-A}
+    after_auto:
+      - {name: pat-inside-a, type: DYNAMIC, src_zone: INSIDE-A, dst_zone: OUTSIDE-A, original: any-ipv4, translated: interface}
+  NAT-PAIR-B:
+    target: PAIR-B
+    before_auto:
+      - {name: static-trex-servers, type: STATIC, src_zone: INSIDE-B, dst_zone: OUTSIDE-B, original: NET-TREX-SRV-B, translated: NET-PUB-SRV-B}
+      - {name: static-srv-b,        type: STATIC, src_zone: INSIDE-B, dst_zone: OUTSIDE-B, original: HOST-SRV-B,     translated: HOST-PUB-SRV-B}
+    after_auto:
+      - {name: pat-inside-b, type: DYNAMIC, src_zone: INSIDE-B, dst_zone: OUTSIDE-B, original: any-ipv4, translated: interface}

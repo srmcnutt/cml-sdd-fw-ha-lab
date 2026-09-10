@@ -1,0 +1,21 @@
+{
+    "EULA": "accept",
+    "Hostname": "FTD-B2",
+    "AdminPassword": "HaLab-2026!",
+    "FirewallMode": "routed",
+    "DNS1": "",
+    "DNS2": "",
+    "DNS3": "",
+    "IPv4Mode": "manual",
+    "IPv4Addr": "198.18.129.44",
+    "IPv4Mask": "255.255.192.0",
+    "IPv4Gw": "198.18.128.1",
+    "IPv6Mode": "disabled",
+    "IPv6Addr": "",
+    "IPv6Mask": "",
+    "IPv6Gw": "",
+    "FmcIp": "198.18.129.31",
+    "FmcRegKey": "HaLabRegKey2026",
+    "FmcNatId": "",
+    "ManageLocally": "No"
+}

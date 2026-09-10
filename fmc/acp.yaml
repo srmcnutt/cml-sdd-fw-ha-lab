@@ -1,0 +1,6 @@
+# Access control policy: permit everything, log at end of connection so FMC
+# connection events can count sessions across a failover.
+name: LAB-ACP
+default_action: BLOCK
+rules:
+  - {name: permit-all-log-end, action: ALLOW, log_end: true}

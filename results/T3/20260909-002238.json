@@ -1,0 +1,1380 @@
+{
+ "scenario": "T3",
+ "opts": {
+  "pair": "A",
+  "then_failover": true,
+  "settle": 30,
+  "hold": 150,
+  "cps": 30,
+  "flow_hold": 120
+ },
+ "started": "2026-09-09 00:01:57",
+ "timeline": [
+  {
+   "t": 4.8,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "00:04:24",
+    "active_flows": 2116.0,
+    "open_flows": 3125.0,
+    "tx_cps": 30,
+    "rx_pps": 1406,
+    "tx_bps": 754919,
+    "rx_bps": 759135,
+    "c_tcps_connects": 3123,
+    "c_tcps_closed": 1009,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 6,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 3124,
+    "s_tcps_closed": 974,
+    "s_tcps_rexmttimeo": 3
+   },
+   "trex_B": {
+    "time": "00:04:25",
+    "active_flows": 2986.0,
+    "open_flows": 2986.0,
+    "tx_cps": 30,
+    "rx_pps": 1353,
+    "tx_bps": 761820,
+    "rx_bps": 761867,
+    "c_tcps_connects": 2986,
+    "c_tcps_closed": null,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": null,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 2986,
+    "s_tcps_closed": null,
+    "s_tcps_rexmttimeo": null
+   },
+   "iperf": "iperf3: error - unable to write to stream socket: Connection reset by peer"
+  },
+  {
+   "t": 11.8,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "00:04:31",
+    "active_flows": 1069.0,
+    "open_flows": 3334.0,
+    "tx_cps": 30,
+    "rx_pps": 654,
+    "tx_bps": 413134,
+    "rx_bps": 400088,
+    "c_tcps_connects": 3332,
+    "c_tcps_closed": 2265,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 6,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 3333,
+    "s_tcps_closed": 2265,
+    "s_tcps_rexmttimeo": 7
+   },
+   "trex_B": {
+    "time": "00:04:31",
+    "active_flows": 3191.0,
+    "open_flows": 3191.0,
+    "tx_cps": 30,
+    "rx_pps": 1421,
+    "tx_bps": 795444,
+    "rx_bps": 795457,
+    "c_tcps_connects": 3191,
+    "c_tcps_closed": null,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": null,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 3191,
+    "s_tcps_closed": null,
+    "s_tcps_rexmttimeo": null
+   },
+   "iperf": "iperf3: error - unable to write to stream socket: Connection reset by peer"
+  },
+  {
+   "t": 18.5,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "00:04:38",
+    "active_flows": 1268.0,
+    "open_flows": 3533.0,
+    "tx_cps": 30,
+    "rx_pps": 632,
+    "tx_bps": 391240,
+    "rx_bps": 392049,
+    "c_tcps_connects": 3532,
+    "c_tcps_closed": 2265,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 6,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 3532,
+    "s_tcps_closed": 2265,
+    "s_tcps_rexmttimeo": 7
+   },
+   "trex_B": {
+    "time": "00:04:38",
+    "active_flows": 3391.0,
+    "open_flows": 3391.0,
+    "tx_cps": 30,
+    "rx_pps": 1552,
+    "tx_bps": 866586,
+    "rx_bps": 866601,
+    "c_tcps_connects": 3391,
+    "c_tcps_closed": null,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": null,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 3391,
+    "s_tcps_closed": null,
+    "s_tcps_rexmttimeo": null
+   },
+   "iperf": "iperf3: error - unable to write to stream socket: Connection reset by peer"
+  },
+  {
+   "t": 25.2,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "00:04:45",
+    "active_flows": 1456.0,
+    "open_flows": 3736.0,
+    "tx_cps": 30,
+    "rx_pps": 569,
+    "tx_bps": 362007,
+    "rx_bps": 360667,
+    "c_tcps_connects": 3735,
+    "c_tcps_closed": 2280,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 24,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 3736,
+    "s_tcps_closed": 2280,
+    "s_tcps_rexmttimeo": 7
+   },
+   "trex_B": {
+    "time": "00:04:45",
+    "active_flows": 3511.0,
+    "open_flows": 3595.0,
+    "tx_cps": 30,
+    "rx_pps": 1713,
+    "tx_bps": 959041,
+    "rx_bps": 957800,
+    "c_tcps_connects": 3595,
+    "c_tcps_closed": 84,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 2,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 3595,
+    "s_tcps_closed": 84,
+    "s_tcps_rexmttimeo": null
+   },
+   "iperf": "iperf3: error - unable to write to stream socket: Connection reset by peer"
+  },
+  {
+   "t": 31.9,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "00:04:51",
+    "active_flows": 1428.0,
+    "open_flows": 3939.0,
+    "tx_cps": 30,
+    "rx_pps": 847,
+    "tx_bps": 517178,
+    "rx_bps": 508952,
+    "c_tcps_connects": 3937,
+    "c_tcps_closed": 2511,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 43,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 3938,
+    "s_tcps_closed": 2511,
+    "s_tcps_rexmttimeo": 8
+   },
+   "trex_B": {
+    "time": "00:04:52",
+    "active_flows": 3556.0,
+    "open_flows": 3796.0,
+    "tx_cps": 30,
+    "rx_pps": 1619,
+    "tx_bps": 905598,
+    "rx_bps": 900803,
+    "c_tcps_connects": 3798,
+    "c_tcps_closed": 240,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 13,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 3798,
+    "s_tcps_closed": 240,
+    "s_tcps_rexmttimeo": 1
+   },
+   "iperf": "iperf3: error - unable to write to stream socket: Connection reset by peer"
+  },
+  {
+   "t": 38.7,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "00:04:58",
+    "active_flows": 1604.0,
+    "open_flows": 4141.0,
+    "tx_cps": 30,
+    "rx_pps": 815,
+    "tx_bps": 490908,
+    "rx_bps": 488768,
+    "c_tcps_connects": 4140,
+    "c_tcps_closed": 2537,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 60,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 4141,
+    "s_tcps_closed": 2537,
+    "s_tcps_rexmttimeo": 14
+   },
+   "trex_B": {
+    "time": "00:04:58",
+    "active_flows": 3601.0,
+    "open_flows": 3999.0,
+    "tx_cps": 30,
+    "rx_pps": 1608,
+    "tx_bps": 893154,
+    "rx_bps": 892715,
+    "c_tcps_connects": 3999,
+    "c_tcps_closed": 398,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 35,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 3999,
+    "s_tcps_closed": 398,
+    "s_tcps_rexmttimeo": 1
+   },
+   "iperf": "iperf3: error - unable to write to stream socket: Connection reset by peer"
+  },
+  {
+   "t": 50.6,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "00:05:10",
+    "active_flows": 1699.0,
+    "open_flows": 4498.0,
+    "tx_cps": 30,
+    "rx_pps": 825,
+    "tx_bps": 491478,
+    "rx_bps": 491214,
+    "c_tcps_connects": 4496,
+    "c_tcps_closed": 2799,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 106,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 4497,
+    "s_tcps_closed": 2799,
+    "s_tcps_rexmttimeo": 24
+   },
+   "trex_B": {
+    "time": "00:05:10",
+    "active_flows": 3498.0,
+    "open_flows": 4357.0,
+    "tx_cps": 30,
+    "rx_pps": 1642,
+    "tx_bps": 911028,
+    "rx_bps": 909955,
+    "c_tcps_connects": 4357,
+    "c_tcps_closed": 859,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 72,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 4357,
+    "s_tcps_closed": 864,
+    "s_tcps_rexmttimeo": 23
+   },
+   "iperf": "iperf3: error - unable to write to stream socket: Connection reset by peer"
+  },
+  {
+   "t": 57.4,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "00:05:17",
+    "active_flows": 1893.0,
+    "open_flows": 4700.0,
+    "tx_cps": 30,
+    "rx_pps": 797,
+    "tx_bps": 476063,
+    "rx_bps": 477211,
+    "c_tcps_connects": 4698,
+    "c_tcps_closed": 2807,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 112,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 4699,
+    "s_tcps_closed": 2807,
+    "s_tcps_rexmttimeo": 25
+   },
+   "trex_B": {
+    "time": "00:05:17",
+    "active_flows": 3531.0,
+    "open_flows": 4558.0,
+    "tx_cps": 30,
+    "rx_pps": 1749,
+    "tx_bps": 974889,
+    "rx_bps": 971506,
+    "c_tcps_connects": 4558,
+    "c_tcps_closed": 1027,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 82,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 4558,
+    "s_tcps_closed": 1027,
+    "s_tcps_rexmttimeo": 29
+   },
+   "iperf": "iperf3: error - unable to write to stream socket: Connection reset by peer"
+  },
+  {
+   "t": 64.1,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "00:05:24",
+    "active_flows": 1856.0,
+    "open_flows": 4903.0,
+    "tx_cps": 30,
+    "rx_pps": 964,
+    "tx_bps": 568616,
+    "rx_bps": 567877,
+    "c_tcps_connects": 4902,
+    "c_tcps_closed": 3047,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 113,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 4903,
+    "s_tcps_closed": 3047,
+    "s_tcps_rexmttimeo": 27
+   },
+   "trex_B": {
+    "time": "00:05:24",
+    "active_flows": 3578.0,
+    "open_flows": 4763.0,
+    "tx_cps": 30,
+    "rx_pps": 1589,
+    "tx_bps": 884587,
+    "rx_bps": 883121,
+    "c_tcps_connects": 4762,
+    "c_tcps_closed": 1185,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 82,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 4762,
+    "s_tcps_closed": 1185,
+    "s_tcps_rexmttimeo": 29
+   },
+   "iperf": "iperf3: error - unable to write to stream socket: Connection reset by peer"
+  },
+  {
+   "t": 70.9,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "00:05:30",
+    "active_flows": 2058.0,
+    "open_flows": 5105.0,
+    "tx_cps": 30,
+    "rx_pps": 922,
+    "tx_bps": 541205,
+    "rx_bps": 540062,
+    "c_tcps_connects": 5104,
+    "c_tcps_closed": 3047,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 113,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 5105,
+    "s_tcps_closed": 3047,
+    "s_tcps_rexmttimeo": 27
+   },
+   "trex_B": {
+    "time": "00:05:30",
+    "active_flows": 3601.0,
+    "open_flows": 4963.0,
+    "tx_cps": 30,
+    "rx_pps": 1605,
+    "tx_bps": 891778,
+    "rx_bps": 891475,
+    "c_tcps_connects": 4963,
+    "c_tcps_closed": 1362,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 93,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 4963,
+    "s_tcps_closed": 1493,
+    "s_tcps_rexmttimeo": 29
+   },
+   "iperf": "iperf3: error - unable to write to stream socket: Connection reset by peer"
+  },
+  {
+   "t": 77.5,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "00:05:37",
+    "active_flows": 2261.0,
+    "open_flows": 5308.0,
+    "tx_cps": 30,
+    "rx_pps": 1022,
+    "tx_bps": 591352,
+    "rx_bps": 591850,
+    "c_tcps_connects": 5307,
+    "c_tcps_closed": 3047,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 113,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 5308,
+    "s_tcps_closed": 3047,
+    "s_tcps_rexmttimeo": 27
+   },
+   "trex_B": {
+    "time": "00:05:37",
+    "active_flows": 3510.0,
+    "open_flows": 5166.0,
+    "tx_cps": 30,
+    "rx_pps": 1803,
+    "tx_bps": 1007850,
+    "rx_bps": 999291,
+    "c_tcps_connects": 5166,
+    "c_tcps_closed": 1656,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 107,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 5166,
+    "s_tcps_closed": 1657,
+    "s_tcps_rexmttimeo": 31
+   },
+   "iperf": "iperf3: error - unable to write to stream socket: Connection reset by peer"
+  },
+  {
+   "t": 84.3,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "00:05:44",
+    "active_flows": 2464.0,
+    "open_flows": 5511.0,
+    "tx_cps": 30,
+    "rx_pps": 1080,
+    "tx_bps": 618934,
+    "rx_bps": 621369,
+    "c_tcps_connects": 5509,
+    "c_tcps_closed": 3047,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 113,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 5510,
+    "s_tcps_closed": 3047,
+    "s_tcps_rexmttimeo": 27
+   },
+   "trex_B": {
+    "time": "00:05:44",
+    "active_flows": 3554.0,
+    "open_flows": 5368.0,
+    "tx_cps": 30,
+    "rx_pps": 1676,
+    "tx_bps": 937907,
+    "rx_bps": 930188,
+    "c_tcps_connects": 5368,
+    "c_tcps_closed": 1814,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 154,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 5368,
+    "s_tcps_closed": 1814,
+    "s_tcps_rexmttimeo": 39
+   },
+   "iperf": "iperf3: error - unable to write to stream socket: Connection reset by peer"
+  },
+  {
+   "t": 91.1,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "00:05:50",
+    "active_flows": 2663.0,
+    "open_flows": 5710.0,
+    "tx_cps": 30,
+    "rx_pps": 1188,
+    "tx_bps": 679202,
+    "rx_bps": 676725,
+    "c_tcps_connects": 5708,
+    "c_tcps_closed": 3047,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 113,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 5709,
+    "s_tcps_closed": 3047,
+    "s_tcps_rexmttimeo": 27
+   },
+   "trex_B": {
+    "time": "00:05:51",
+    "active_flows": 3595.0,
+    "open_flows": 5566.0,
+    "tx_cps": 30,
+    "rx_pps": 1619,
+    "tx_bps": 900267,
+    "rx_bps": 898997,
+    "c_tcps_connects": 5566,
+    "c_tcps_closed": 1971,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 167,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 5566,
+    "s_tcps_closed": 1971,
+    "s_tcps_rexmttimeo": 39
+   },
+   "iperf": "iperf3: error - unable to write to stream socket: Connection reset by peer"
+  },
+  {
+   "t": 97.7,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "00:05:57",
+    "active_flows": 2859.0,
+    "open_flows": 5906.0,
+    "tx_cps": 30,
+    "rx_pps": 1259,
+    "tx_bps": 712833,
+    "rx_bps": 713139,
+    "c_tcps_connects": 5905,
+    "c_tcps_closed": 3047,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 113,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 5905,
+    "s_tcps_closed": 3047,
+    "s_tcps_rexmttimeo": 27
+   },
+   "trex_B": {
+    "time": "00:05:57",
+    "active_flows": 3502.0,
+    "open_flows": 5763.0,
+    "tx_cps": 30,
+    "rx_pps": 1926,
+    "tx_bps": 1074209,
+    "rx_bps": 1069957,
+    "c_tcps_connects": 5763,
+    "c_tcps_closed": 2261,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 177,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 5763,
+    "s_tcps_closed": 2283,
+    "s_tcps_rexmttimeo": 43
+   },
+   "iperf": "iperf3: error - unable to write to stream socket: Connection reset by peer"
+  },
+  {
+   "t": 104.2,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "00:06:04",
+    "active_flows": 3056.0,
+    "open_flows": 6103.0,
+    "tx_cps": 30,
+    "rx_pps": 1282,
+    "tx_bps": 725659,
+    "rx_bps": 724909,
+    "c_tcps_connects": 6102,
+    "c_tcps_closed": 3047,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 113,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 6102,
+    "s_tcps_closed": 3047,
+    "s_tcps_rexmttimeo": 27
+   },
+   "trex_B": {
+    "time": "00:06:04",
+    "active_flows": 3517.0,
+    "open_flows": 5960.0,
+    "tx_cps": 30,
+    "rx_pps": 1766,
+    "tx_bps": 982803,
+    "rx_bps": 979855,
+    "c_tcps_connects": 5960,
+    "c_tcps_closed": 2443,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 183,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 5960,
+    "s_tcps_closed": 2443,
+    "s_tcps_rexmttimeo": 43
+   },
+   "iperf": "iperf3: error - unable to write to stream socket: Connection reset by peer"
+  },
+  {
+   "t": 110.8,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "00:06:10",
+    "active_flows": 3258.0,
+    "open_flows": 6305.0,
+    "tx_cps": 30,
+    "rx_pps": 1344,
+    "tx_bps": 756264,
+    "rx_bps": 756368,
+    "c_tcps_connects": 6303,
+    "c_tcps_closed": 3047,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 113,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 6304,
+    "s_tcps_closed": 3047,
+    "s_tcps_rexmttimeo": 27
+   },
+   "trex_B": {
+    "time": "00:06:10",
+    "active_flows": 3562.0,
+    "open_flows": 6162.0,
+    "tx_cps": 30,
+    "rx_pps": 1673,
+    "tx_bps": 927440,
+    "rx_bps": 926137,
+    "c_tcps_connects": 6161,
+    "c_tcps_closed": 2600,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 193,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 6161,
+    "s_tcps_closed": 2600,
+    "s_tcps_rexmttimeo": 46
+   },
+   "iperf": "iperf3: error - unable to write to stream socket: Connection reset by peer"
+  },
+  {
+   "t": 117.5,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "00:06:17",
+    "active_flows": 3458.0,
+    "open_flows": 6505.0,
+    "tx_cps": 30,
+    "rx_pps": 1426,
+    "tx_bps": 800000,
+    "rx_bps": 799264,
+    "c_tcps_connects": 6504,
+    "c_tcps_closed": 3047,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 113,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 6505,
+    "s_tcps_closed": 3047,
+    "s_tcps_rexmttimeo": 27
+   },
+   "trex_B": {
+    "time": "00:06:17",
+    "active_flows": 3605.0,
+    "open_flows": 6363.0,
+    "tx_cps": 30,
+    "rx_pps": 1656,
+    "tx_bps": 919508,
+    "rx_bps": 917688,
+    "c_tcps_connects": 6363,
+    "c_tcps_closed": 2758,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 199,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 6363,
+    "s_tcps_closed": 2758,
+    "s_tcps_rexmttimeo": 48
+   },
+   "iperf": "iperf3: error - unable to write to stream socket: Connection reset by peer"
+  },
+  {
+   "t": 124.3,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "00:06:24",
+    "active_flows": 3584.0,
+    "open_flows": 6708.0,
+    "tx_cps": 30,
+    "rx_pps": 1518,
+    "tx_bps": 843833,
+    "rx_bps": 848066,
+    "c_tcps_connects": 6708,
+    "c_tcps_closed": 3124,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 118,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 6709,
+    "s_tcps_closed": 3124,
+    "s_tcps_rexmttimeo": 27
+   },
+   "trex_B": {
+    "time": "00:06:24",
+    "active_flows": 3495.0,
+    "open_flows": 6566.0,
+    "tx_cps": 30,
+    "rx_pps": 1870,
+    "tx_bps": 1076954,
+    "rx_bps": 1036056,
+    "c_tcps_connects": 6566,
+    "c_tcps_closed": 3071,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 213,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 6566,
+    "s_tcps_closed": 3069,
+    "s_tcps_rexmttimeo": 48
+   },
+   "iperf": "iperf3: error - unable to write to stream socket: Connection reset by peer"
+  },
+  {
+   "t": 131.1,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "00:06:30",
+    "active_flows": 3578.0,
+    "open_flows": 6910.0,
+    "tx_cps": 30,
+    "rx_pps": 1487,
+    "tx_bps": 833492,
+    "rx_bps": 830584,
+    "c_tcps_connects": 6908,
+    "c_tcps_closed": 3332,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 130,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 6909,
+    "s_tcps_closed": 3424,
+    "s_tcps_rexmttimeo": 27
+   },
+   "trex_B": {
+    "time": "00:06:31",
+    "active_flows": 3539.0,
+    "open_flows": 6768.0,
+    "tx_cps": 30,
+    "rx_pps": 1703,
+    "tx_bps": 949536,
+    "rx_bps": 945328,
+    "c_tcps_connects": 6768,
+    "c_tcps_closed": 3229,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 321,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 6768,
+    "s_tcps_closed": 3229,
+    "s_tcps_rexmttimeo": 56
+   },
+   "iperf": "iperf3: error - unable to write to stream socket: Connection reset by peer"
+  },
+  {
+   "t": 137.7,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "00:06:37",
+    "active_flows": 3517.0,
+    "open_flows": 7110.0,
+    "tx_cps": 30,
+    "rx_pps": 1640,
+    "tx_bps": 926012,
+    "rx_bps": 915171,
+    "c_tcps_connects": 7108,
+    "c_tcps_closed": 3593,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 159,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 7109,
+    "s_tcps_closed": 3595,
+    "s_tcps_rexmttimeo": 35
+   },
+   "trex_B": {
+    "time": "00:06:37",
+    "active_flows": 3580.0,
+    "open_flows": 6967.0,
+    "tx_cps": 30,
+    "rx_pps": 1651,
+    "tx_bps": 918326,
+    "rx_bps": 916020,
+    "c_tcps_connects": 6967,
+    "c_tcps_closed": 3387,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 326,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 6967,
+    "s_tcps_closed": 3387,
+    "s_tcps_rexmttimeo": 60
+   },
+   "iperf": "iperf3: error - unable to write to stream socket: Connection reset by peer"
+  },
+  {
+   "t": 144.4,
+   "FTD-A1": {
+    "this": "Primary - Standby Ready",
+    "other": "Secondary - Active"
+   },
+   "FTD-A2": {
+    "this": "Secondary - Active",
+    "other": "Primary - Standby Ready"
+   },
+   "trex_A": {
+    "time": "00:06:44",
+    "active_flows": 3560.0,
+    "open_flows": 7312.0,
+    "tx_cps": 30,
+    "rx_pps": 1631,
+    "tx_bps": 912922,
+    "rx_bps": 908000,
+    "c_tcps_connects": 7310,
+    "c_tcps_closed": 3752,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 181,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 7310,
+    "s_tcps_closed": 3752,
+    "s_tcps_rexmttimeo": 55
+   },
+   "trex_B": {
+    "time": "00:06:44",
+    "active_flows": 3579.0,
+    "open_flows": 7170.0,
+    "tx_cps": 30,
+    "rx_pps": 1669,
+    "tx_bps": 923386,
+    "rx_bps": 922724,
+    "c_tcps_connects": 7170,
+    "c_tcps_closed": 3591,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 337,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 7170,
+    "s_tcps_closed": 3644,
+    "s_tcps_rexmttimeo": 63
+   },
+   "iperf": "iperf3: error - unable to write to stream socket: Connection reset by peer"
+  }
+ ],
+ "events": {
+  "first_state_change_s": 4.8,
+  "traffic_seen_after_change_s": 4.8,
+  "asp_drop_delta_FTD-A1": {
+   "Interface is down (interface-down)": 85,
+   "Dst MAC L2 Lookup Failed (dst-l2_lookup-fail)": 4
+  },
+  "asp_drop_delta_FTD-A2": {
+   "First TCP packet not SYN (tcp-not-syn)": 4704,
+   "Interface is down (interface-down)": 7,
+   "TCP failed 3 way handshake (tcp-3whs-failed)": 6,
+   "TCP RST/FIN out of order (tcp-rstfin-ooo)": 4,
+   "Blocked or blacklisted by the stream preprocessor (stream)": 3
+  },
+  "conndrops_delta": 0,
+  "rexmt_delta": 185,
+  "active_flows_pre_post": [
+   1250.0,
+   3601.0
+  ],
+  "iperf": {
+   "intervals": 46,
+   "zero_intervals": 0,
+   "resets": 1,
+   "survived": false
+  }
+ },
+ "pre": {
+  "FTD-A1": {
+   "this": "Primary - Active",
+   "other": "Secondary - Standby Ready"
+  },
+  "FTD-A2": {
+   "this": "Secondary - Standby Ready",
+   "other": "Primary - Active"
+  },
+  "traffic": {
+   "trex_A": {
+    "time": "00:03:22",
+    "active_flows": 1250.0,
+    "open_flows": 1250.0,
+    "tx_cps": 30,
+    "rx_pps": 829,
+    "tx_bps": 494160,
+    "rx_bps": 492001,
+    "c_tcps_connects": 1242,
+    "c_tcps_closed": null,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 3,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 1242,
+    "s_tcps_closed": null,
+    "s_tcps_rexmttimeo": 2
+   },
+   "trex_B": {
+    "time": "00:03:22",
+    "active_flows": 1111.0,
+    "open_flows": 1111.0,
+    "tx_cps": 30,
+    "rx_pps": 530,
+    "tx_bps": 339563,
+    "rx_bps": 339884,
+    "c_tcps_connects": 1110,
+    "c_tcps_closed": null,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": null,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 1111,
+    "s_tcps_closed": null,
+    "s_tcps_rexmttimeo": null
+   },
+   "iperf": "[  5]  28.00-30.00  sec  3.99 MBytes  16718 Kbits/sec    0    596 KBytes"
+  },
+  "fmc": {
+   "primary": "Active",
+   "secondary": "Standby"
+  },
+  "diag": {
+   "FTD-A1": {
+    "asp_drop": [],
+    "stateful": [
+     "Stateful Failover Logical Update Statistics",
+     "General\t\t59557      0          69341      0",
+     "sys cmd  \t456        0          456        0",
+     "up time  \t0          0          0          0",
+     "RPC services  \t0          0          0          0",
+     "TCP conn \t59046      0          68873      0",
+     "UDP conn \t0          0          0          0",
+     "ARP tbl  \t51         0          12         0",
+     "Xlate_Timeout  \t0          0          0          0",
+     "Logical Update Queue Information",
+     "Cur \tMax \tTotal",
+     "Recv Q: \t0 \t12 \t72950",
+     "Xmit Q: \t0 \t12 \t61192"
+    ],
+    "conn_count": "1343 in use, 5710 most used"
+   },
+   "FTD-A2": {
+    "asp_drop": [],
+    "stateful": [
+     "Stateful Failover Logical Update Statistics",
+     "General\t\t69545      0          59792      0",
+     "sys cmd  \t456        0          456        0",
+     "up time  \t0          0          0          0",
+     "RPC services  \t0          0          0          0",
+     "TCP conn \t69077      0          59281      0",
+     "UDP conn \t0          0          0          0",
+     "ARP tbl  \t12         0          51         0",
+     "Xlate_Timeout  \t0          0          0          0",
+     "Logical Update Queue Information",
+     "Cur \tMax \tTotal",
+     "Recv Q: \t0 \t12 \t64813",
+     "Xmit Q: \t0 \t1 \t69772"
+    ],
+    "conn_count": "1257 in use, 5676 most used"
+   }
+  }
+ },
+ "t0": "00:03:27",
+ "t0_failover": "00:04:18",
+ "mid": {
+  "t": 45.5,
+  "diag": {
+   "FTD-A1": {
+    "asp_drop": [
+     "Dst MAC L2 Lookup Failed (dst-l2_lookup-fail)                                4",
+     "Interface is down (interface-down)                                          85"
+    ],
+    "stateful": [
+     "Stateful Failover Logical Update Statistics",
+     "General\t\t63023      0          69342      0",
+     "sys cmd  \t458        0          457        0",
+     "up time  \t0          0          0          0",
+     "RPC services  \t0          0          0          0",
+     "TCP conn \t62507      0          68873      0",
+     "UDP conn \t0          0          0          0",
+     "ARP tbl  \t53         0          12         0",
+     "Xlate_Timeout  \t0          0          0          0",
+     "Logical Update Queue Information",
+     "Cur \tMax \tTotal",
+     "Recv Q: \t0 \t12 \t72959",
+     "Xmit Q: \t0 \t12 \t64673"
+    ],
+    "conn_count": "20 in use, 5710 most used"
+   },
+   "FTD-A2": {
+    "asp_drop": [
+     "First TCP packet not SYN (tcp-not-syn)                                    4700",
+     "TCP RST/FIN out of order (tcp-rstfin-ooo)                                    3",
+     "Interface is down (interface-down)                                           7",
+     "Blocked or blacklisted by the stream preprocessor (stream)                   2"
+    ],
+    "stateful": [
+     "Stateful Failover Logical Update Statistics",
+     "General\t\t69547      0          60465      0",
+     "sys cmd  \t458        0          457        0",
+     "up time  \t0          0          0          0",
+     "RPC services  \t0          0          0          0",
+     "TCP conn \t69077      0          59951      0",
+     "UDP conn \t0          0          0          0",
+     "ARP tbl  \t12         0          52         0",
+     "Xlate_Timeout  \t0          0          0          0",
+     "Logical Update Queue Information",
+     "Cur \tMax \tTotal",
+     "Recv Q: \t0 \t12 \t65492",
+     "Xmit Q: \t0 \t1 \t69774"
+    ],
+    "conn_count": "1669 in use, 5676 most used"
+   }
+  }
+ },
+ "post": {
+  "FTD-A1": {
+   "this": "Primary - Standby Ready",
+   "other": "Secondary - Active"
+  },
+  "FTD-A2": {
+   "this": "Secondary - Active",
+   "other": "Primary - Standby Ready"
+  },
+  "traffic": {
+   "trex_A": {
+    "time": "00:06:51",
+    "active_flows": 3601.0,
+    "open_flows": 7511.0,
+    "tx_cps": 30,
+    "rx_pps": 1515,
+    "tx_bps": 844803,
+    "rx_bps": 844992,
+    "c_tcps_connects": 7510,
+    "c_tcps_closed": 3910,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 188,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 7511,
+    "s_tcps_closed": 3910,
+    "s_tcps_rexmttimeo": 55
+   },
+   "trex_B": {
+    "time": "00:06:51",
+    "active_flows": 3513.0,
+    "open_flows": 7369.0,
+    "tx_cps": 30,
+    "rx_pps": 1933,
+    "tx_bps": 1091696,
+    "rx_bps": 1071134,
+    "c_tcps_connects": 7370,
+    "c_tcps_closed": 3856,
+    "c_tcps_conndrops": null,
+    "c_tcps_rexmttimeo": 381,
+    "c_tcps_timeoutdrop": null,
+    "c_err_no_syn": null,
+    "s_tcps_accepts": 7370,
+    "s_tcps_closed": 3858,
+    "s_tcps_rexmttimeo": 79
+   },
+   "iperf": "iperf3: error - unable to write to stream socket: Connection reset by peer"
+  },
+  "fmc": {
+   "primary": "Standby",
+   "secondary": "Active"
+  },
+  "diag": {
+   "FTD-A1": {
+    "asp_drop": [
+     "Dst MAC L2 Lookup Failed (dst-l2_lookup-fail)                                4",
+     "Interface is down (interface-down)                                          85"
+    ],
+    "stateful": [
+     "Stateful Failover Logical Update Statistics",
+     "General\t\t63023      0          69342      0",
+     "sys cmd  \t458        0          457        0",
+     "up time  \t0          0          0          0",
+     "RPC services  \t0          0          0          0",
+     "TCP conn \t62507      0          68873      0",
+     "UDP conn \t0          0          0          0",
+     "ARP tbl  \t53         0          12         0",
+     "Xlate_Timeout  \t0          0          0          0",
+     "Logical Update Queue Information",
+     "Cur \tMax \tTotal",
+     "Recv Q: \t0 \t12 \t72959",
+     "Xmit Q: \t0 \t12 \t64673"
+    ],
+    "conn_count": "15 in use, 5710 most used"
+   },
+   "FTD-A2": {
+    "asp_drop": [
+     "First TCP packet not SYN (tcp-not-syn)                                    4704",
+     "TCP failed 3 way handshake (tcp-3whs-failed)                                 6",
+     "TCP RST/FIN out of order (tcp-rstfin-ooo)                                    4",
+     "Interface is down (interface-down)                                           7",
+     "Blocked or blacklisted by the stream preprocessor (stream)                   3"
+    ],
+    "stateful": [
+     "Stateful Failover Logical Update Statistics",
+     "General\t\t69547      0          60465      0",
+     "sys cmd  \t458        0          457        0",
+     "up time  \t0          0          0          0",
+     "RPC services  \t0          0          0          0",
+     "TCP conn \t69077      0          59951      0",
+     "UDP conn \t0          0          0          0",
+     "ARP tbl  \t12         0          52         0",
+     "Xlate_Timeout  \t0          0          0          0",
+     "Logical Update Queue Information",
+     "Cur \tMax \tTotal",
+     "Recv Q: \t0 \t12 \t65492",
+     "Xmit Q: \t0 \t1 \t69774"
+    ],
+    "conn_count": "3604 in use, 5676 most used"
+   }
+  }
+ },
+ "log": [
+  "00:01:57 == restore baseline",
+  "00:01:58 link 31 conditioning: 200 latency=11 loss=0.0",
+  "00:01:58 link 32 conditioning: 200 latency=11 loss=0.0",
+  "00:02:05 PAIR-A: {'primary': 'Active', 'secondary': 'Standby'}",
+  "00:02:05 PAIR-B: {'primary': 'Active', 'secondary': 'Standby'}",
+  "00:02:06 baseline HA: {'A': {'primary': 'Active', 'secondary': 'Standby'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:02:11 FTD-A1: cleared connections and drop counters; now 8 in use, 5710 most used",
+  "00:02:17 FTD-A2: cleared connections and drop counters; now 8 in use, 5676 most used",
+  "00:02:23 FTD-B2: cleared connections and drop counters; now 8 in use, 5727 most used",
+  "00:02:29 FTD-B1: cleared connections and drop counters; now 8 in use, 5576 most used",
+  "00:02:50 traffic started: TRex A+B, iperf3 CLIENT -> 198.51.100.50 (pair A)",
+  "00:02:50 settling 30 s",
+  "00:03:27 pre: {\"FTD-A1\": {\"this\": \"Primary - Active\", \"other\": \"Secondary - Standby Ready\"}, \"FTD-A2\": {\"this\": \"Secondary - Standby Ready\", \"other\": \"Primary - Active\"}, \"traffic\": {\"trex_A\": {\"time\": \"00:03:22\", \"active_flows\": 1250.0, \"open_flows\": 1250.0, \"tx_cps\": 30, \"rx_pps\": 829, \"tx_bps\": 494160, \"rx_bps\": 492001, \"c_tcps_connects\": 1242, \"c_tcps_closed\": null, \"c_tcps_conndrops\": null, \"c_tcps_rexmttimeo\": 3, \"c_tcps_timeoutdrop\": null, \"c_err_no_syn\": null, \"s_tcps_accepts\": 1242, \"s_tcps_closed\": null, \"s_tcps_rexmttimeo\": 2}, \"trex_B\": {\"time\": \"00:03:22\", \"active_flows\": 1111.0, \"open_flows\": ",
+  "00:03:33 SW-IN-EAST Et2/0 allowed vlan remove 901 -> 1 Et2/0 110,210,900,902-903 Et2/0 110,210,900,902-903 Et2/0 110,210,900,902-903 SW-IN-EAST#",
+  "00:03:33 waiting 45 s for the impairment to settle before switching the active peer",
+  "00:04:23 FMC switch active PAIR-A: 200 accepted",
+  "00:04:25 t+   4.8s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=2116.0 tx_cps=30 rx_pps=1406 conndrops=None rexmt=6  iperf=- unable to write to stream socket: Connection reset by peer",
+  "00:04:25 ** failover state change observed at t+4.8s",
+  "00:04:32 t+  11.8s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=1069.0 tx_cps=30 rx_pps=654 conndrops=None rexmt=6  iperf=- unable to write to stream socket: Connection reset by peer",
+  "00:04:38 t+  18.5s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=1268.0 tx_cps=30 rx_pps=632 conndrops=None rexmt=6  iperf=- unable to write to stream socket: Connection reset by peer",
+  "00:04:45 t+  25.2s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=1456.0 tx_cps=30 rx_pps=569 conndrops=None rexmt=24  iperf=- unable to write to stream socket: Connection reset by peer",
+  "00:04:52 t+  31.9s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=1428.0 tx_cps=30 rx_pps=847 conndrops=None rexmt=43  iperf=- unable to write to stream socket: Connection reset by peer",
+  "00:04:58 t+  38.7s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=1604.0 tx_cps=30 rx_pps=815 conndrops=None rexmt=60  iperf=- unable to write to stream socket: Connection reset by peer",
+  "00:05:09 mid diag captured at t+45.5s",
+  "00:05:10 t+  50.6s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=1699.0 tx_cps=30 rx_pps=825 conndrops=None rexmt=106  iperf=- unable to write to stream socket: Connection reset by peer",
+  "00:05:17 t+  57.4s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=1893.0 tx_cps=30 rx_pps=797 conndrops=None rexmt=112  iperf=- unable to write to stream socket: Connection reset by peer",
+  "00:05:24 t+  64.1s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=1856.0 tx_cps=30 rx_pps=964 conndrops=None rexmt=113  iperf=- unable to write to stream socket: Connection reset by peer",
+  "00:05:31 t+  70.9s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=2058.0 tx_cps=30 rx_pps=922 conndrops=None rexmt=113  iperf=- unable to write to stream socket: Connection reset by peer",
+  "00:05:37 t+  77.5s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=2261.0 tx_cps=30 rx_pps=1022 conndrops=None rexmt=113  iperf=- unable to write to stream socket: Connection reset by peer",
+  "00:05:44 t+  84.3s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=2464.0 tx_cps=30 rx_pps=1080 conndrops=None rexmt=113  iperf=- unable to write to stream socket: Connection reset by peer",
+  "00:05:51 t+  91.1s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=2663.0 tx_cps=30 rx_pps=1188 conndrops=None rexmt=113  iperf=- unable to write to stream socket: Connection reset by peer",
+  "00:05:57 t+  97.7s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=2859.0 tx_cps=30 rx_pps=1259 conndrops=None rexmt=113  iperf=- unable to write to stream socket: Connection reset by peer",
+  "00:06:04 t+ 104.2s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=3056.0 tx_cps=30 rx_pps=1282 conndrops=None rexmt=113  iperf=- unable to write to stream socket: Connection reset by peer",
+  "00:06:11 t+ 110.8s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=3258.0 tx_cps=30 rx_pps=1344 conndrops=None rexmt=113  iperf=- unable to write to stream socket: Connection reset by peer",
+  "00:06:17 t+ 117.5s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=3458.0 tx_cps=30 rx_pps=1426 conndrops=None rexmt=113  iperf=- unable to write to stream socket: Connection reset by peer",
+  "00:06:24 t+ 124.3s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=3584.0 tx_cps=30 rx_pps=1518 conndrops=None rexmt=118  iperf=- unable to write to stream socket: Connection reset by peer",
+  "00:06:31 t+ 131.1s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=3578.0 tx_cps=30 rx_pps=1487 conndrops=None rexmt=130  iperf=- unable to write to stream socket: Connection reset by peer",
+  "00:06:37 t+ 137.7s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=3517.0 tx_cps=30 rx_pps=1640 conndrops=None rexmt=159  iperf=- unable to write to stream socket: Connection reset by peer",
+  "00:06:44 t+ 144.4s  FTD-A1: Primary - Standby Ready | FTD-A2: Secondary - Active  flows=3560.0 tx_cps=30 rx_pps=1631 conndrops=None rexmt=181  iperf=- unable to write to stream socket: Connection reset by peer",
+  "00:06:56 post: {\"FTD-A1\": {\"this\": \"Primary - Standby Ready\", \"other\": \"Secondary - Active\"}, \"FTD-A2\": {\"this\": \"Secondary - Active\", \"other\": \"Primary - Standby Ready\"}, \"traffic\": {\"trex_A\": {\"time\": \"00:06:51\", \"active_flows\": 3601.0, \"open_flows\": 7511.0, \"tx_cps\": 30, \"rx_pps\": 1515, \"tx_bps\": 844803, \"rx_bps\": 844992, \"c_tcps_connects\": 7510, \"c_tcps_closed\": 3910, \"c_tcps_conndrops\": null, \"c_tcps_rexmttimeo\": 188, \"c_tcps_timeoutdrop\": null, \"c_err_no_syn\": null, \"s_tcps_accepts\": 7511, \"s_tcps_closed\": 3910, \"s_tcps_rexmttimeo\": 55}, \"trex_B\": {\"time\": \"00:06:51\", \"active_flows\": 3513.0, \"open_flow",
+  "00:06:56 FTD-A1 asp drop deltas: {'Interface is down (interface-down)': 85, 'Dst MAC L2 Lookup Failed (dst-l2_lookup-fail)': 4}",
+  "00:06:56 FTD-A2 asp drop deltas: {'First TCP packet not SYN (tcp-not-syn)': 4704, 'Interface is down (interface-down)': 7, 'TCP failed 3 way handshake (tcp-3whs-failed)': 6, 'TCP RST/FIN out of order (tcp-rstfin-ooo)': 4, 'Blocked or blacklisted by the stream preprocessor (stream)': 3}",
+  "00:06:57 iperf3: {\"intervals\": 46, \"zero_intervals\": 0, \"resets\": 1, \"survived\": false}",
+  "00:06:59 == restore baseline",
+  "00:06:59 link 31 conditioning: 200 latency=11 loss=0.0",
+  "00:07:00 link 32 conditioning: 200 latency=11 loss=0.0",
+  "00:07:07 PAIR-A: {'primary': 'Standby', 'secondary': 'Active'}",
+  "00:07:07 PAIR-A: secondary is active, switching back to the primary",
+  "00:07:19 FMC switch active PAIR-A: 200 accepted",
+  "00:07:19 PAIR-B: {'primary': 'Active', 'secondary': 'Standby'}",
+  "00:07:20 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:07:51 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:08:21 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:08:52 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:09:22 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:09:53 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:10:24 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:10:54 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:11:25 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:11:55 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:12:26 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:12:57 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:13:28 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:13:59 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:14:29 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:15:00 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:15:30 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:16:01 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:16:31 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:17:02 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:17:33 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:18:03 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:18:34 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:19:05 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:19:35 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:20:06 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:20:36 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:21:07 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:21:38 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:22:08 waiting for HA baseline: {'A': {'primary': 'Standby', 'secondary': 'Active'}, 'B': {'primary': 'Active', 'secondary': 'Standby'}}",
+  "00:22:38 WARNING: HA did not return to primary-active baseline"
+ ]
+}

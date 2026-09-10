@@ -1,0 +1,114 @@
+===== BEGIN T3 --pair A --then-failover --settle 30 --hold 150 --cps 30 --flow-hold 120 @ 00:01:57
+00:03:33 SW-IN-EAST Et2/0 allowed vlan remove 901 -> 1 Et2/0 110,210,900,902-903 Et2/0 110,210,900,902-903 Et2/0 110,210,900,902-903 SW-IN-EAST#
+00:04:23 FMC switch active PAIR-A: 200 accepted
+00:04:25 ** failover state change observed at t+4.8s
+00:06:56 FTD-A1 asp drop deltas: {'Interface is down (interface-down)': 85, 'Dst MAC L2 Lookup Failed (dst-l2_lookup-fail)': 4}
+00:06:56 FTD-A2 asp drop deltas: {'First TCP packet not SYN (tcp-not-syn)': 4704, 'Interface is down (interface-down)': 7, 'TCP failed 3 way handshake (tcp-3whs-failed)': 6, 'TCP RST/FIN out of order (tcp-rstfin-ooo)': 4, 'Blocked or blacklisted by the stream preprocessor (stream)': 3}
+00:06:57 iperf3: {"intervals": 46, "zero_intervals": 0, "resets": 1, "survived": false}
+00:07:19 FMC switch active PAIR-A: 200 accepted
+00:22:38 WARNING: HA did not return to primary-active baseline
+00:22:38 events: {"first_state_change_s": 4.8, "traffic_seen_after_change_s": 4.8, "asp_drop_delta_FTD-A1": {"Interface is down (interface-down)": 85, "Dst MAC L2 Lookup Failed (dst-l2_lookup-fail)": 4}, "asp_drop_delta_FTD-A2": {"First TCP packet not SYN (tcp-not-syn)": 4704, "Interface is down (interface-down)": 7, "TCP failed 3 way handshake (tcp-3whs-failed)": 6, "TCP RST/FIN out of order (tcp-rstfin-ooo)": 4, "Blocked or blacklisted by the stream preprocessor (stream)": 3}, "conndrops_delta": 0, "rexmt_delta": 185, "active_flows_pre_post": [1250.0, 3601.0], "iperf": {"intervals": 46, "zero_intervals": 0, "resets": 1, "survived": false}}
+00:22:38 saved results/T3/20260909-002238.json
+===== END T3 --pair A --then-failover --settle 30 --hold 150 --cps 30 --flow-hold 120 @ 00:22:38
+===== BEGIN T4 --pair A --settle 30 --hold 120 --cps 30 --flow-hold 90 @ 00:22:38
+00:22:52 FMC switch active PAIR-A: 200 accepted
+00:24:21 SW-IN-EAST Et2/0 allowed vlan remove 900 -> 1 Et2/0 110,210,901-903 Et2/0 110,210,901-903 Et2/0 110,210,901-903 SW-IN-EAST#
+00:26:30 FTD-A1 asp drop deltas: {'First TCP packet not SYN (tcp-not-syn)': 1852, 'TCP failed 3 way handshake (tcp-3whs-failed)': 3}
+00:26:31 iperf3: {"intervals": 88, "zero_intervals": 1, "resets": 0, "survived": true}
+00:27:15 events: {"asp_drop_delta_FTD-A1": {"First TCP packet not SYN (tcp-not-syn)": 1852, "TCP failed 3 way handshake (tcp-3whs-failed)": 3}, "conndrops_delta": 0, "rexmt_delta": 265, "active_flows_pre_post": [1278.0, 2607.0], "iperf": {"intervals": 88, "zero_intervals": 1, "resets": 0, "survived": true}}
+00:27:15 saved results/T4/20260909-002715.json
+===== END T4 --pair A --settle 30 --hold 120 --cps 30 --flow-hold 90 @ 00:27:15
+===== BEGIN T5 --settle 30 --hold 120 --cps 30 --flow-hold 90 @ 00:27:15
+00:28:56 link 31 stop: 204
+00:28:56 link 32 stop: 204
+00:29:15 ** failover state change observed at t+16.8s
+00:31:09 FTD-A1 asp drop deltas: {'First TCP packet not SYN (tcp-not-syn)': 3133}
+00:31:09 FTD-A2 asp drop deltas: {'Interface is down (interface-down)': 3}
+00:31:10 iperf3: {"intervals": 89, "zero_intervals": 1, "resets": 0, "survived": true}
+00:31:14 link 31 start: 204
+00:31:14 link 32 start: 204
+00:32:44 events: {"first_state_change_s": 16.8, "traffic_seen_after_change_s": 16.8, "asp_drop_delta_FTD-A1": {"First TCP packet not SYN (tcp-not-syn)": 3133}, "asp_drop_delta_FTD-A2": {"Interface is down (interface-down)": 3}, "conndrops_delta": 0, "rexmt_delta": 54, "active_flows_pre_post": [1359.0, 2622.0], "iperf": {"intervals": 89, "zero_intervals": 1, "resets": 0, "survived": true}}
+00:32:44 saved results/T5/20260909-003244.json
+===== END T5 --settle 30 --hold 120 --cps 30 --flow-hold 90 @ 00:32:44
+===== BEGIN T6 --settle 30 --hold 150 --cps 30 --flow-hold 120 @ 00:32:44
+00:34:25 node FTD-A1 stop: 204
+00:34:25 node FTD-B1 stop: 204
+00:34:57 ** failover state change observed at t+1.2s
+00:39:53 FTD-A2 asp drop deltas: {'First TCP packet not SYN (tcp-not-syn)': 88, 'TCP failed 3 way handshake (tcp-3whs-failed)': 26, 'TCP RST/FIN out of order (tcp-rstfin-ooo)': 7, 'Blocked or blacklisted by the stream preprocessor (stream)': 4, 'Interface is down (interface-down)': 3}
+00:39:55 iperf3: {"intervals": 186, "zero_intervals": 18, "resets": 0, "survived": true}
+00:39:59 node FTD-A1 start: 204
+00:39:59 node FTD-B1 start: 204
+00:43:57 FMC switch active PAIR-A: 200 accepted
+00:44:18 events: {"first_state_change_s": 1.2, "traffic_seen_after_change_s": 1.2, "asp_drop_delta_FTD-A2": {"First TCP packet not SYN (tcp-not-syn)": 88, "TCP failed 3 way handshake (tcp-3whs-failed)": 26, "TCP RST/FIN out of order (tcp-rstfin-ooo)": 7, "Blocked or blacklisted by the stream preprocessor (stream)": 4, "Interface is down (interface-down)": 3}, "conndrops_delta": 324, "rexmt_delta": 359, "active_flows_pre_post": [1288.0, 3609.0], "iperf": {"intervals": 186, "zero_intervals": 18, "resets": 0, "survived": true}}
+00:44:18 saved results/T6/20260909-004417.json
+===== END T6 --settle 30 --hold 150 --cps 30 --flow-hold 120 @ 00:44:18
+===== BEGIN T9 --settle 30 --hold 150 --cps 30 --flow-hold 120 @ 00:44:18
+00:45:59 node RTR-1 stop: 204
+00:48:40 iperf3: {"intervals": 103, "zero_intervals": 81, "resets": 0, "survived": true}
+00:48:45 node RTR-1 start: 204
+00:51:27 events: {"conndrops_delta": 4475, "rexmt_delta": 24, "active_flows_pre_post": [1334.0, 180.0], "iperf": {"intervals": 103, "zero_intervals": 81, "resets": 0, "survived": true}}
+00:51:27 saved results/T9/20260909-005127.json
+===== END T9 --settle 30 --hold 150 --cps 30 --flow-hold 120 @ 00:51:27
+===== BEGIN T8 --loss 1 --settle 30 --hold 100 --cps 30 --flow-hold 90 @ 00:51:27
+00:54:56 FTD-A1 asp drop deltas: {'First TCP packet not SYN (tcp-not-syn)': 2043, 'TCP failed 3 way handshake (tcp-3whs-failed)': 2}
+00:54:58 iperf3: {"intervals": 76, "zero_intervals": 1, "resets": 0, "survived": true}
+00:55:08 events: {"asp_drop_delta_FTD-A1": {"First TCP packet not SYN (tcp-not-syn)": 2043, "TCP failed 3 way handshake (tcp-3whs-failed)": 2}, "conndrops_delta": 0, "rexmt_delta": 57, "active_flows_pre_post": [1286.0, 2624.0], "iperf": {"intervals": 76, "zero_intervals": 1, "resets": 0, "survived": true}}
+00:55:08 saved results/T8/20260909-005508.json
+===== END T8 --loss 1 --settle 30 --hold 100 --cps 30 --flow-hold 90 @ 00:55:08
+===== BEGIN T8 --loss 5 --settle 30 --hold 100 --cps 30 --flow-hold 90 @ 00:55:08
+00:58:34 FTD-A1 asp drop deltas: {'First TCP packet not SYN (tcp-not-syn)': 1871}
+00:58:36 iperf3: {"intervals": 77, "zero_intervals": 1, "resets": 0, "survived": true}
+00:58:46 events: {"asp_drop_delta_FTD-A1": {"First TCP packet not SYN (tcp-not-syn)": 1871}, "conndrops_delta": 0, "rexmt_delta": 22, "active_flows_pre_post": [1277.0, 2559.0], "iperf": {"intervals": 77, "zero_intervals": 1, "resets": 0, "survived": true}}
+00:58:46 saved results/T8/20260909-005846.json
+===== END T8 --loss 5 --settle 30 --hold 100 --cps 30 --flow-hold 90 @ 00:58:46
+===== BEGIN T7 --pair A --latency 0 --settle 25 --hold 90 --cps 30 --flow-hold 70 @ 00:58:46
+01:00:22 FMC switch active PAIR-A: 200 accepted
+01:00:23 ** failover state change observed at t+4.6s
+01:01:55 FTD-A1 asp drop deltas: {'Interface is down (interface-down)': 15, 'Dst MAC L2 Lookup Failed (dst-l2_lookup-fail)': 2}
+01:01:55 FTD-A2 asp drop deltas: {'First TCP packet not SYN (tcp-not-syn)': 322, 'Interface is down (interface-down)': 9}
+01:01:57 iperf3: {"intervals": 67, "zero_intervals": 1, "resets": 0, "survived": true}
+01:02:11 FMC switch active PAIR-A: 200 accepted
+01:02:32 events: {"first_state_change_s": 4.6, "traffic_seen_after_change_s": 4.6, "asp_drop_delta_FTD-A1": {"Interface is down (interface-down)": 15, "Dst MAC L2 Lookup Failed (dst-l2_lookup-fail)": 2}, "asp_drop_delta_FTD-A2": {"First TCP packet not SYN (tcp-not-syn)": 322, "Interface is down (interface-down)": 9}, "conndrops_delta": 0, "rexmt_delta": 8, "active_flows_pre_post": [1127.0, 2183.0], "iperf": {"intervals": 67, "zero_intervals": 1, "resets": 0, "survived": true}}
+01:02:32 saved results/T7/20260909-010232.json
+===== END T7 --pair A --latency 0 --settle 25 --hold 90 --cps 30 --flow-hold 70 @ 01:02:32
+===== BEGIN T7 --pair A --latency 2 --settle 25 --hold 90 --cps 30 --flow-hold 70 @ 01:02:32
+01:04:06 FMC switch active PAIR-A: 200 accepted
+01:04:08 ** failover state change observed at t+4.8s
+01:05:44 FTD-A1 asp drop deltas: {'Interface is down (interface-down)': 26, 'Dst MAC L2 Lookup Failed (dst-l2_lookup-fail)': 2}
+01:05:44 FTD-A2 asp drop deltas: {'First TCP packet not SYN (tcp-not-syn)': 312, 'Interface is down (interface-down)': 9}
+01:05:46 iperf3: {"intervals": 70, "zero_intervals": 1, "resets": 0, "survived": true}
+01:06:00 FMC switch active PAIR-A: 200 accepted
+01:06:21 events: {"first_state_change_s": 4.8, "traffic_seen_after_change_s": 4.8, "asp_drop_delta_FTD-A1": {"Interface is down (interface-down)": 26, "Dst MAC L2 Lookup Failed (dst-l2_lookup-fail)": 2}, "asp_drop_delta_FTD-A2": {"First TCP packet not SYN (tcp-not-syn)": 312, "Interface is down (interface-down)": 9}, "conndrops_delta": 0, "rexmt_delta": 7, "active_flows_pre_post": [1112.0, 2192.0], "iperf": {"intervals": 70, "zero_intervals": 1, "resets": 0, "survived": true}}
+01:06:21 saved results/T7/20260909-010621.json
+===== END T7 --pair A --latency 2 --settle 25 --hold 90 --cps 30 --flow-hold 70 @ 01:06:21
+===== BEGIN T7 --pair A --latency 4 --settle 25 --hold 90 --cps 30 --flow-hold 70 @ 01:06:21
+01:07:54 FMC switch active PAIR-A: 200 accepted
+01:07:56 ** failover state change observed at t+4.6s
+01:09:28 FTD-A1 asp drop deltas: {'Interface is down (interface-down)': 35}
+01:09:28 FTD-A2 asp drop deltas: {'First TCP packet not SYN (tcp-not-syn)': 322, 'Interface is down (interface-down)': 3}
+01:09:29 iperf3: {"intervals": 68, "zero_intervals": 1, "resets": 0, "survived": true}
+01:09:43 FMC switch active PAIR-A: 200 accepted
+01:10:04 events: {"first_state_change_s": 4.6, "traffic_seen_after_change_s": 4.6, "asp_drop_delta_FTD-A1": {"Interface is down (interface-down)": 35}, "asp_drop_delta_FTD-A2": {"First TCP packet not SYN (tcp-not-syn)": 322, "Interface is down (interface-down)": 3}, "conndrops_delta": 0, "rexmt_delta": 10, "active_flows_pre_post": [1114.0, 2200.0], "iperf": {"intervals": 68, "zero_intervals": 1, "resets": 0, "survived": true}}
+01:10:04 saved results/T7/20260909-011004.json
+===== END T7 --pair A --latency 4 --settle 25 --hold 90 --cps 30 --flow-hold 70 @ 01:10:04
+===== BEGIN T7 --pair A --latency 11 --settle 25 --hold 90 --cps 30 --flow-hold 70 @ 01:10:04
+01:11:37 FMC switch active PAIR-A: 200 accepted
+01:11:39 ** failover state change observed at t+4.6s
+01:13:09 FTD-A1 asp drop deltas: {'Interface is down (interface-down)': 68}
+01:13:09 FTD-A2 asp drop deltas: {'First TCP packet not SYN (tcp-not-syn)': 320, 'Interface is down (interface-down)': 9}
+01:13:11 iperf3: {"intervals": 67, "zero_intervals": 1, "resets": 0, "survived": true}
+01:13:26 FMC switch active PAIR-A: 200 accepted
+01:13:46 events: {"first_state_change_s": 4.6, "traffic_seen_after_change_s": 4.6, "asp_drop_delta_FTD-A1": {"Interface is down (interface-down)": 68}, "asp_drop_delta_FTD-A2": {"First TCP packet not SYN (tcp-not-syn)": 320, "Interface is down (interface-down)": 9}, "conndrops_delta": 0, "rexmt_delta": 7, "active_flows_pre_post": [1106.0, 2199.0], "iperf": {"intervals": 67, "zero_intervals": 1, "resets": 0, "survived": true}}
+01:13:46 saved results/T7/20260909-011346.json
+===== END T7 --pair A --latency 11 --settle 25 --hold 90 --cps 30 --flow-hold 70 @ 01:13:46
+===== BEGIN T7 --pair A --latency 18 --settle 25 --hold 90 --cps 30 --flow-hold 70 @ 01:13:46
+01:15:20 FMC switch active PAIR-A: 200 accepted
+01:15:22 ** failover state change observed at t+4.7s
+01:16:53 FTD-A1 asp drop deltas: {'Interface is down (interface-down)': 102, 'Dst MAC L2 Lookup Failed (dst-l2_lookup-fail)': 4}
+01:16:53 FTD-A2 asp drop deltas: {'First TCP packet not SYN (tcp-not-syn)': 310, 'Interface is down (interface-down)': 9}
+01:16:54 iperf3: {"intervals": 67, "zero_intervals": 1, "resets": 0, "survived": true}
+01:17:09 FMC switch active PAIR-A: 200 accepted
+01:17:30 events: {"first_state_change_s": 4.7, "traffic_seen_after_change_s": 4.7, "asp_drop_delta_FTD-A1": {"Interface is down (interface-down)": 102, "Dst MAC L2 Lookup Failed (dst-l2_lookup-fail)": 4}, "asp_drop_delta_FTD-A2": {"First TCP packet not SYN (tcp-not-syn)": 310, "Interface is down (interface-down)": 9}, "conndrops_delta": 0, "rexmt_delta": 20, "active_flows_pre_post": [1098.0, 2206.0], "iperf": {"intervals": 67, "zero_intervals": 1, "resets": 0, "survived": true}}
+01:17:30 saved results/T7/20260909-011730.json
+===== END T7 --pair A --latency 18 --settle 25 --hold 90 --cps 30 --flow-hold 70 @ 01:17:30
+===== ALL DONE @ 01:17:30
