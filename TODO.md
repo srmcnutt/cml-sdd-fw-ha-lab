@@ -60,7 +60,7 @@ Update this file as work progresses. Dates are absolute.
 - [x] T4 failover-link-only: NO split-brain (hellos also cross data interfaces); session unaffected — corrects the naive expectation
 - [x] T5 full interconnect: split-brain on BOTH pairs at ~17s (the real inter-site-circuit case)
 - [x] T6 site failure: pair A -> West in ~1s detect, ~30-40s full recovery, long session held; pair B unaffected
-- [x] T7 latency sweep (3/6/10/25/40ms RTT): failover ~5s and session survived at EVERY point — latency up to 40ms does not degrade planned stateful failover
+- [x] T7 latency sweep (target RTT ~3/6/10/25/40 ms = CML per-direction settings 0/2/4/11/18, build package Section 13): failover ~5s and session survived at EVERY point — latency up to 40ms does not degrade planned stateful failover
 - [x] T8 degraded link 1% and 5% loss: NO false failover at either; sessions held
 - [x] T9 router failure: default timers blackhole pair A inbound (no recovery, ~4475 conns lost); FIX = BGP timers 3/9 -> ~16s recovery, ~193 conns lost (BFD alone insufficient). Configs in repo; applied live for the test
 
