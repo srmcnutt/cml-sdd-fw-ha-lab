@@ -3,6 +3,11 @@
 Legend: `[ ]` not started, `[~]` in progress, `[x]` done, `[!]` blocked.
 Update this file as work progresses. Dates are absolute.
 
+Phases 0 to 8 are the original build on CML 2.9.0 (2026-09-08 and 09). Paths in
+them are as they were then: the build package was `docs/build-package.md` (now
+`spec/intent.md` plus `spec/design.md`), the FMC YAML was `fmc/` (now
+`configs/fmc/`), and the test scripts were in `scripts/` (now `tests/`).
+
 ## Phase 0 — prerequisites (2026-09-08)
 - [x] Read original build package and verify CML platform facts (link conditioning, TRex, FTDv day-0)
 - [x] dCloud CML 2.9.0 confirmed: 316 GB RAM, 60 vCPU, nothing running
@@ -67,3 +72,13 @@ Update this file as work progresses. Dates are absolute.
 ## Phase 8 — wrap-up
 - [x] Export lab YAML to `lab/topology.exported.yaml` and drift check (scripts/check_drift.py): no drift
 - [x] Results in results/RESULTS.md (auto from JSON via scripts/summarize.py); findings folded into the build package
+
+## Phase 9: restructure and retarget at CML 2.10 (started 2026-10-06)
+- [x] Fix doc drifts: T4 label in summarize.py; T7 sweep stated as targets and CML settings
+- [x] Split the spec into spec/intent.md (what, why, acceptance tests) and spec/design.md (how)
+- [x] Move FMC YAML to configs/fmc/, test scripts to tests/; add CLAUDE.md
+- [x] .mcp.json points at the CML 2.10 built-in MCP server through mcp-remote
+- [ ] Enable virl2-mcp-server on the CML 2.10 controller (Cockpit, Services) and confirm the MCP connection and header names
+- [ ] Re-verify the section 2 platform facts on the 2.10 instance; record them in spec/design.md
+- [ ] Build on 2.10 (design.md section 17 build sequence) and run T1 to T9
+- [ ] tests/summarize.py and tests/check_drift.py; fold findings into the spec

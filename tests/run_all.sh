@@ -5,7 +5,7 @@
 cd "$(dirname "$0")/.." || exit 1
 export TREX_EXT_LIBS="$PWD/vendor/trex-ext-libs"
 PYT=".venv-trex/bin/python"
-run() { echo "===== BEGIN $* @ $(date +%H:%M:%S)"; $PYT scripts/run_test.py "$@" 2>&1 | grep -E 'switch active|state change|link [0-9]+ (stop|start)|node .* (stop|start)|remove|asp drop deltas|iperf3:|events:|saved|WARNING|Traceback|Error' ; echo "===== END $* @ $(date +%H:%M:%S)"; }
+run() { echo "===== BEGIN $* @ $(date +%H:%M:%S)"; $PYT tests/run_test.py "$@" 2>&1 | grep -E 'switch active|state change|link [0-9]+ (stop|start)|node .* (stop|start)|remove|asp drop deltas|iperf3:|events:|saved|WARNING|Traceback|Error' ; echo "===== END $* @ $(date +%H:%M:%S)"; }
 run T3 --pair A --then-failover --settle 30 --hold 150 --cps 30 --flow-hold 120
 run T4 --pair A --settle 30 --hold 120 --cps 30 --flow-hold 90
 run T5 --settle 30 --hold 120 --cps 30 --flow-hold 90

@@ -1,13 +1,13 @@
 # Stretched HA lab: topology source of truth.
 # Rendered into CML's native import format by scripts/render_lab.py.
 # Interface names are the ones the CML node definitions present. Link numbers
-# match section 8 of docs/build-package.md.
+# match section 8 of spec/design.md.
 lab:
   title: FW-HA-LAB
   description: >-
     Dual-site FTD failover demonstration. Two Active/Standby FTDv pairs split
     across the East and West sites over a 25 ms conditioned layer 2 interconnect.
-    Source: docs/build-package.md (v2, 2026-09-08).
+    Source: spec/design.md.
 
 nodes:
   ISP-A:      {def: cat8000v, ifaces: 5,  x: -300, y: -150, tags: [internet], config: configs/routers/ISP-A.cfg}
@@ -35,7 +35,7 @@ nodes:
 # Baseline conditioning for the two inter-site trunks. CML applies "latency"
 # PER DIRECTION and the virtual path adds about 1.5 ms each way: measured on
 # 2026-09-08, latency 25 gave 54 ms RTT, 12 gave 27 ms, 11 gave 25 ms.
-# So 11 is the value that yields the 25 ms design point (build package s.13).
+# So 11 is the value that yields the 25 ms design point (spec/design.md section 13).
 conditioning_baseline: &wan {latency: 11, jitter: 0, loss: 0.0, bandwidth: 0}
 
 links:

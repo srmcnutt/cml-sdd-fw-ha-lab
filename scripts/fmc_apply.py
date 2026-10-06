@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
-"""Apply the fmc/ configuration to the FMC through its REST API, in order.
+"""Apply the configs/fmc/ configuration to the FMC through its REST API, in order.
 Every step is idempotent: objects are looked up by name before creation.
 
-  fmc_apply.py objects      zones, networks, hosts (fmc/objects.yaml)
-  fmc_apply.py acp          access control policy and rule (fmc/acp.yaml)
-  fmc_apply.py register     register the four FTDs and wait (fmc/devices.yaml)
+  fmc_apply.py objects      zones, networks, hosts (configs/fmc/objects.yaml)
+  fmc_apply.py acp          access control policy and rule (configs/fmc/acp.yaml)
+  fmc_apply.py register     register the four FTDs and wait (configs/fmc/devices.yaml)
   fmc_apply.py interfaces   data interfaces on each pair's primary
-  fmc_apply.py ha           create both failover pairs and wait for Active/Standby (fmc/ha.yaml)
+  fmc_apply.py ha           create both failover pairs and wait for Active/Standby (configs/fmc/ha.yaml)
   fmc_apply.py standby      standby addresses and interface monitoring on each pair
   fmc_apply.py routes       static routes on each pair
-  fmc_apply.py nat          NAT policies, rules, assignment (fmc/nat.yaml)
+  fmc_apply.py nat          NAT policies, rules, assignment (configs/fmc/nat.yaml)
   fmc_apply.py deploy       deploy pending changes to every deployable device and wait
   fmc_apply.py status       print devices, pairs, deployable devices
 """
@@ -17,7 +17,7 @@ import os, sys, time, yaml
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import lablib as L
 
-FMC_DIR = os.path.join(L.REPO, 'fmc')
+FMC_DIR = os.path.join(L.REPO, 'configs', 'fmc')
 CFG = '/api/fmc_config/v1/domain/{domain}'
 PLAT = '/api/fmc_platform/v1'
 

@@ -1,7 +1,7 @@
 # RENDERED FILE. Source: lab/topology.yaml + configs/. Regenerate with scripts/render_lab.py
 lab:
   title: FW-HA-LAB
-  description: 'Dual-site FTD failover demonstration. Two Active/Standby FTDv pairs split across the East and West sites over a 25 ms conditioned layer 2 interconnect. Source: docs/build-package.md (v2, 2026-09-08).'
+  description: 'Dual-site FTD failover demonstration. Two Active/Standby FTDv pairs split across the East and West sites over a 25 ms conditioned layer 2 interconnect. Source: spec/design.md.'
   notes: ''
   version: 0.3.0
 annotations: []

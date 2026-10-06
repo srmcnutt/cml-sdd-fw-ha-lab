@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Execute one failover scenario from build package section 16 and record results.
+"""Execute one failover scenario from spec/intent.md (acceptance tests) using the mechanics in spec/design.md section 16 and record results.
 
   run_test.py T1|T2|T3|T4|T5|T6|T7|T8|T9 [options]
   run_test.py restore                      put the lab back to baseline and exit
@@ -17,7 +17,7 @@ Options:
   --keep              do not restore the baseline afterwards
 
 Run with the TRex client environment:
-  TREX_EXT_LIBS=$PWD/vendor/trex-ext-libs .venv-trex/bin/python scripts/run_test.py T2
+  TREX_EXT_LIBS=$PWD/vendor/trex-ext-libs .venv-trex/bin/python tests/run_test.py T2
 """
 import os, sys, time, json, re, subprocess
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

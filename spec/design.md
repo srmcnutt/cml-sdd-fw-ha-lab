@@ -1,4 +1,4 @@
-# Stretched firewall HA — CML build package (v2)
+# Design: stretched firewall HA lab
 
 **Purpose:** build a Cisco Modeling Labs (CML) topology that demonstrates
 cross-site Active/Standby FTD failover between two colocation sites
@@ -8,10 +8,15 @@ before the design is committed.
 **Audience:** an LLM agent building the CML topology, device configs, FMC
 configuration, and test runbook.
 
-**Revision:** v2, 2026-09-08. Supersedes v1 (kept as
-`docs/build-package.v1-original.md`). v2 incorporates the
-platform verification and design decisions of 2026-09-08. Section 2 lists what
-changed and why.
+**This is the how half of the spec.** The what and why, including the
+acceptance tests, are in [`intent.md`](intent.md). This file is a living
+document: it is edited in place, and git history keeps every earlier version
+(the pre-verification v1 draft is in commit `f5719ed` as
+`docs/build-package.v1-original.md`).
+
+**Revision:** v3, 2026-10-06. Restructured into `spec/intent.md` plus this
+file, and retargeted at CML 2.10 with its built-in MCP server. The design and
+the measured 2026-09-09 results are unchanged from v2 (2026-09-08).
 
 **Training copy.** This is a sanitized copy of a real engagement's build
 package. The customer, its sites, and its inventory have been replaced with a
@@ -40,31 +45,8 @@ repository, it is not part of the lab.
 
 ## 1. Design intent
 
-Two colocation sites, East and West. Two FTD Active/Standby failover pairs,
-each split across both sites:
-
-- **Pair A** — active unit in East, standby unit in West. Fronts the
-  East-homed services.
-- **Pair B** — active unit in West, standby unit in East. Fronts the
-  West-homed services.
-
-Each site backs up the other. Both sites carry live traffic in steady state
-because each hosts one pair's active unit. This is often described as
-"active/active dual site." It is active/active at the *site* level only. Each
-individual pair is standard Active/Standby failover. **Do not model this as
-clustering.** Clustering was ruled out because the cluster control link requires
-under 20 ms round trip and these sites measure 20 to 25 ms.
-
-**Each pair has its own VLANs and prefixes.** Pair A and pair B do not share an
-outside VLAN, an inside VLAN, or an address block. Because the two units of a
-pair sit in different buildings, each pair's outside VLAN, inside VLAN, failover
-VLAN, and state VLAN are stretched across the inter-site layer 2 interconnect.
-In production that is an colocation layer 2 circuit delivered as an 802.1Q trunk. In
-CML it is two conditioned trunk links between the site switches.
-
-**What this build is for:** proving failover timing, session preservation,
-split-brain behavior, and inbound path movement at realistic latency. Everything
-else is scenery.
+Moved to [`intent.md`](intent.md). Read it first: it says what this lab must
+show, what is out of scope, and the acceptance tests every build must pass.
 
 ---
 
@@ -95,13 +77,32 @@ from the customer; here they define a fictional enterprise.
 | FTD failover has no preemption. After a failover the new active unit stays active until another failover event | FMC Device Configuration Guide, High Availability |
 | A 10.x management center manages threat defense devices from version 7.3 upward | Secure Firewall Management Center Compatibility Guide |
 
-### CONFIRMED — platform (verified 2026-09-08 against the dCloud instance)
+### CONFIRMED — CML 2.10 MCP server (Cisco documentation)
+
+| Item | Source |
+| --- | --- |
+| CML 2.10 includes a built-in MCP server, reachable at the `/mcp` URI of the CML server | CML 2.10 docs, MCP Server Overview |
+| The `virl2-mcp-server` service is not started by default; an administrator enables and starts it (Cockpit, Services tab) | CML 2.10 docs, MCP Server Overview |
+| Clients connect through the `mcp-remote` bridge, which needs Node.js 18 or later (`npx`) | CML 2.10 docs, MCP Server Overview |
+| pyATS is bundled, so the `send_cli_command` tool runs CLI commands on virtual devices | CML 2.10 docs, MCP Server Overview |
+| The server is based on the open-source `cml-mcp` project | CML 2.10 docs, MCP Server Overview |
+
+**PROPOSED, verify on first connect:** `.mcp.json` passes CML credentials in an
+`X-Authorization` header and device credentials in `X-PyATS-Authorization`,
+following the upstream `cml-mcp` HTTP client instructions. Cisco's page does not
+document the header names for the built-in server.
+
+### CONFIRMED on CML 2.9.0 — RE-VERIFY on the CML 2.10 instance before building
+
+Everything in this table was verified on 2026-09-08 against a dCloud CML 2.9.0
+instance. Treat each row as **PROPOSED** for a CML 2.10 build until it is
+checked again on that instance, and record the result here.
 
 | Item | Value |
 | --- | --- |
 | CML | 2.9.0, dCloud, 316 GB RAM, 60 vCPU, one compute host, nothing else running |
 | CML API | `https://198.18.128.2`, admin-capable API account, credentials in `.lab-creds.env` |
-| CML MCP server | `cml-mcp[pyats]` registered in `.mcp.json`; provides per-link conditioning, per-link and per-node start/stop, packet capture, and a pyATS/Unicon CLI tool for IOS XE nodes |
+| CML MCP server | On 2.9.0: community `cml-mcp[pyats]`. On 2.10: the built-in server above, registered in `.mcp.json` |
 | FMC | 10.0.1, external to CML at `198.18.129.31`, REST API enabled, evaluation license active (expires 2026-12-06), no devices or policies configured |
 | FTDv image | 7.7.0. Day-0 config supports EULA, hostname, admin password, management IP, FMC IP, registration key, NAT ID. Registration needs no console work |
 | FTDv interfaces | `Management0/0`, one reserved unused port, `GigabitEthernet0/0` to `0/7`. Six interfaces must be enabled per node |
@@ -743,28 +744,27 @@ The fourth item is the headline number.
 
 ---
 
-## 16. Test scenarios
+## 16. Test mechanics
 
-Run each with TRex traffic active on both pairs and the `CLIENT` iperf3 session
-running, at the 25 ms baseline unless noted. Mechanisms refer to CML operations
-available through the MCP server.
+The acceptance tests, with their Given / When / Then and the findings, are in
+[`intent.md`](intent.md). This table says only how `tests/run_test.py` applies
+each trigger. Every run restores the baseline before and after, runs TRex on
+both pairs and the `CLIENT` iperf3 session, and saves `results/<ID>/<timestamp>.json`.
 
-| ID | Scenario | Mechanism | What to observe |
-| --- | --- | --- | --- |
-| T1 | Baseline health | Nothing failed | Both pairs Active/Standby, state sync current, BGP and HSRP converged, measured RTT 25 ms |
-| T2 | Planned failover | FMC: switch active on pair A | Failover time, session survival, iperf3 survival, egress trombone via East HSRP VIP |
-| T3 | State link failure | Prune VLAN 901 from `SW-IN-EAST` trunk Ethernet2/0 | Pair stays paired, state sync lost. Then run T2 again: sessions should drop. Stateful versus stateless, side by side |
-| T4 | Failover link failure | Prune VLAN 900 from `SW-IN-EAST` trunk Ethernet2/0 | **Observed 2026-09-09: NO split-brain.** FTD sends failover hellos over the monitored data interfaces as well as the dedicated failover link, so with the stretched data VLANs still up the standby keeps hearing the active and stays standby; the session was unaffected. Split-brain needs the data path to fail too (T5). This corrects the naive "both units go active" expectation. |
-| T5 | Full interconnect failure | Stop links 31 and 32 | Firewall split-brain on both pairs plus dual HSRP actives. The inter-site-circuit-failure case |
-| T6 | Site failure | Stop nodes `FTD-A1` and `FTD-B1` | Pair A fails to West, pair B unaffected. Recovery time |
-| T7 | Latency sweep | Repeat T2 at target RTTs of 2, 6, 10, 25, 40 ms, which are CML per-direction settings 0, 2, 4, 11, 18 (Section 13). Setting 0 measures about 3 ms, the path's own floor | Where behavior visibly degrades. Converts the argument into a chart |
-| T8 | Degraded link | 25 ms plus 1% then 5% loss on links 31 and 32 | False failovers, state sync health, session survival under loss |
-| T9 | Router failure | Stop node `RTR-1` | **Observed 2026-09-09: pair A inbound blackholed for the full 150 s window, no recovery.** ISP-A holds a valid backup path to `198.51.100.0/26` via `RTR-3` (West), but with default eBGP timers (holdtime 180 s) and no BFD it does not detect the abrupt `RTR-1` loss for up to 180 s, so it keeps sending pair A's traffic to the dead router. The firewall never fails over because the firewall is healthy; the gap is routing failure detection. **Finding: cross-site firewall HA does not cover edge-router failure; add BFD or aggressive BGP timers.** Mitigation verified 2026-09-09: BFD on eBGP alone did NOT resolve it (the eBGP path lingered on the dead next-hop and iBGP had no fast detection); **aggressive BGP hold timers (`timers bgp 3 9`) on every eBGP and iBGP session cut the outage to about 16 s** with the session surviving and ~193 short connections dropped (vs ~4,475 with defaults). Recommendation: pair cross-site firewall HA with fast routing failure detection (aggressive BGP timers, and BFD where the platform honors fall-over). |
+| ID | Mechanism in the lab |
+| --- | --- |
+| T1 | Nothing failed; snapshots only |
+| T2 | FMC REST: switch active on pair A |
+| T3 | Prune VLAN 901 from `SW-IN-EAST` trunk Ethernet2/0, then (with `--then-failover`) switch active |
+| T4 | Prune VLAN 900 from `SW-IN-EAST` trunk Ethernet2/0 |
+| T5 | CML: stop links 31 and 32 |
+| T6 | CML: stop nodes `FTD-A1` and `FTD-B1` |
+| T7 | CML conditioning on links 31 and 32 at per-direction settings 0, 2, 4, 11, 18 (target RTTs about 3, 6, 10, 25, 40 ms; section 13), then T2 |
+| T8 | CML conditioning on links 31 and 32: latency 11 plus 1%, then 5%, loss |
+| T9 | CML: stop node `RTR-1`. Variants: `--tag bfd` (BFD lines applied live) and `--tag timers` (BGP 3/9 timers) |
 
-**T4, T5, T7, T8, and T9 are the ones that matter for the design
-conversation.** Capture for every run: failover detection time, total
-convergence time, session survival count, iperf3 outcome, and syslog or FMC
-evidence of the transition.
+Capture for every run: failover detection time, total convergence time,
+session survival, iperf3 outcome, and drop reasons on the unit that became active.
 
 ---
 
@@ -773,55 +773,33 @@ evidence of the transition.
 ### Layout
 
 ```
-fw-ha-lab/
-  README.md                                 start here
-  docs/
-    HOW-IT-WORKS.md                         walkthrough of the method for readers new to the project
-    build-package.md                        this document, the source of truth
-    build-package.v1-original.md            the pre-verification draft, kept so Section 2 can be read against it
-  TODO.md                                   build log and task tracker
-  .lab-creds.env.example                    template; copy to .lab-creds.env (never committed)
-  .mcp.json                                 CML MCP server registration for the agent
+cml-sdd-fw-ha-lab/
+  README.md                start here
+  CLAUDE.md                standing rules Claude Code loads every session
+  HOW-IT-WORKS.md          walkthrough of the method for readers new to the project
+  TODO.md                  build log and task tracker
+  spec/
+    intent.md              what and why, acceptance tests T1 to T9, findings
+    design.md              this document: the how
   lab/
-    topology.yaml                           CML lab definition: nodes, interfaces, links, positions, conditioning
-    FW-HA-LAB.cml.yaml                      rendered import file, generated by render_lab.py; never edited by hand
-    state/                                  ids of the live lab, written by build_lab.py (git-ignored)
+    topology.yaml          nodes, interfaces, links, positions, conditioning (source)
+    FW-HA-LAB.cml.yaml     rendered import file; generated, never edited by hand
+    state/                 ids of the live lab (git-ignored)
   configs/
-    routers/RTR-1.cfg ... RTR-4.cfg, ISP-A.cfg, ISP-B.cfg
-    switches/SW-OUT-EAST.cfg ... SW-IN-WEST.cfg
-    ftd/FTD-A1.day0.json ... FTD-B2.day0.json
-    trex/TREX-A.node.cfg, TREX-B.node.cfg      day-0: management address, switch to ASTF with port gateways
-    trex/http_nat.py                           ASTF profile loaded by scripts/trex_run.py
-    docker/net-tools.config.json, CLIENT.boot.sh, SRV-A.boot.sh, SRV-B.boot.sh
-  fmc/
-    objects.yaml                            zones, network and host objects
-    devices.yaml                            registration, interfaces, routes per pair
-    ha.yaml                                 pair definitions
-    nat.yaml                                NAT policies
-    acp.yaml                                access control policy
-  scripts/
-    lablib.py                               credentials, CML and FMC REST helpers, repository paths
-    render_lab.py                           lab/topology.yaml + configs/ -> lab/<title>.cml.yaml
-    build_lab.py                            imports the rendered lab into CML, records ids in lab/state/
-    push_configs.py                         stop, wipe, reload day-0, restart named nodes
-    fmc_apply.py                            applies fmc/ to the FMC in order, idempotent steps
-    console.py                              node console driver over CML's SSH console server (FTD, TRex, Docker, IOS)
-    trex_run.py                             start, stop, and read stats from the TRex nodes
-    run_test.py                             executes a scenario from Section 16 and records results
-    run_all.sh                              runs T3 through T9 back to back
-    apply_bfd_live.py                       pushes the BFD lines to running routers without a reboot (T9 mitigation)
-    check_drift.py                          exports the live lab and diffs it against the rendered file
-    summarize.py                            results/T*/*.json -> results/RESULTS.md
-  vendor/
-    trex-core/                              TRex 2.87 client library and stock profiles (sparse checkout)
-    trex-ext-libs/                          pure-Python subset of TRex's bundled libraries
-  .venv/  .venv-trex/                        Python 3.14 for the scripts, Python 3.10 for the TRex client
-  requirements.txt  requirements-trex.txt
-  results/
-    T1/ ... T9/                             captured output per run: JSON timeline plus console log
-    RESULTS.md                              summary table, generated by summarize.py
-    results.html, failover-lab-results.docx the written-up results
-    assets/                                 figures, SVG source and PNG
+    routers/ switches/ ftd/ trex/ docker/   day-0 configs per node
+    fmc/                   zones, objects, devices, HA pairs, NAT, access policy (YAML)
+  tests/
+    run_test.py            runs one acceptance test (T1 to T9) and records JSON
+    run_all.sh             runs T3 to T9 back to back
+    summarize.py           results/T*/*.json -> results/RESULTS.md
+    check_drift.py         exports the live lab and diffs it against the rendered file
+  results/                 JSON and logs per run, RESULTS.md, written-up report, figures
+  scripts/                 build tooling: lablib, render_lab, build_lab, push_configs,
+                           fmc_apply, console, trex_run, apply_bfd_live
+  vendor/                  TRex 2.87 client library (see vendor/README.md)
+  .mcp.json                CML 2.10 built-in MCP server registration for Claude Code
+  .lab-creds.env.example   template for .lab-creds.env (never committed)
+  requirements*.txt        Python 3.14 for the scripts, Python 3.10 for the TRex client
 ```
 
 ### Operating the lab
@@ -839,26 +817,30 @@ the TRex client `PYT="env TREX_EXT_LIBS=$PWD/vendor/trex-ext-libs .venv-trex/bin
 | FMC state | `$PY scripts/fmc_apply.py status` |
 | Any node console | `$PY scripts/console.py FTD-A1 --login 'admin:...' --prompt '(?m)^> ?$' -- 'show failover'` |
 | TRex status, start, stats, stop | `$PYT scripts/trex_run.py status` / `start A 50 90` / `stats A` / `stop A` |
-| Run a scenario | `$PYT scripts/run_test.py T2 --pair A --hold 120` |
-| Put the lab back to baseline | `$PYT scripts/run_test.py restore` |
-| Drift check against the live lab | `$PY scripts/check_drift.py` |
+| Run an acceptance test | `$PYT tests/run_test.py T2 --pair A --hold 120` |
+| Put the lab back to baseline | `$PYT tests/run_test.py restore` |
+| Rebuild the results table | `$PY tests/summarize.py` |
+| Drift check against the live lab | `$PY tests/check_drift.py` |
 
-### Build sequence (as executed 2026-09-08)
+### Build sequence
 
-1. Generate all files under `lab/`, `configs/`, and `fmc/` from this document.
-2. `build_lab.py`: create the lab, nodes with correct interface counts, links,
-   and day-0 configs. Apply conditioning. Do not start anything.
+1. Re-verify the CML 2.10 platform facts in section 2 on the target instance
+   (node definitions and interface names, day-0 file names, external connector,
+   latency mapping) and record the results there.
+2. `render_lab.py`, then `build_lab.py`: create the lab, nodes, links, and
+   day-0 configs. Apply conditioning. Do not start anything.
 3. Start `MGMT-SW`, `EXT-CONN`, `FTD-A1`. Confirm it reaches the FMC. If not,
    switch `EXT-CONN` to the other bridge.
 4. Start the remaining FTDs. `fmc_apply.py` registers all four and waits.
 5. `fmc_apply.py` continues: objects, interfaces, HA pairs, routes, NAT, access
    policy, deploy. Confirm both pairs show Active/Standby.
-6. Start routers, switches, TRex, Docker hosts. Verify with pyATS: trunks,
-   spanning tree, BGP, HSRP, measured RTT, end-to-end reachability through NAT.
-7. Start TRex profiles and the iperf3 session. Run T1.
-8. Run T2 through T9 with `run_test.py`, one at a time, restoring the baseline
-   between runs.
-9. Export the lab to `lab/topology.exported.yaml` and write up results.
+6. Start routers, switches, TRex, Docker hosts. Verify through the MCP server's
+   `send_cli_command`: trunks, spanning tree, BGP, HSRP, measured RTT,
+   end-to-end reachability through NAT.
+7. Start TRex and the iperf3 session. Run T1.
+8. Run T2 through T9 with `tests/run_test.py`, one at a time.
+9. `tests/summarize.py`, then `tests/check_drift.py`. Fold any finding back
+   into `intent.md` or this file.
 
 ---
 
@@ -888,3 +870,6 @@ the TRex client `PYT="env TREX_EXT_LIBS=$PWD/vendor/trex-ext-libs .venv-trex/bin
    "active/active." Use "dual-site failover pairs" or "split Active/Standby."
 8. **FMC evaluation license** expires 2026-12-06. The lab must be finished, or
    re-licensed, before then.
+9. **CML 2.10 retarget (2026-10-06):** the platform facts in section 2 were
+   verified on CML 2.9.0. Re-verify them on the 2.10 instance before the first
+   build, and confirm the `.mcp.json` header names on first connect.

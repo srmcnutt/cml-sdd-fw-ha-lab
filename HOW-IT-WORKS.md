@@ -21,7 +21,7 @@ CML UI cannot be re-run, diffed, or handed to someone else.
 1. **The repository is the lab.** Every device config, the topology, the link
    conditioning, and the FMC policy live in files. A script renders them into
    CML's native import format and another script imports that file. If a value
-   is not in the repository, it is not part of the lab. `scripts/check_drift.py`
+   is not in the repository, it is not part of the lab. `tests/check_drift.py`
    exports the live lab and diffs it against the rendered file to prove it.
 2. **Scripts are idempotent and talk to APIs.** `fmc_apply.py` looks every
    object up by name before creating it, so any step can be re-run. Nothing is
@@ -39,7 +39,7 @@ flowchart LR
     subgraph repo[repository]
         T[lab/topology.yaml]
         C[configs/*]
-        F[fmc/*.yaml]
+        F[configs/fmc/*.yaml]
         P[configs/trex/http_nat.py]
     end
     T --> R[render_lab.py]
@@ -71,16 +71,18 @@ from the JSON.
 
 | Path | What it is | Why it exists |
 | --- | --- | --- |
-| `docs/build-package.md` | The design and runbook, written as a spec for an LLM agent | It is the single source of truth. Everything else was generated from it or checked against it |
-| `lab/topology.yaml` | 21 nodes, 43 numbered links, positions, tags, per-link conditioning | Human-readable topology. Link numbers match the build package's link table |
+| `spec/intent.md` | What the lab must show and why, plus the acceptance tests T1 to T9 in Given / When / Then form | The intent half of the spec: what and why, no device syntax |
+| `spec/design.md` | The design and runbook, written as a spec for an LLM agent | The how half of the spec. Everything else was generated from it or checked against it |
+| `CLAUDE.md` | Standing rules for Claude Code | Loaded at the start of every session, so the rules do not depend on the agent finding this file |
+| `lab/topology.yaml` | 21 nodes, 43 numbered links, positions, tags, per-link conditioning | Human-readable topology. Link numbers match the link table in spec/design.md |
 | `configs/` | Day-0 configuration per node, in the format each node type expects | Routers get `iosxe_config.txt`, switches `ios_config.txt`, FTDs a JSON `day0-config`, TRex a shell `node.cfg`, Docker nodes a `config.json` plus `boot.sh` |
 | `lab/FW-HA-LAB.cml.yaml` | The rendered import file, configs embedded | Portable: imports into any CML with the same node definitions. Generated, never edited |
-| `fmc/*.yaml` | Zones, objects, devices, HA pairs, NAT, access policy | Declarative input for `fmc_apply.py` |
+| `configs/fmc/*.yaml` | Zones, objects, devices, HA pairs, NAT, access policy | Declarative input for `fmc_apply.py` |
 | `scripts/lablib.py` | Credentials, cached sessions, CML and FMC REST helpers, repository paths | Every other script imports it; it is the only place that knows how to authenticate |
 | `scripts/console.py` | A `pexpect` driver for CML's SSH console server | FTD CLI, Docker hosts, and TRex have no API reachable from the workstation on the data path; the console does |
 | `scripts/trex_run.py` | Starts, stops, and reads the TRex nodes | Uses the vendored TRex 2.87 Python client over the management network |
-| `scripts/run_test.py` | The scenario runner | One command per scenario, with options for pair, latency, loss, hold time, connection rate |
-| `scripts/summarize.py` | JSON to Markdown | Picks the newest run per scenario variant and builds the table |
+| `tests/run_test.py` | The scenario runner | One command per scenario, with options for pair, latency, loss, hold time, connection rate |
+| `tests/summarize.py` | JSON to Markdown | Picks the newest run per scenario variant and builds the table |
 | `results/` | Everything the runs produced | JSON timelines, console logs, the summary, the written-up report |
 
 ## 5. How the scripts talk to the lab
@@ -112,11 +114,13 @@ to each node's management address on ports 4500/4501, loads the ASTF profile
 with tunables (client range, server range, connections per second, hold time),
 and reads global and per-side TCP counters.
 
-**The CML MCP server** (`.mcp.json`): during the build, the agent used
-`cml-mcp[pyats]` for interactive verification: per-link conditioning, packet
-capture, and a pyATS/Unicon CLI tool for the IOS XE nodes (BGP, HSRP, trunk,
-and spanning-tree checks). The scripts do not depend on it; it is how the agent
-looked at the lab while building it.
+**The CML MCP server** (`.mcp.json`): during the original build on CML 2.9 the
+agent used the community `cml-mcp[pyats]` server for interactive verification:
+per-link conditioning, packet capture, and a pyATS CLI tool for the IOS XE nodes
+(BGP, HSRP, trunk, and spanning-tree checks). CML 2.10 ships a built-in MCP
+server based on that project, reached at `<cml-host>/mcp` through `mcp-remote`;
+`.mcp.json` now points there. The scripts do not depend on it; it is how the
+agent looks at the lab while building it.
 
 ## 6. A test run, step by step
 
@@ -213,23 +217,23 @@ Each of these cost time and is now encoded in a file so nobody pays for it twice
 
 ## 10. How the agent was used
 
-The build package was written first, as a specification with three tiers:
+The spec (then a single "build package", now `spec/intent.md` plus `spec/design.md`) was written first, with three tiers:
 confirmed facts, decisions, and proposals the agent could change. The agent
 verified the platform facts against the real CML and FMC (node definitions,
 interface names, day-0 formats, conditioning semantics) before generating any
 files, and the verified facts went back into the document. `TODO.md` was the
 shared task list; each phase was checked off with the evidence next to it.
 When something did not work, the fix went into a file and the lesson went into
-the build package, so the document stayed the source of truth rather than the
+the spec, so the document stayed the source of truth rather than the
 chat history.
 
 ## 11. Adapting the lab
 
 - A different CML instance: re-verify the external connector and the latency
-  mapping (build package section 13), update the management addresses in
-  `configs/ftd/*.day0.json`, `configs/trex/*.node.cfg`, `fmc/devices.yaml`,
+  mapping (`spec/design.md` section 13), update the management addresses in
+  `configs/ftd/*.day0.json`, `configs/trex/*.node.cfg`, `configs/fmc/devices.yaml`,
   `scripts/trex_run.py`, and `lab/topology.yaml` notes.
 - A new scenario: add a trigger branch in `run_test.py` (`run()`), a trigger
-  label in `summarize.py`, and a row in build package section 16.
-- Different addressing: section 9 of the build package is the plan; the configs
-  and `fmc/*.yaml` are the values. Re-render, re-import, and run the drift check.
+  label in `summarize.py`, a Given / When / Then entry in `spec/intent.md`, and a row in `spec/design.md` section 16.
+- Different addressing: section 9 of `spec/design.md` is the plan; the configs
+  and `configs/fmc/*.yaml` are the values. Re-render, re-import, and run the drift check.

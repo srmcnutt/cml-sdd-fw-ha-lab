@@ -1,11 +1,14 @@
 {
   "mcpServers": {
-    "cml-mcp-dcloud": {
+    "cml": {
       "command": "/bin/sh",
       "args": [
         "-c",
-        "set -a; . ./.lab-creds.env; set +a; CML_URL=\"$CML_HOST\" CML_USERNAME=\"$CML_USER\" CML_PASSWORD=\"$CML_PASS\" CML_VERIFY_SSL=false exec uvx 'cml-mcp[pyats]'"
-      ]
+        "set -a; . ./.lab-creds.env; set +a; CML_AUTH=\"Basic $(printf '%s:%s' \"$CML_USER\" \"$CML_PASS\" | base64)\"; DEV_AUTH=\"Basic $(printf '%s:%s' \"$DEVICE_USER\" \"$DEVICE_PASS\" | base64)\"; exec npx -y mcp-remote \"$CML_HOST/mcp\" --header \"X-Authorization:$CML_AUTH\" --header \"X-PyATS-Authorization:$DEV_AUTH\""
+      ],
+      "env": {
+        "NODE_TLS_REJECT_UNAUTHORIZED": "0"
+      }
     }
   }
 }

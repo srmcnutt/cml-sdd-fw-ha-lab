@@ -7,7 +7,7 @@ Docker nodes' config.json is ignored (CML exports only the boot script).
 Writes lab/topology.exported.yaml. Exit code 1 when drift is found.
 """
 import os, sys, yaml
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'scripts'))
 import lablib as L
 
 

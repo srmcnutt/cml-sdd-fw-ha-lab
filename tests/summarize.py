@@ -2,7 +2,7 @@
 """Read every results/T*/*.json and print a per-scenario summary, newest run per
 scenario. Writes results/RESULTS.md. Use --json to emit machine-readable rows.
 
-  .venv/bin/python scripts/summarize.py
+  .venv/bin/python tests/summarize.py
 """
 import os, sys, json, glob
 
@@ -15,7 +15,7 @@ TRIGGER = {
     'T9': 'power off RTR-1',
 }
 # T7 runs are recorded by CML per-direction latency setting. Target round-trip
-# times from build package section 13 (setting 0 is the path's own ~3 ms floor).
+# times from spec/design.md section 13 (setting 0 is the path's own ~3 ms floor).
 T7_TARGET_RTT = {0: '~3', 2: '6', 4: '10', 11: '25', 18: '40'}
 
 
