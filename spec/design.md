@@ -87,10 +87,20 @@ from the customer; here they define a fictional enterprise.
 | pyATS is bundled, so the `send_cli_command` tool runs CLI commands on virtual devices | CML 2.10 docs, MCP Server Overview |
 | The server is based on the open-source `cml-mcp` project | CML 2.10 docs, MCP Server Overview |
 
-**PROPOSED, verify on first connect:** `.mcp.json` passes CML credentials in an
-`X-Authorization` header and device credentials in `X-PyATS-Authorization`,
-following the upstream `cml-mcp` HTTP client instructions. Cisco's page does not
-document the header names for the built-in server.
+### CONFIRMED: CML 2.10 release notes (Cisco, CML 2.10 Release Notes)
+
+| Item | Source |
+| --- | --- |
+| New API `GET /ai/mcp/configuration` returns the MCP client configuration for AI tools | CML 2.10 Release Notes, New APIs |
+| pyATS credentials can be set per image and per node definition instead of defaulting to cisco/cisco; generated pyATS testbeds include a per-node enable password | CML 2.10 Release Notes, Summary of Changes |
+
+### PROPOSED: verify on the CML 2.10 instance before the first build
+
+| Item | Check | Verified |
+| --- | --- | --- |
+| MCP client config | Compare `.mcp.json` with `GET /api/v0/ai/mcp/configuration`. `.mcp.json` currently assumes `X-Authorization` (CML login) and `X-PyATS-Authorization` (device login), from the upstream `cml-mcp` HTTP client instructions; Cisco's docs do not name the headers. Use Cisco's version if they differ | not yet |
+| `send_cli_command` | Listed under the `cml` server in Claude Code's `/mcp`; `show version` on `RTR-1` returns output. Cisco confirms the tool exists; its options are documented only in the upstream README | not yet |
+| pyATS device login | IOS XE nodes use `admin` / the secret in `configs/routers/*.cfg`, not cisco/cisco. If `send_cli_command` fails on login, set pyATS credentials for `cat8000v` and `ioll2-xe` in CML | not yet |
 
 ### CONFIRMED on CML 2.9.0 — RE-VERIFY on the CML 2.10 instance before building
 

@@ -78,7 +78,10 @@ them are as they were then: the build package was `docs/build-package.md` (now
 - [x] Split the spec into spec/intent.md (what, why, acceptance tests) and spec/design.md (how)
 - [x] Move FMC YAML to configs/fmc/, test scripts to tests/; add CLAUDE.md
 - [x] .mcp.json points at the CML 2.10 built-in MCP server through mcp-remote
-- [ ] Enable virl2-mcp-server on the CML 2.10 controller (Cockpit, Services) and confirm the MCP connection and header names
+- [ ] Enable virl2-mcp-server on the CML 2.10 controller (Cockpit, Services)
+- [ ] Compare `.mcp.json` with `GET /api/v0/ai/mcp/configuration`; fix `.mcp.json` if they differ
+- [ ] `/mcp` in Claude Code shows the `cml` server connected and `send_cli_command` listed
+- [ ] After the routers boot: `send_cli_command` runs `show version` on RTR-1; if login fails, set pyATS credentials for cat8000v and ioll2-xe in CML
 - [ ] Re-verify the section 2 platform facts on the 2.10 instance; record them in spec/design.md
 - [ ] Build on 2.10 (design.md section 17 build sequence) and run T1 to T9
 - [ ] tests/summarize.py and tests/check_drift.py; fold findings into the spec
